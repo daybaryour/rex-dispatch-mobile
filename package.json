@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "git_push": "node -e \"const mssg = ' ' + process.argv[1]; require('child_process').execSync('git add . && git commit -m \\\"' + mssg + '\\\" && git push -u origin master', { stdio:[0, 1, 2] } ) \"",
+    "git_push_dev": "node -e \"const mssg = ' ' + process.argv[1]; require('child_process').execSync('git add . && git commit -m \\\"' + mssg + '\\\" && git push -u origin development', { stdio:[0, 1, 2] } ) \""
   },
   "dependencies": {
     "@react-native-community/clipboard": "^1.5.1",

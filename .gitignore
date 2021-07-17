@@ -43,8 +43,8 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
-VoxImplantDemo.xcworkspace
-VoximplantDemo.xcworkspace
+app.xcworkspace
+
 
 # fastlane
 #
