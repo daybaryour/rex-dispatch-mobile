@@ -41,6 +41,11 @@ buck-out/
 \.buckd/
 *.keystore
 
+# CocoaPods
+/ios/Pods/
+VoxImplantDemo.xcworkspace
+VoximplantDemo.xcworkspace
+
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
