@@ -10,7 +10,7 @@ import {
   Divider,
 } from "native-base";
 import { Button } from "react-native-elements";
-import { View, ScrollView, Platform } from "react-native";
+import { View, ScrollView } from "react-native";
 import { Grid, Row, Col } from "react-native-easy-grid";
 import PhoneInput from "react-native-phone-number-input";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
@@ -22,9 +22,11 @@ import colors from "../../../helpers/color";
 
 //partials
 import Header from "../../partials/header";
+import Modals from "./modals";
 
 const ChooseProvider = () => {
   const source = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const [showModal, toggle_showModal] = useState(null);
   return (
     <View style={style.body}>
       <Header icon={"back"} title={"Choose Dispatch Provider"} />
@@ -32,7 +34,10 @@ const ChooseProvider = () => {
         {source.map((data) => {
           return (
             <>
-              <Grid key={data}>
+              <Grid
+                key={data}
+                onPress={() => toggle_showModal("business_details")}
+              >
                 <Row style={{ marginTop: "5%", marginBottom: "4%" }}>
                   <Col size={0.8}>
                     <Image
@@ -144,6 +149,7 @@ const ChooseProvider = () => {
                         fontSize: 12,
                         color: colors.lemon,
                       }}
+                      onPress={() => toggle_showModal("proceed_payment")}
                     />
                   </Col>
                 </Row>
@@ -153,6 +159,7 @@ const ChooseProvider = () => {
           );
         })}
       </ScrollView>
+      <Modals showModal={showModal} toggle_showModal={toggle_showModal} />
     </View>
   );
 };

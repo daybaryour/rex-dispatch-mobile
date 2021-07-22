@@ -91,9 +91,7 @@ const Login = (props) => {
               title="Sign in"
               buttonStyle={[style.btn_success]}
               titleStyle={style.btn_text}
-            >
-              <Text style={style.btn_text}>Add Card</Text>
-            </Button>
+            />
 
             <Text style={{ fontSize: 14, marginTop: "12%" }}>
               New to Rex Logistics?{" "}

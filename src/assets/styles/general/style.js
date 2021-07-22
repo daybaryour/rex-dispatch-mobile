@@ -16,21 +16,16 @@ export default StyleSheet.create({
     marginTop: "30%",
     marginBottom: "5%",
   },
-  heading: {
-    // fontFamily: "CircularStdFont-Medium",
-    // fontFamily: "Avenir-Roman",
-    fontSize: 20,
-    fontWeight: Platform === "ios" ? "600" : "bold",
-    marginBottom: "2%",
-    color: "#1F1F1F",
-  },
-  heading_text: {
-    fontSize: 14,
-    fontWeight: Platform === "ios" ? "500" : "bold",
-    color: "#1F1F1F",
+
+  //buttons
+  btn_success: {
+    backgroundColor: colors.lemon,
+    borderRadius: 3,
+    padding: "5%",
     marginBottom: "10%",
-    lineHeight: 17.17,
   },
+
+  // form elements
   form_control: {
     borderWidth: 1.1,
     borderColor: colors.border_black,
@@ -40,40 +35,79 @@ export default StyleSheet.create({
     fontSize: 16,
     height: 50,
   },
+
   form_label: {
     fontSize: 14,
     fontWeight: "500",
     marginTop: "7%",
     marginBottom: "4%",
   },
-  btn_success: {
-    backgroundColor: colors.lemon,
-    borderRadius: 3,
-    padding: "5%",
+
+  //   Headings
+  heading: {
+    // fontFamily: "CircularStdFont-Medium",
+    // fontFamily: "Avenir-Roman",
+    fontSize: 20,
+    fontWeight: Platform.OS === "ios" ? "600" : "bold",
+    marginBottom: "2%",
+    color: "#1F1F1F",
+  },
+  heading_text: {
+    fontSize: 14,
+    fontWeight: Platform.OS === "ios" ? "500" : "bold",
+    color: "#1F1F1F",
     marginBottom: "10%",
+    lineHeight: 17.17,
   },
   sub_heading: {
-    fontWeight: "600",
+    fontWeight: Platform.OS === "ios" ? "600" : "bold",
     fontSize: 16,
     color: colors.black,
   },
+
+  //texts
   btn_text: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: Platform.OS === "ios" ? "600" : "bold",
   },
   text: {
     fontSize: 14,
     color: colors.black,
-    fontWeight: "500",
+    fontWeight: Platform.OS === "ios" ? "600" : "bold",
   },
   text_white: {
     fontSize: 14,
     color: colors.white,
-    fontWeight: "500",
+    fontWeight: Platform.OS === "ios" ? "500" : "bold",
+  },
+  text_12: {
+    fontSize: 12,
+    color: colors.black,
   },
   text_16: {
     fontSize: 16,
     color: colors.black,
-    fontWeight: Platform === "ios" ? "500" : "bold",
+    fontWeight: Platform.OS === "ios" ? "500" : "bold",
+  },
+  text_16_normal: {
+    fontSize: 16,
+    color: colors.black,
+  },
+  text_20: {
+    fontSize: 20,
+    color: colors.black,
+    fontWeight: Platform.OS === "ios" ? "600" : "bold",
+  },
+
+  //   modals
+  modalContent: {
+    backgroundColor: colors.white,
+    paddingVertical: "12%",
+    borderRadius: 20,
+    borderColor: "rgba(0, 0, 0, 0.1)",
+  },
+  bottomModal: {
+    justifyContent: "flex-end",
+    margin: 0,
   },
 });

@@ -10,10 +10,10 @@ import {
 import { Header as Head } from "react-native-elements";
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
+import { CommonActions } from "@react-navigation/native";
 
 class Header extends Component {
   render() {
-    console.log(this.props.backAction);
     return (
       <>
         {/* <SafeAreaView style={{ backgroundColor: colors.navy_blue }} />
@@ -28,32 +28,26 @@ class Header extends Component {
           }}
           leftComponent={
             <>
-              {this.props.icon == "menu" ? (
-                <TouchableOpacity>
-                  <Image
-                    source={require("../../../assets/icons/menu.png")}
-                    style={{ width: 20, height: 12, marginTop: "4%" }}
-                  />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity onPress={() => this.props.backAction}>
+              {this.props.icon == "back" ? (
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.goBack()}
+                >
                   <Image
                     source={require("../../../assets/icons/back.png")}
                     style={{ width: 8, height: 14, marginTop: "4%" }}
                   />
                 </TouchableOpacity>
+              ) : (
+                <Image
+                  source={require("../../../assets/logos/logo_white.png")}
+                  style={{ width: 20, height: 20 }}
+                />
               )}
             </>
           }
           centerComponent={
             <>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: colors.white,
-                  fontWeight: "500",
-                }}
-              >
+              <Text style={[style.text_16, { color: colors.white }]}>
                 {this.props.title}
               </Text>
             </>
