@@ -1,16 +1,6 @@
-import React, { Component } from "react";
-import {
-  Container,
-  Content,
-  Text,
-  Form,
-  Item,
-  Input,
-  Label,
-  Icon,
-  Thumbnail,
-  Right,
-} from "native-base";
+import React from "react";
+
+import { Text } from "react-native";
 import { Button } from "react-native-elements";
 import {
   View,
@@ -22,10 +12,7 @@ import {
 import OtpInputs from "@twotalltotems/react-native-otp-input";
 
 //styles
-import normalStyle from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
-import authNormalStyle from "../../../assets/styles/general/authStyle";
-import authTabStyle from "../../../assets/styles/general/authTabStyle";
+import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
 
 const window = Dimensions.get("window");
@@ -57,8 +44,8 @@ const Verification = (props) => {
   //     Dimensions.removeEventListener("change", this.onDimensionChange);
   //   }
 
-  const style = window.width > 578 ? tabStyle : normalStyle;
-  const authStyle = window.width > 578 ? authTabStyle : authNormalStyle;
+  //   const style = window.width > 578 ? tabStyle : normalStyle;
+  //   const authStyle = window.width > 578 ? authTabStyle : authNormalStyle;
   return (
     <>
       <SafeAreaView style={{ backgroundColor: colors.navy_blue }} />
@@ -70,7 +57,7 @@ const Verification = (props) => {
               <Text
                 style={[
                   style.heading,
-                  { color: colors.white, marginTop: "25%" },
+                  { color: colors.white, marginTop: "20%" },
                 ]}
               >
                 Verification
@@ -106,8 +93,8 @@ const Verification = (props) => {
             <View
               style={{
                 display: "flex",
-                marginTop: "5%",
-                marginBottom: "13%",
+                marginTop: 27,
+                marginBottom: 41,
               }}
             >
               <Text style={[style.text_white, { textAlign: "center" }]}>
@@ -136,12 +123,13 @@ const Verification = (props) => {
                 </Text>
               </Text>
             </View>
-            <View style={{ marginTop: "17%" }}>
+            <View style={{ marginTop: 20 }}>
               <Button
                 block
                 title="Continue"
-                buttonStyle={[style.btn_success, { padding: "5%" }]}
+                buttonStyle={[style.btn_success]}
                 titleStyle={style.btn_text}
+                onPress={() => props.navigation.navigate("card")}
               >
                 <Text style={style.btn_text}>Add Card</Text>
               </Button>

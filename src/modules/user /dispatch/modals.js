@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 import Modal from "react-native-modal";
 import { Button } from "react-native-elements";
@@ -7,7 +7,6 @@ import { Radio, Image, Divider } from "native-base";
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 
 const Modals = (props) => {
@@ -136,14 +135,12 @@ const Modals = (props) => {
           ]}
         >
           <View style={style.container}>
-            <Text style={[style.text_16, { marginBottom: "7%" }]}>
-              Hi Bayo,
-            </Text>
+            <Text style={[style.text_16, { marginBottom: 20 }]}>Hi Bayo,</Text>
             <Text style={[style.text_16_normal, { marginBottom: "7%" }]}>
               you have selected{" "}
               <Text style={[style.text_16]}>DHL Logistics</Text> to deliver your
               package to
-              <Text style={[style.text_16]}> Daniel Chibuzor </Text> at 42 Ajose
+              <Text style={[style.text_16]}> Daniel Chibuzor</Text> at 42 Ajose
               str, Mende, Maryland for{" "}
               <Text style={[style.text_16]}> ₦1500. </Text>
             </Text>
@@ -170,6 +167,10 @@ const Modals = (props) => {
               title="Make Payment"
               buttonStyle={[style.btn_success, { marginTop: "7%" }]}
               titleStyle={style.btn_text}
+              onPress={() => {
+                props.toggle_showModal(null);
+                props.navigation.navigate("orderSuccess");
+              }}
             >
               <Text style={style.btn_text}>Add Card</Text>
             </Button>
@@ -179,6 +180,10 @@ const Modals = (props) => {
                 style.text_16,
                 { color: colors.red, textAlign: "center" },
               ]}
+              onPress={() => {
+                props.toggle_showModal(null);
+                props.navigation.navigate("cancelRequest");
+              }}
             >
               Cancel Request
             </Text>

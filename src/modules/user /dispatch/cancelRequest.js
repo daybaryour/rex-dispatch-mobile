@@ -6,23 +6,26 @@ import { Radio, TextArea } from "native-base";
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 
 //partials
 import Header from "../../partials/header";
 
-const CancelRequest = () => {
+const CancelRequest = (props) => {
   const [value, setValue] = React.useState("one");
 
   return (
     <View style={style.body}>
-      <Header icon={"back"} title={"Cancel Request"} />
+      <Header
+        icon={"back"}
+        title={"Cancel Request"}
+        navigation={props.navigation}
+      />
       <ScrollView showsVerticalScrollIndicator={false} style={style.container}>
-        <Text style={[style.text_20, { marginTop: "5%" }]}>
+        <Text style={[style.text_20, { marginTop: 20 }]}>
           Please select the reason for cancellation:
         </Text>
-        <View style={{ marginTop: "8%", marginBottom: "25%" }}>
+        <View style={{ marginTop: 20, marginBottom: 20 }}>
           <Radio.Group
             name="myRadioGroup"
             aria-label="t2"
@@ -109,7 +112,7 @@ const CancelRequest = () => {
               Others
             </Radio>
           </Radio.Group>
-          <View style={{ marginTop: "5%", marginBottom: "30%" }}>
+          <View style={{ marginTop: "5%", marginBottom: 100 }}>
             {/* come back  make sure focus works */}
             <TextArea
               aria-label="t1"

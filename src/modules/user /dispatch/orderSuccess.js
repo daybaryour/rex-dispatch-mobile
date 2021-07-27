@@ -4,18 +4,17 @@ import { Button } from "react-native-elements";
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 
-const OrderSuccess = () => {
+const OrderSuccess = (props) => {
   return (
     <View style={style.body}>
       <ScrollView showsVerticalScrollIndicator={false} style={style.container}>
         <View style={{ alignItems: "center" }}>
-          <View style={{ marginTop: "25%" }}>
+          <View style={{ marginTop: "23%" }}>
             <Image
               source={require("../../../assets/images/bulb_man.png")}
-              style={{ width: 210, height: 210, marginVertical: "5%" }}
+              style={{ width: 210, height: 210, marginVertical: 20 }}
             />
           </View>
           <View style={{ alignItems: "center" }}>
@@ -29,8 +28,8 @@ const OrderSuccess = () => {
                 {
                   fontWeight: "400",
                   textAlign: "center",
-                  marginTop: "10%",
-                  marginBottom: "7%",
+                  marginTop: 34,
+                  marginBottom: 20,
                 },
               ]}
             >
@@ -45,8 +44,9 @@ const OrderSuccess = () => {
         <Button
           block
           title="Send another parcel"
-          buttonStyle={[style.btn_success, { marginTop: "15%" }]}
+          buttonStyle={[style.btn_success, { marginTop: 55 }]}
           titleStyle={style.btn_text}
+          onPress={() => props.navigation.navigate("dispatch")}
         />
         <Text
           style={[style.text_16, { textAlign: "center", color: colors.lemon }]}

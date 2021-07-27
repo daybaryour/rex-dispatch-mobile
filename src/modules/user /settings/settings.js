@@ -2,14 +2,12 @@ import React from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 
 import { Divider } from "native-base";
-import { Grid, Row, Col } from "react-native-easy-grid";
 import { Avatar } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/FontAwesome5";
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 
 //partials
@@ -21,7 +19,7 @@ const Settings = (props) => {
   return (
     <>
       <View style={style.body}>
-        <Header icon={"back"} title={"Settings"} />
+        <Header icon={"menu"} title={"Settings"} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
@@ -83,113 +81,131 @@ const Settings = (props) => {
           </View>
           <View>
             <View style={style.container}>
-              <View style={{ marginBottom: "5%" }}>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBottom: "4%",
-                  }}
-                >
-                  <Text style={[style.text_16_normal]}>Profile details</Text>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate("profile")}
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("profile")}
+              >
+                <View style={{ marginBottom: "5%" }}>
+                  <View
                     style={{
-                      marginLeft: "auto",
+                      display: "flex",
+                      flexDirection: "row",
+                      marginBottom: "4%",
                     }}
                   >
-                    <Icon
+                    <Text style={[style.text_16_normal]}>Profile details</Text>
+                    <TouchableOpacity
+                      onPress={() => props.navigation.navigate("profile")}
                       style={{
-                        fontSize: 14,
-                        marginTop: "20%",
+                        marginLeft: "auto",
                       }}
-                      name={"chevron-right"}
-                    />
-                  </TouchableOpacity>
+                    >
+                      <Icon
+                        style={{
+                          fontSize: 14,
+                          marginTop: "20%",
+                        }}
+                        name={"chevron-right"}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Divider />
                 </View>
-                <Divider />
-              </View>
-              <View style={{ marginBottom: "5%" }}>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBottom: "4%",
-                  }}
-                >
-                  <Text style={[style.text_16_normal]}>My Cards</Text>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate("password")}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("password")}
+              >
+                <View style={{ marginBottom: "5%" }}>
+                  <View
                     style={{
-                      marginLeft: "auto",
+                      display: "flex",
+                      flexDirection: "row",
+                      marginBottom: "4%",
                     }}
                   >
-                    <Icon
+                    <Text style={[style.text_16_normal]}>My Cards</Text>
+                    <TouchableOpacity
+                      onPress={() => props.navigation.navigate("password")}
                       style={{
-                        fontSize: 14,
-                        marginTop: "20%",
+                        marginLeft: "auto",
                       }}
-                      name={"chevron-right"}
-                    />
-                  </TouchableOpacity>
+                    >
+                      <Icon
+                        style={{
+                          fontSize: 14,
+                          marginTop: "20%",
+                        }}
+                        name={"chevron-right"}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Divider />
                 </View>
-                <Divider />
-              </View>
-              <View style={{ marginBottom: "5%" }}>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBottom: "4%",
-                  }}
-                >
-                  <Text style={[style.text_16_normal]}>Security</Text>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate("password")}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("password")}
+              >
+                <View style={{ marginBottom: "5%" }}>
+                  <View
                     style={{
-                      marginLeft: "auto",
+                      display: "flex",
+                      flexDirection: "row",
+                      marginBottom: "4%",
                     }}
                   >
-                    <Icon
+                    <Text style={[style.text_16_normal]}>Security</Text>
+                    <TouchableOpacity
+                      onPress={() => props.navigation.navigate("password")}
                       style={{
-                        fontSize: 14,
-                        marginTop: "20%",
+                        marginLeft: "auto",
                       }}
-                      name={"chevron-right"}
-                    />
-                  </TouchableOpacity>
+                    >
+                      <Icon
+                        style={{
+                          fontSize: 14,
+                          marginTop: "20%",
+                        }}
+                        name={"chevron-right"}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Divider />
                 </View>
-                <Divider />
-              </View>
-              <View
-                style={{ marginBottom: "5%" }}
-                onPress={() => alert("testing")}
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("support")}
               >
                 <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBottom: "4%",
-                  }}
+                  style={{ marginBottom: "5%" }}
+                  onPress={() => alert("testing")}
                 >
-                  <Text style={[style.text_16_normal]}>Support</Text>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate("support")}
+                  <View
                     style={{
-                      marginLeft: "auto",
+                      display: "flex",
+                      flexDirection: "row",
+                      marginBottom: "4%",
                     }}
                   >
-                    <Icon
+                    <Text style={[style.text_16_normal]}>Support</Text>
+                    <TouchableOpacity
+                      onPress={() => props.navigation.navigate("support")}
                       style={{
-                        fontSize: 14,
-                        marginTop: "20%",
+                        marginLeft: "auto",
                       }}
-                      name={"chevron-right"}
-                    />
-                  </TouchableOpacity>
+                    >
+                      <Icon
+                        style={{
+                          fontSize: 14,
+                          marginTop: "20%",
+                        }}
+                        name={"chevron-right"}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Divider />
                 </View>
-                <Divider />
-              </View>
+              </TouchableOpacity>
+
               <View style={{ marginBottom: "5%" }}>
                 <View
                   style={{

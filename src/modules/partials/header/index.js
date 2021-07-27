@@ -10,7 +10,6 @@ import {
 import { Header as Head } from "react-native-elements";
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
-import { CommonActions } from "@react-navigation/native";
 
 class Header extends Component {
   render() {
@@ -23,8 +22,8 @@ class Header extends Component {
           containerStyle={{
             backgroundColor: colors.navy_blue,
             //   justifyContent: "space-around",
-            paddingVertical: "7%",
-            paddingHorizontal: "6%",
+            paddingVertical: 28,
+            paddingHorizontal: 24,
           }}
           leftComponent={
             <>

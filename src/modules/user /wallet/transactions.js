@@ -5,7 +5,6 @@ import { Image, Divider } from "native-base";
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 
 const Transactions = () => {
@@ -50,7 +49,7 @@ const Transactions = () => {
                   </Text>
                 </Col>
                 <Col size={2}>
-                  <Text style={[style.text]}>₦15,000.00</Text>
+                  <Text style={[style.text]}>₦15,000</Text>
                 </Col>
               </Row>
               <Divider />

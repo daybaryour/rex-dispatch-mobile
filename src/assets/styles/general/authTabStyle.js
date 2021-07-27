@@ -6,8 +6,6 @@ export default StyleSheet.create({
     fontWeight: "400",
     fontSize: 12,
     color: colors.lemon,
-    marginTop: "5%",
-    marginBottom: "8%",
     textDecorationLine: "underline",
   },
 });

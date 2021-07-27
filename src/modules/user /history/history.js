@@ -1,10 +1,8 @@
 import React from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import { Grid, Row, Col } from "react-native-easy-grid";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 
 import Icon from "react-native-vector-icons/FontAwesome5";
@@ -21,90 +19,80 @@ const History = (props) => {
       <Header title={"Dispatch History"} />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: colors.ash_bg, paddingTop: "5%" }}
+        style={{ backgroundColor: colors.ash_bg, paddingTop: 22 }}
       >
         <View style={style.container}>
           {source.map((data) => {
             return (
-              <View
-                style={{
-                  backgroundColor: colors.white,
-
-                  padding: "4%",
-                  borderRadius: 10,
-                  //   marginTop: "5%",
-                  marginBottom: "5%",
-                  borderWidth: 1,
-                  borderColor: colors.ash_border,
-                }}
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("singleHistory")}
               >
-                <View style={{ display: "flex", flexDirection: "row" }}>
-                  <View>
-                    <Text style={[style.text, { marginVertical: "5%" }]}>
-                      Daniel Adebayor
-                    </Text>
-                    <Text
-                      style={[
-                        style.text_12,
-                        {
-                          color: colors.text_grey,
-                          marginBottom: "6%",
-                        },
-                      ]}
-                    >
-                      09/06/2021, 09:30pm
-                    </Text>
-                    <Text
-                      style={[
-                        style.text_12,
-                        { color: colors.lemon, marginBottom: "5%" },
-                      ]}
-                    >
-                      COMPLETED
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: "space-around",
-                      marginLeft: "auto",
-                    }}
-                  >
-                    <View
-                      style={
-                        {
-                          // backgroundColor: colors.indigo_light,
-                          // borderRadius: 50,
-                          // height: 17,
-                          // paddingVertical: "10%",
-                          // paddingHorizontal: "2%",
-                        }
-                      }
-                    >
-                      <TouchableOpacity
-                        onPress={() =>
-                          props.navigation.navigate("singleHistory")
-                        }
+                <View
+                  style={{
+                    backgroundColor: colors.white,
+
+                    paddingVertical: 18,
+                    paddingHorizontal: 14,
+                    borderRadius: 10,
+                    marginBottom: 22,
+                    borderWidth: 1,
+                    borderColor: colors.ash_border,
+                  }}
+                >
+                  <View style={{ display: "flex", flexDirection: "row" }}>
+                    <View>
+                      <Text style={[style.text, { marginVertical: 6 }]}>
+                        Daniel Adebayor
+                      </Text>
+                      <Text
+                        style={[
+                          style.text_12,
+                          {
+                            color: colors.text_grey,
+                            marginBottom: 11,
+                          },
+                        ]}
                       >
-                        <Image
-                          source={require("../../../assets/icons/indigo_chevron.png")}
+                        09/06/2021, 09:30pm
+                      </Text>
+                      <Text
+                        style={[
+                          style.text_12,
+                          { color: colors.lemon, marginBottom: 5 },
+                        ]}
+                      >
+                        COMPLETED
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        marginLeft: "auto",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          backgroundColor: colors.indigo_light,
+                          borderRadius: 50,
+                          height: 17,
+                          paddingVertical: 2,
+                          paddingHorizontal: 5,
+                        }}
+                      >
+                        <Icon
                           style={{
-                            height: 18,
-                            width: 18,
+                            color: colors.indigo,
+                            fontSize: 12,
+                            textAlign: "center",
                           }}
+                          name={"chevron-right"}
                         />
-                      </TouchableOpacity>
-                      {/* <Icon
-                    style={{
-                      color: colors.indigo,
-                      fontSize: 14,
-                      textAlign: "center",
-                    }}
-                    name={"chevron-right"}
-                  /> */}
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>

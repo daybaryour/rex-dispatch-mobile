@@ -2,23 +2,26 @@ import React from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 import { Button } from "react-native-elements";
 import { Grid, Row, Col } from "react-native-easy-grid";
+import { Rating, AirbnbRating } from "react-native-ratings";
 
 import Icon from "react-native-vector-icons/Ionicons";
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 
 const DeliverySuccess = (props) => {
+  const ratingCompleted = (rating) => {
+    console.log("Rating is: " + rating);
+  };
   return (
     <View style={style.body}>
       <ScrollView showsVerticalScrollIndicator={false} style={style.container}>
         <View style={{ alignItems: "center" }}>
-          <View style={{ marginTop: "25%" }}>
+          <View style={{ marginTop: "20%" }}>
             <Image
               source={require("../../../assets/images/star_woman.png")}
-              style={{ width: 160, height: 160, marginVertical: "5%" }}
+              style={{ width: 160, height: 160, marginVertical: 20 }}
             />
           </View>
           <View>
@@ -28,7 +31,7 @@ const DeliverySuccess = (props) => {
                 {
                   color: colors.text_blue,
                   textAlign: "center",
-                  marginBottom: "5%",
+                  marginBottom: 30,
                 },
               ]}
             >
@@ -40,7 +43,7 @@ const DeliverySuccess = (props) => {
                 {
                   textAlign: "center",
                   fontWeight: "normal",
-                  marginBottom: "6%",
+                  marginBottom: 35,
                 },
               ]}
             >
@@ -52,10 +55,10 @@ const DeliverySuccess = (props) => {
         <View
           style={{
             backgroundColor: colors.blue_bg,
-            paddingHorizontal: "2%",
+            paddingHorizontal: 10,
             borderRadius: 4,
-            marginTop: "5%",
-            marginBottom: "4%",
+            marginTop: 16,
+            marginBottom: 10,
             borderWidth: 1,
             borderColor: colors.ash_border,
           }}
@@ -63,7 +66,7 @@ const DeliverySuccess = (props) => {
           <Grid
           //   onPress={() => toggle_showModal("business_details")}
           >
-            <Row style={{ marginTop: "5%", marginBottom: "7%" }}>
+            <Row style={{ marginTop: 16, marginBottom: 25 }}>
               <Col size={0.9}>
                 <Image
                   alt="dispatch company's logo"
@@ -72,7 +75,7 @@ const DeliverySuccess = (props) => {
                     width: 45,
                     height: 45,
                     borderRadius: 6,
-                    marginTop: "10%",
+                    marginTop: 5,
                   }}
                 />
               </Col>
@@ -83,7 +86,7 @@ const DeliverySuccess = (props) => {
                   style={{
                     fontSize: 12,
                     color: colors.text_grey,
-                    marginTop: "2%",
+                    marginTop: 5,
                   }}
                 >
                   4825 deliveries
@@ -99,9 +102,9 @@ const DeliverySuccess = (props) => {
                 <View
                   style={{
                     backgroundColor: colors.white,
-                    padding: "5%",
-                    paddingHorizontal: "12%",
-                    marginBottom: "25%",
+                    padding: 5,
+                    paddingHorizontal: 8,
+                    marginBottom: 20,
                     borderRadius: 20,
                   }}
                 >
@@ -120,55 +123,34 @@ const DeliverySuccess = (props) => {
             </Row>
           </Grid>
         </View>
-        <View
-          style={{
-            marginVertical: "10%",
-            display: "flex",
-            flexDirection: "row",
-            marginRight: "auto",
-            marginLeft: "auto",
-          }}
-        >
-          <Icon
-            style={{
-              color: colors.yellow,
-              fontSize: 30,
-            }}
-            name={"star"}
-          />
-          <Icon
-            style={{
-              color: colors.yellow,
-              fontSize: 30,
-            }}
-            name={"star"}
-          />
-          <Icon
-            style={{
-              color: colors.yellow,
-              fontSize: 30,
-            }}
-            name={"star"}
-          />
-          <Icon
-            style={{
-              color: colors.yellow,
-              fontSize: 30,
-            }}
-            name={"star"}
-          />
-          <Icon
-            style={{
-              color: colors.ash,
-              fontSize: 30,
-            }}
-            name={"star"}
-          />
-        </View>
+
+        <AirbnbRating
+          count={5}
+          defaultRating={0}
+          size={25}
+          onFinishRating={ratingCompleted}
+          showRating={false}
+          unSelectedColor={colors.ash}
+          selectedColor={colors.yellow}
+          style={{ paddingVertical: 15 }}
+          ratingContainerStyle={{ paddingVertical: 20 }}
+        />
+
+        {/* <Rating
+          type="custom"
+          onFinishRating={ratingCompleted}
+          style={{ paddingVertical: 15 }}
+          ratingBackgroundColor={colors.ash}
+          imageSize={30}
+          ratingColor={colors.yellow}
+          showRating={false}
+          //   ratingBackgroundColor={{ color: colors.ash }}
+          startingValue={0}
+        /> */}
         <Button
           block
           title="Submit Feedback"
-          buttonStyle={[style.btn_success, { marginTop: "10%" }]}
+          buttonStyle={[style.btn_success, { marginTop: 40 }]}
           titleStyle={style.btn_text}
         />
         <Text

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, Input, Image } from "native-base";
 import { Button } from "react-native-elements";
 import {
@@ -11,10 +11,7 @@ import {
 import { Grid, Row, Col } from "react-native-easy-grid";
 
 //styles
-import normalStyle from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
-import authNormalStyle from "../../../assets/styles/general/authStyle";
-import authTabStyle from "../../../assets/styles/general/authTabStyle";
+import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
 
 const window = Dimensions.get("window");
@@ -45,8 +42,8 @@ const Card = (props) => {
   //     Dimensions.removeEventListener("change", this.onDimensionChange);
   //   }
 
-  const style = window.width > 578 ? tabStyle : normalStyle;
-  const authStyle = window.width > 578 ? authTabStyle : authNormalStyle;
+  //   const style = window.width > 578 ? tabStyle : normalStyle;
+  //   const authStyle = window.width > 578 ? authTabStyle : authNormalStyle;
 
   return (
     <>
@@ -79,8 +76,6 @@ const Card = (props) => {
                 borderTopColor: colors.navy_blue,
 
                 borderTopWidth: 125,
-
-                borderRightColor: "pink",
               },
             ]}
           >
@@ -89,8 +84,7 @@ const Card = (props) => {
               style={{
                 marginRight: "auto",
                 marginLeft: "auto",
-                marginTop: "-25%",
-                //   width: "100%",
+                marginTop: -85,
               }}
               source={require("../../../assets/icons/card/cardbg.png")}
             ></Image>
@@ -104,7 +98,7 @@ const Card = (props) => {
               placeholder="0000 0000 0000 0000"
             />
 
-            <Grid style={{ marginTop: "4%" }}>
+            <Grid>
               <Row>
                 <Col>
                   <Text style={style.form_label}>Expiry Date</Text>
@@ -115,7 +109,7 @@ const Card = (props) => {
                     placeholder="mm/yy"
                   />
                 </Col>
-                <Col style={{ marginLeft: "5%" }}>
+                <Col style={{ marginLeft: 23 }}>
                   <Text style={style.form_label}>CVV</Text>
 
                   <Input
@@ -134,8 +128,8 @@ const Card = (props) => {
               style={{
                 height: 20,
                 width: 20,
-                marginTop: "30%",
-                marginBottom: "2%",
+                marginTop: 100,
+                marginBottom: 16,
                 marginRight: "auto",
                 marginLeft: "auto",
               }}
@@ -143,12 +137,13 @@ const Card = (props) => {
             <Text style={{ textAlign: "center" }}>
               We would never share your card information with anyone.
             </Text>
-            <View style={{ marginTop: "7%" }}>
+            <View style={{ marginTop: 17 }}>
               <Button
                 block
                 title="Add Card"
-                buttonStyle={[style.btn_success]}
+                buttonStyle={[style.btn_success, { marginTop: 0 }]}
                 titleStyle={style.btn_text}
+                onPress={() => props.navigation.navigate("dispatch")}
               />
             </View>
           </View>

@@ -1,41 +1,20 @@
 import React, { Component } from "react";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import {
-  Container,
-  Content,
-  Text,
-  Form,
-  Item,
-  Input,
-  Label,
-  Icon,
-  Button,
-  Thumbnail,
-  Right,
-  Card,
-  CardItem,
-  Body,
-  Tab,
-  Tabs,
-  TabHeading,
-  View,
-  Title,
-  Segment,
-} from "native-base";
+import { Text, Image, View } from "native-base";
 import styles from "../../assets/styles/general/style";
 import style from "../../assets/styles/general/style";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, ScrollView } from "react-native";
 
 export class Onboarding extends Component {
   render() {
     const onRouteChange = this.props.onRouteChange;
 
     return (
-      <Container>
-        <Content style={style.container}>
+      <View style={style.body}>
+        <ScrollView style={style.container}>
           <View>
-            <Thumbnail
-              square
+            <Image
+              alt="rex-logo"
               source={require("../../assets/logos/logo.png")}
               style={style.top_logo}
             />
@@ -51,15 +30,15 @@ export class Onboarding extends Component {
               borderRadius: 6,
               paddingHorizontal: 15,
               paddingVertical: 17,
-              marginBottom: "10%",
+              marginBottom: 40,
             }}
           >
             <TouchableOpacity onPress={() => onRouteChange("user")}>
               <Grid>
                 <Row>
                   <Col size={1}>
-                    <Thumbnail
-                      square
+                    <Image
+                      alt="paper plane"
                       source={require("../../assets/icons/send.png")}
                       style={{ height: 40, width: 40 }}
                     />
@@ -95,15 +74,15 @@ export class Onboarding extends Component {
               borderRadius: 6,
               paddingHorizontal: 15,
               paddingVertical: 17,
-              marginBottom: "10%",
+              marginBottom: 40,
             }}
           >
             <TouchableOpacity onPress={() => onRouteChange("business")}>
               <Grid>
                 <Row>
                   <Col size={1}>
-                    <Thumbnail
-                      square
+                    <Image
+                      alt="suitcase"
                       source={require("../../assets/icons/suitcase.png")}
                       style={{ height: 40, width: 40 }}
                     />
@@ -139,15 +118,15 @@ export class Onboarding extends Component {
               borderRadius: 6,
               paddingHorizontal: 15,
               paddingVertical: 17,
-              marginBottom: "10%",
+              marginBottom: 40,
             }}
           >
             <TouchableOpacity onPress={() => onRouteChange("rider")}>
               <Grid>
                 <Row>
                   <Col size={1}>
-                    <Thumbnail
-                      square
+                    <Image
+                      alt="bike"
                       source={require("../../assets/icons/bike.png")}
                       style={{ height: 40, width: 40 }}
                     />
@@ -178,8 +157,8 @@ export class Onboarding extends Component {
               </Grid>
             </TouchableOpacity>
           </View>
-        </Content>
-      </Container>
+        </ScrollView>
+      </View>
     );
   }
 }

@@ -1,18 +1,17 @@
 import React from "react";
 
-import { Text, Input, Select, CheckIcon, TextArea } from "native-base";
+import { Text, Input, TextArea } from "native-base";
 import { Button } from "react-native-elements";
-import { View, ScrollView, StatusBar, Dimensions, Image } from "react-native";
+import { View, ScrollView } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 import env from "../../../helpers/constants";
 
-const Delivery = () => {
+const Delivery = (props) => {
   return (
     <>
       <ScrollView
@@ -66,7 +65,7 @@ const Delivery = () => {
           // withShadow
         />
 
-        <Text style={style.form_label}>Phone Number</Text>
+        <Text style={style.form_label}>Additional Information</Text>
 
         {/* come back  make sure focus works */}
         <TextArea
@@ -81,8 +80,9 @@ const Delivery = () => {
         <Button
           block
           title="Continue"
-          buttonStyle={[style.btn_success, { marginTop: "10%" }]}
+          buttonStyle={[style.btn_success, { marginTop: 40 }]}
           titleStyle={style.btn_text}
+          onPress={() => props.navigation.navigate("chooseProvider")}
         />
       </ScrollView>
     </>

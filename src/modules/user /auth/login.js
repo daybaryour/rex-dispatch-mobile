@@ -1,24 +1,13 @@
-import React, { Component, useRef, useState } from "react";
-import {
-  Container,
-  Text,
-  FormControl,
-  Image,
-  Right,
-  Box,
-  Center,
-  VStack,
-  Input,
-} from "native-base";
+import React, { useRef, useState } from "react";
+import { FormControl, Image, Input } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button } from "react-native-elements";
-import { View, ScrollView, SafeAreaView } from "react-native";
+import { View, ScrollView, Text } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
 
 import authStyle from "../../../assets/styles/general/authStyle";
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
-import color from "../../../helpers/color";
 
 const Login = (props) => {
   //   state = {
@@ -65,7 +54,7 @@ const Login = (props) => {
               autoFocus
             />
 
-            <Text {...style.form_label}>Password</Text>
+            <Text style={style.form_label}>Password</Text>
 
             <Input
               placeholder="Enter password"
@@ -75,7 +64,7 @@ const Login = (props) => {
               _focus={colors.border_black}
               InputRightElement={
                 <Icon
-                  style={{ marginHorizontal: "2%" }}
+                  style={{ marginHorizontal: 15 }}
                   name={hide_password ? "eye" : "eye-slash"}
                   onPress={() => {
                     toggle_hide_password(!hide_password);
@@ -89,17 +78,18 @@ const Login = (props) => {
             <Button
               block
               title="Sign in"
-              buttonStyle={[style.btn_success]}
+              buttonStyle={[style.btn_success, { marginTop: 0 }]}
               titleStyle={style.btn_text}
+              onPress={() => props.navigation.navigate("dispatch")}
             />
 
-            <Text style={{ fontSize: 14, marginTop: "12%" }}>
-              New to Rex Logistics?{" "}
+            <Text style={{ fontSize: 14, marginBottom: 50 }}>
+              New to Rex Dispatch?{" "}
               <Text
                 style={{ color: colors.lemon }}
                 onPress={() => props.navigation.navigate("register")}
               >
-                Regsiter
+                Register
               </Text>
             </Text>
           </FormControl>

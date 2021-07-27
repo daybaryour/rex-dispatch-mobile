@@ -13,16 +13,17 @@ export default StyleSheet.create({
   top_logo: {
     height: 45,
     width: 80,
-    marginTop: "30%",
-    marginBottom: "5%",
+    marginTop: 120,
+    marginBottom: 20,
   },
 
   //buttons
   btn_success: {
     backgroundColor: colors.lemon,
     borderRadius: 3,
-    padding: "5%",
-    marginBottom: "10%",
+    padding: 20,
+    marginBottom: 40,
+    marginTop: 50,
   },
 
   // form elements
@@ -39,8 +40,8 @@ export default StyleSheet.create({
   form_label: {
     fontSize: 14,
     fontWeight: "500",
-    marginTop: "7%",
-    marginBottom: "4%",
+    marginTop: 28,
+    marginBottom: 12,
   },
 
   //   Headings
@@ -49,14 +50,14 @@ export default StyleSheet.create({
     // fontFamily: "Avenir-Roman",
     fontSize: 20,
     fontWeight: Platform.OS === "ios" ? "600" : "bold",
-    marginBottom: "2%",
+    marginBottom: 8,
     color: "#1F1F1F",
   },
   heading_text: {
     fontSize: 14,
     fontWeight: Platform.OS === "ios" ? "500" : "bold",
     color: "#1F1F1F",
-    marginBottom: "10%",
+    marginBottom: 20,
     lineHeight: 17.17,
   },
   sub_heading: {
@@ -102,7 +103,7 @@ export default StyleSheet.create({
   //   modals
   modalContent: {
     backgroundColor: colors.white,
-    paddingVertical: "12%",
+    paddingVertical: 48,
     borderRadius: 20,
     borderColor: "rgba(0, 0, 0, 0.1)",
   },

@@ -6,7 +6,6 @@ import { Grid, Row, Col } from "react-native-easy-grid";
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 
 //partials
@@ -19,7 +18,7 @@ const Wallet = (props) => {
     <View style={style.body}>
       <Header title={"My Wallet"} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ backgroundColor: colors.ash_bg, paddingVertical: "3%" }}>
+        <View style={{ backgroundColor: colors.ash_bg, paddingVertical: 15 }}>
           <Grid style={style.container}>
             <Row>
               <Col size={1} style={{ alignItems: "center" }}>
@@ -29,7 +28,7 @@ const Wallet = (props) => {
                     {
                       textAlign: "left",
                       color: colors.pure_ash,
-                      marginTop: "2%",
+                      marginTop: 12,
                     },
                   ]}
                 >
@@ -38,7 +37,7 @@ const Wallet = (props) => {
                 <Text
                   style={[
                     style.text_20,
-                    { textAlign: "left", marginVertical: "5%" },
+                    { textAlign: "left", marginVertical: 7 },
                   ]}
                 >
                   ₦20,000.00
@@ -49,8 +48,8 @@ const Wallet = (props) => {
                   buttonStyle={{
                     backgroundColor: colors.light_lemon,
                     borderRadius: 3,
-                    paddingVertical: "6%",
-                    paddingHorizontal: "10%",
+                    paddingVertical: 8,
+                    paddingHorizontal: 15,
                     borderRadius: 20,
                   }}
                   titleStyle={{
@@ -67,13 +66,13 @@ const Wallet = (props) => {
                     {
                       textAlign: "left",
                       color: colors.pure_ash,
-                      marginTop: "2%",
+                      marginTop: 12,
                     },
                   ]}
                 >
                   Wallet Id
                 </Text>
-                <Text style={[style.text, { marginVertical: "4%" }]}>
+                <Text style={[style.text, { marginVertical: 7 }]}>
                   @pre7263
                 </Text>
               </Col>
@@ -89,7 +88,7 @@ const Wallet = (props) => {
           <Button
             block
             title="Add funds to wallet"
-            buttonStyle={[style.btn_success, { marginTop: "4%" }]}
+            buttonStyle={[style.btn_success, { marginTop: 20 }]}
             titleStyle={style.btn_text}
           />
         </View>

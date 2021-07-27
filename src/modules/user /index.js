@@ -3,12 +3,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 
 //react navigation
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Login from "./auth/login";
@@ -44,10 +39,10 @@ const Users = (props) => {
         screenOptions={{ gestureEnabled: false }}
         headerMode="none"
       >
-        <Drawer.Screen name="login" component={Login} />
-        <Drawer.Screen name="register" component={Register} />
-        <Drawer.Screen name="terms" component={Terms} />
-        <Drawer.Screen name="verification" component={Verification} />
+        <Stack.Screen name="login" component={Login} />
+        <Stack.Screen name="register" component={Register} />
+        <Stack.Screen name="terms" component={Terms} />
+        <Stack.Screen name="verification" component={Verification} />
       </Stack.Navigator>
     );
   };
@@ -118,7 +113,7 @@ const Users = (props) => {
     <NavigationContainer>
       {isAuth ? (
         <Drawer.Navigator
-          initialRouteName="settings"
+          initialRouteName="login"
           screenOptions={{ gestureEnabled: false }}
         >
           <Drawer.Screen name="dispatch" component={DispatchStack} />
@@ -126,6 +121,13 @@ const Users = (props) => {
           <Drawer.Screen name="track" component={TrackStack} />
           <Drawer.Screen name="history" component={HistoryStack} />
           <Drawer.Screen name="settings" component={SettingsStack} />
+
+          {/* delete during integration  */}
+          <Drawer.Screen name="login" component={Login} />
+          <Drawer.Screen name="register" component={Register} />
+          <Drawer.Screen name="terms" component={Terms} />
+          <Drawer.Screen name="verification" component={Verification} />
+          <Drawer.Screen name="card" component={Card} />
         </Drawer.Navigator>
       ) : (
         <AuthStack />

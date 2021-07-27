@@ -8,11 +8,10 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 
 //styles
 import style from "../../../assets/styles/general/style";
-import tabStyle from "../../../assets/styles/general/tabStyle";
 import colors from "../../../helpers/color";
 import env from "../../../helpers/constants";
 
-const Pickup = () => {
+const Pickup = (props) => {
   return (
     <>
       <ScrollView
@@ -97,8 +96,9 @@ const Pickup = () => {
         <Button
           block
           title="Continue"
-          buttonStyle={[style.btn_success, { marginTop: "10%" }]}
+          buttonStyle={[style.btn_success, { marginTop: 40 }]}
           titleStyle={style.btn_text}
+          onPress={() => props.toggle_pickup_show(false)}
         />
       </ScrollView>
     </>

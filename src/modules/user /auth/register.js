@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Text, Input, Label, Image, Right } from "native-base";
+import { Text, Input, Image } from "native-base";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -69,7 +69,7 @@ const Register = (props) => {
           />
           {/* <Input style={{ fontSize: 16 }} placeholder="09047478291" /> */}
           {/*  */}
-          <Text style={style.form_label}>Password</Text>
+          <Text style={style.form_label}>Create a Password</Text>
 
           <Input
             placeholder="Enter password"
@@ -78,7 +78,7 @@ const Register = (props) => {
             _focus={colors.border_black}
             InputRightElement={
               <Icon
-                style={{ marginHorizontal: "2%" }}
+                style={{ marginHorizontal: 15 }}
                 name={hide_password ? "eye" : "eye-slash"}
                 onPress={() => {
                   toggle_hide_password(!hide_password);
@@ -87,17 +87,19 @@ const Register = (props) => {
             }
           />
 
-          <Grid style={{ marginVertical: "6%" }}>
+          <Grid style={{ marginVertical: 30 }}>
             <Row>
-              <Col size={0.5}>
+              <Col size={0.4}>
                 <CheckBox
                   checked={icon_checked}
                   onPress={() => toggle_icon_checked(!icon_checked)}
                   checkedColor="#494949"
-                  style={{
-                    borderRadius: 3,
-                    marginLeft: -20,
-                    marginTop: "30%",
+                  titleProps={() => props.navigation.navigate("terms")}
+                  containerStyle={{
+                    backgroundColor: "#fff",
+                    borderWidth: 0,
+                    marginLeft: -5,
+                    marginTop: "18%",
                   }}
                 />
               </Col>
@@ -133,11 +135,12 @@ const Register = (props) => {
           <Button
             block
             title="Register"
-            buttonStyle={[style.btn_success, { marginBottom: 0 }]}
+            buttonStyle={[style.btn_success, { marginTop: 0 }]}
             titleStyle={style.btn_text}
+            onPress={() => props.navigation.navigate("verification")}
           />
 
-          <Text style={{ fontSize: 14, marginVertical: "12%" }}>
+          <Text style={{ fontSize: 14, marginBottom: 42 }}>
             Have an account?{" "}
             <Text
               style={{ color: colors.lemon }}
