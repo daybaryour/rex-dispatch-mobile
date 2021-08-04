@@ -30,7 +30,6 @@ const History = (props) => {
                 <View
                   style={{
                     backgroundColor: colors.white,
-
                     paddingVertical: 18,
                     paddingHorizontal: 14,
                     borderRadius: 10,
@@ -97,7 +96,7 @@ const History = (props) => {
           })}
         </View>
       </ScrollView>
-      <Footer location={"history"} navigation={props.navigation} />
+      <Footer location={"dispatch"} navigation={props.navigation} />
     </View>
   );
 };

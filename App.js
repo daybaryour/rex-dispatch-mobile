@@ -11,13 +11,17 @@ import React from "react";
 //native base
 import { NativeBaseProvider } from "native-base";
 import "react-native-gesture-handler";
-import getTheme from "./src/assets/styles/native-base-theme/components";
-import material from "./src/assets/styles/native-base-theme/variables/material";
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
+import axios from "axios";
 
-import Users from "./src/modules/user ";
+import Users from "./src/modules/user";
 import Onboarding from "./src/modules/onboarding";
 import Business from "./src/modules/business";
 import Riders from "./src/modules/rider";
+import setupAxios from "./src/redux/setupAxios";
+
+setupAxios(axios, store);
 
 class App extends React.Component {
   state = {
@@ -33,17 +37,19 @@ class App extends React.Component {
   render() {
     const route = this.state.route;
     return (
-      <NativeBaseProvider>
-        {route == "user" ? (
-          <Users />
-        ) : route == "business" ? (
-          <Business />
-        ) : route == "rider" ? (
-          <Riders />
-        ) : (
-          <Onboarding onRouteChange={this.onRouteChange} />
-        )}
-      </NativeBaseProvider>
+      <Provider store={store}>
+        <NativeBaseProvider>
+          {route == "user" ? (
+            <Users />
+          ) : route == "business" ? (
+            <Business />
+          ) : route == "rider" ? (
+            <Riders />
+          ) : (
+            <Onboarding onRouteChange={this.onRouteChange} />
+          )}
+        </NativeBaseProvider>
+      </Provider>
     );
   }
 }

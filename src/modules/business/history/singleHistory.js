@@ -1,5 +1,5 @@
-import { Divider } from "native-base";
 import React from "react";
+import { Divider } from "native-base";
 import { View, Text, ScrollView } from "react-native";
 
 //styles
@@ -19,7 +19,10 @@ const SingleHistory = (props) => {
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: colors.ash_bg, paddingTop: 22 }}
+        style={{
+          backgroundColor: colors.ash_bg,
+          paddingTop: 22,
+        }}
       >
         <View style={style.container}>
           <View

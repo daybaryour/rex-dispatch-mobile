@@ -64,12 +64,11 @@ const Profile = (props) => {
           }
         />
         <Text style={style.form_label}>Phone Number</Text>
-        {/* <Item regular style={style.form_control}> */}
         <PhoneInput
-          // countryPickerButtonStyle={style.form_control}
-          containerStyle={[style.form_control, { borderWidth: 0.8 }]}
-          textContainerStyle={{ backgroundColor: "#fff" }}
-          // ref={phoneInput}
+          containerStyle={style.phone_container}
+          textContainerStyle={style.phone_text_container}
+          textInputStyle={[style.no_margin, style.no_padding]}
+          //   ref={phoneInput}
           defaultCode="NG"
           layout="first"
           //   onChangeText={(text) => {
@@ -78,8 +77,6 @@ const Profile = (props) => {
           //   onChangeFormattedText={(text) => {
           //     setFormattedValue(text);
           //   }}
-          // withDarkTheme
-          // withShadow
         />
 
         <Text style={style.form_label}>State</Text>

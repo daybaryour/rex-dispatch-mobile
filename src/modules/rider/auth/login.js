@@ -35,11 +35,10 @@ const Login = (props) => {
         <View>
           <FormControl>
             <Text style={style.form_label}>Phone Number</Text>
-            {/* <Item regular style={style.form_control}> */}
             <PhoneInput
-              //   countryPickerButtonStyle={style.form_control}
-              containerStyle={[style.form_control, { borderWidth: 0.9 }]}
-              textContainerStyle={{ backgroundColor: "#fff" }}
+              containerStyle={style.phone_container}
+              textContainerStyle={style.phone_text_container}
+              textInputStyle={[style.no_margin, style.no_padding]}
               //   ref={phoneInput}
               defaultCode="NG"
               layout="first"
@@ -49,9 +48,6 @@ const Login = (props) => {
               //   onChangeFormattedText={(text) => {
               //     setFormattedValue(text);
               //   }}
-              // withDarkTheme
-              // withShadow
-              autoFocus
             />
 
             <Text style={style.form_label}>Password</Text>

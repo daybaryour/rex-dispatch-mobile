@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView } from "react-native";
+import { Divider, Pressable } from "native-base";
 
 //styles
 import style from "../../../assets/styles/general/style";
@@ -8,7 +9,6 @@ import colors from "../../../helpers/color";
 //partials
 import Header from "../../partials/header";
 import Footer from "../../partials/footer/riderFooter";
-import { Divider, Pressable } from "native-base";
 
 const Deliverables = (props) => {
   const source = [1, 2, 3, 4, 5];

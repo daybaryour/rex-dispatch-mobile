@@ -10,6 +10,17 @@ export default StyleSheet.create({
   container: {
     marginHorizontal: "6%",
   },
+  no_padding: {
+    padding: 0,
+  },
+  no_margin: {
+    margin: 0,
+  },
+  modal_container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   top_logo: {
     height: 45,
     width: 80,
@@ -42,6 +53,27 @@ export default StyleSheet.create({
     fontWeight: "500",
     marginTop: 28,
     marginBottom: 12,
+  },
+
+  //   react-native-phone-number-input styling
+  phone_container: {
+    padding: 0,
+    borderWidth: 1,
+    width: "100%",
+    borderRadius: 3,
+  },
+  phone_container_error: {
+    padding: 0,
+    borderWidth: 1,
+    width: "100%",
+    borderRadius: 3,
+    borderColor: "red",
+  },
+  phone_text_container: {
+    backgroundColor: "#fff",
+    maxHeight: 50,
+    margin: 0,
+    padding: 0,
   },
 
   //   Headings
@@ -93,6 +125,11 @@ export default StyleSheet.create({
   text_16_normal: {
     fontSize: 16,
     color: colors.black,
+  },
+  text_18: {
+    fontSize: 16,
+    color: colors.black,
+    fontWeight: Platform.OS === "ios" ? "500" : "bold",
   },
   text_20: {
     fontSize: 20,

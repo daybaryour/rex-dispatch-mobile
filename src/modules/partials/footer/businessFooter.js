@@ -58,10 +58,10 @@ class Footer extends React.Component {
               shadow={6}
             >
               <Pressable
-                opacity={location === "wallet" ? 1 : 0.4}
+                opacity={location === "dispatch" ? 1 : 0.4}
                 py={2}
                 flex={1}
-                onPress={() => navigation.navigate("wallet")}
+                onPress={() => navigation.navigate("dispatch")}
               >
                 <Center>
                   <Icon
@@ -69,19 +69,19 @@ class Footer extends React.Component {
                       color: colors.navy_blue,
                       fontSize: 20,
                     }}
-                    name={"wallet"}
+                    name={"send"}
                   />
 
                   <Text style={[style.text_12, { color: colors.navy_blue }]}>
-                    Wallet
+                    Dispatch
                   </Text>
                 </Center>
               </Pressable>
               <Pressable
-                opacity={location === "track" ? 1 : 0.4}
+                opacity={location === "fleet" ? 1 : 0.4}
                 py={2}
                 flex={1}
-                onPress={() => navigation.navigate("track")}
+                onPress={() => navigation.navigate("fleet")}
               >
                 <Center>
                   <FontAwesome
@@ -93,15 +93,15 @@ class Footer extends React.Component {
                   />
 
                   <Text style={[style.text_12, { color: colors.navy_blue }]}>
-                    Fleets
+                    Fleet
                   </Text>
                 </Center>
               </Pressable>
               <Pressable
-                opacity={location === "dispatch" ? 1 : 0.4}
+                opacity={location === "requests" ? 1 : 0.4}
                 py={2}
                 flex={1}
-                onPress={() => navigation.navigate("dispatch")}
+                onPress={() => navigation.navigate("requests")}
               >
                 <Center>
                   <FontAwesome
@@ -113,15 +113,15 @@ class Footer extends React.Component {
                   />
 
                   <Text style={[style.text_12, { color: colors.navy_blue }]}>
-                    Place bids
+                    Requests
                   </Text>
                 </Center>
               </Pressable>
               <Pressable
-                opacity={location === "history" ? 1 : 0.4}
+                opacity={location === "bids" ? 1 : 0.4}
                 py={2}
                 flex={1}
-                onPress={() => navigation.navigate("history")}
+                onPress={() => navigation.navigate("bids")}
               >
                 <Center>
                   <Icon
@@ -136,7 +136,7 @@ class Footer extends React.Component {
                     style={[style.text_12, { color: colors.navy_blue }]}
                     {...{ fontWeight: "500" }}
                   >
-                    History
+                    Bids
                   </Text>
                 </Center>
               </Pressable>

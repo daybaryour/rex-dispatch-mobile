@@ -79,20 +79,7 @@ const Verification = (props) => {
                 Resend code
               </Text>
             </View>
-            <View>
-              <Text style={[style.text_white, { textAlign: "center" }]}>
-                Not your number?{" "}
-                <Text
-                  style={[
-                    style.text_white,
-                    { color: colors.lemon, textDecorationLine: "underline" },
-                  ]}
-                  onPress={() => props.navigation.navigate("register")}
-                >
-                  Change number
-                </Text>
-              </Text>
-            </View>
+
             <View style={{ marginTop: 20 }}>
               <Button
                 block

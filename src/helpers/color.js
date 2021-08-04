@@ -4,7 +4,6 @@ export default {
   border_black: "#4B545A",
   text_black: "#494949",
   navy_blue: "#00114E",
-  text_blue: "#00114E",
   blue_bg: "#F0F8FF",
   light_blue: "rgba(233, 244, 255, 0.5)",
   icon_blue: "#004E92",

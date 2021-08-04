@@ -88,7 +88,7 @@ const Riders = () => {
     <NavigationContainer>
       {isAuth ? (
         <Drawer.Navigator
-          initialRouteName="dispatch"
+          initialRouteName="auth"
           screenOptions={{ gestureEnabled: false }}
         >
           {/* delete during integration  */}
