@@ -1,18 +1,69 @@
 import React, { useRef, useState } from "react";
-import { FormControl, Image, Input } from "native-base";
+import { FormControl, Image, Input, useToast } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button } from "react-native-elements";
 import { View, ScrollView, Text } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
+import { useForm, Controller } from "react-hook-form";
 
 import authStyle from "../../../assets/styles/general/authStyle";
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
 
+//redux
+import { login } from "../../../redux/general/auth/authActions";
+import { useDispatch, useSelector } from "react-redux";
+
 const Login = (props) => {
   const [hide_password, toggle_hide_password] = useState(true);
+  const [isLoading, toggle_isLoading] = useState(false);
 
   const phoneInput = useRef() < PhoneInput > null;
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const { message } = useSelector((state) => state.message);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    toggle_isLoading(true);
+    // data.phone = data.phone.substring(1);
+    // console.log(data);
+    dispatch(login(data, "business"))
+      .then(() => {
+        toggle_isLoading(false);
+
+        props.navigation.navigate("requests", {
+          screen: "allRequests",
+        });
+
+        //     props.navigation.dispatch(
+        //       CommonActions.reset({
+        //         index: 1,
+        //         routes: [
+        //           {
+        //             name: "auth",
+        //             screen: "verification",
+        //           },
+        //         ],
+        //       })
+        //     );
+      })
+      .catch(() => {
+        toast.show({
+          title: message
+            ? message
+            : "something went wrong, please check your internet connection",
+          status: "error",
+          placement: "top",
+        });
+        toggle_isLoading(false);
+      });
+  };
 
   return (
     //
@@ -31,62 +82,97 @@ const Login = (props) => {
           </Text>
         </View>
         <View>
-          <FormControl>
-            <Text style={style.form_label}>Phone Number</Text>
-            <PhoneInput
-              containerStyle={style.phone_container}
-              textContainerStyle={style.phone_text_container}
-              textInputStyle={[style.no_margin, style.no_padding]}
-              //   ref={phoneInput}
-              defaultCode="NG"
-              layout="first"
-              //   onChangeText={(text) => {
-              //     setValue(text);
-              //   }}
-              //   onChangeFormattedText={(text) => {
-              //     setFormattedValue(text);
-              //   }}
-            />
+          <Text style={style.form_label}>Phone Number</Text>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <PhoneInput
+                containerStyle={
+                  errors.phone
+                    ? style.phone_container_error
+                    : style.phone_container
+                }
+                textContainerStyle={style.phone_text_container}
+                textInputStyle={[style.no_margin, style.no_padding]}
+                //   ref={phoneInput}
+                defaultCode="NG"
+                layout="first"
+                // onChangeText={(text) => {
+                //   onChange(text);
+                // }}
+                onChangeFormattedText={(text) => {
+                  onChange(text);
+                }}
+              />
+            )}
+            name={"phone"}
+            defaultValue=""
+          />
+          {errors.phone && (
+            <Text style={style.error_text}>Phone number is required.</Text>
+          )}
 
-            <Text style={style.form_label}>Password</Text>
+          <Text style={style.form_label}>Password</Text>
 
-            <Input
-              placeholder="Enter password"
-              {...style.form_control}
-              type={!hide_password ? "text" : "password"}
-              style={{ borderBottomWidth: 0 }}
-              _focus={colors.border_black}
-              InputRightElement={
-                <Icon
-                  style={{ marginHorizontal: 15 }}
-                  name={hide_password ? "eye" : "eye-slash"}
-                  onPress={() => {
-                    toggle_hide_password(!hide_password);
-                  }}
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, value } }) => (
+              <FormControl isInvalid={errors.password ? true : false}>
+                <Input
+                  placeholder="Enter password"
+                  {...style.form_control}
+                  type={!hide_password ? "text" : "password"}
+                  _focus={colors.border_black}
+                  onChangeText={(val) => onChange(val)}
+                  value={value}
+                  InputRightElement={
+                    <Icon
+                      style={{ marginHorizontal: 15 }}
+                      name={hide_password ? "eye" : "eye-slash"}
+                      onPress={() => {
+                        toggle_hide_password(!hide_password);
+                      }}
+                    />
+                  }
                 />
-              }
-            />
+              </FormControl>
+            )}
+            name={"password"}
+            defaultValue=""
+          />
+          {errors.password && (
+            <Text style={style.error_text}>Password is required.</Text>
+          )}
 
-            <Text style={authStyle.sm_text}>Forgot password?</Text>
+          <Text style={authStyle.sm_text}>Forgot password?</Text>
 
-            <Button
-              block
-              title="Sign in"
-              buttonStyle={[style.btn_success, { marginTop: 0 }]}
-              titleStyle={style.btn_text}
-              onPress={() => props.navigation.navigate("requests")}
-            />
+          <Button
+            block
+            title="Sign in"
+            buttonStyle={[style.btn_success, { marginTop: 0 }]}
+            titleStyle={style.btn_text}
+            loading={isLoading}
+            disabled={isLoading}
+            disabledStyle={[style.btn_success, { marginTop: 0, opacity: 0.8 }]}
+            onPress={handleSubmit(onSubmit)}
+            // onPress={() => props.navigation.navigate("requests")}
+          />
 
-            <Text style={{ fontSize: 14, marginBottom: 50 }}>
-              New to Rex Dispatch?{" "}
-              <Text
-                style={{ color: colors.lemon }}
-                onPress={() => props.navigation.navigate("register")}
-              >
-                Register
-              </Text>
+          <Text style={{ fontSize: 14, marginBottom: 50 }}>
+            New to Rex Dispatch?{" "}
+            <Text
+              style={{ color: colors.lemon }}
+              onPress={() => props.navigation.navigate("register")}
+            >
+              Register
             </Text>
-          </FormControl>
+          </Text>
         </View>
       </ScrollView>
     </View>

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import { View } from "react-native";
-
 //react navigation
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -10,6 +8,7 @@ import Login from "./auth/login";
 import Register from "./auth/register";
 import Terms from "./auth/terms";
 import Verification from "./auth/verification";
+import AuthSuccess from "./auth/authSuccess";
 import Card from "./settings/card";
 import CreateDispatch from "./dispatch/createDispatch";
 import ChooseProvider from "./dispatch/chooseProvider";
@@ -39,11 +38,13 @@ const Users = (props) => {
       <Stack.Navigator
         screenOptions={{ gestureEnabled: false }}
         headerMode="none"
+        // initialRouteName="verification"
       >
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="register" component={Register} />
         <Stack.Screen name="terms" component={Terms} />
         <Stack.Screen name="verification" component={Verification} />
+        <Stack.Screen name="authSuccess" component={AuthSuccess} />
       </Stack.Navigator>
     );
   };
@@ -123,7 +124,7 @@ const Users = (props) => {
         <Drawer.Screen name="track" component={TrackStack} />
         <Drawer.Screen name="history" component={HistoryStack} />
         <Drawer.Screen name="settings" component={SettingsStack} />
-
+      
         <Drawer.Screen name="auth" component={AuthStack} />
 
         {/* delete during integration  */}

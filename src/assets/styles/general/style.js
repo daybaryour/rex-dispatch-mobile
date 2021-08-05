@@ -113,6 +113,11 @@ export default StyleSheet.create({
     color: colors.white,
     fontWeight: Platform.OS === "ios" ? "500" : "bold",
   },
+  error_text: {
+    marginTop: 5,
+    fontSize: 12,
+    color: "red",
+  },
   text_12: {
     fontSize: 12,
     color: colors.black,

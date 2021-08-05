@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { FormControl, Image, Input } from "native-base";
+import { FormControl, Image, Input, useToast } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button } from "react-native-elements";
 import { View, ScrollView, Text } from "react-native";
@@ -11,9 +11,8 @@ import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
 
 //redux
-import { login } from "../_redux/auth/authActions";
+import { login } from "../../../redux/general/auth/authActions";
 import { useDispatch, useSelector } from "react-redux";
-import { useToast } from "native-base";
 
 const Login = (props) => {
   const [hide_password, toggle_hide_password] = useState(true);
@@ -25,10 +24,7 @@ const Login = (props) => {
 
   const phoneInput = useRef() < PhoneInput > null;
 
-  useEffect(() => {
-    console.log(err_resp);
-    setErrors(err_resp);
-  }, []);
+  useEffect(() => {}, []);
 
   const onPasswordChange = (text) => {
     setPassword(text);
@@ -42,39 +38,39 @@ const Login = (props) => {
     toggle_isLoading(true);
 
     if (!phone) {
-      console.log("got");
       err_resp.phone = true;
+      setErrors(err_resp);
       toggle_isLoading(false);
     }
     if (!password) {
-      toggle_isLoading(false);
       err_resp.password = true;
+      setErrors(err_resp);
       toggle_isLoading(false);
     }
 
     if (password && phone) {
       const data = { phone: phone, password: password };
-      console.log(data);
 
-      dispatch(login(data))
+      dispatch(login(data, "customer"))
         .then(() => {
           //   toggle_isLoading(false);
-          props.navigation.navigate("dispatch");
+          props.navigation.navigate("dispatch", {
+            screen: "createDispatch",
+          });
         })
         .catch(() => {
           toast.show({
             title: message
               ? message
-              : "please connect your phone to the internet",
+              : "something went wrong, please check your internet connection",
             status: "error",
-            placement: "bottom",
+            placement: "top",
           });
           toggle_isLoading(false);
         });
     }
   };
 
-  console.log(errors);
   return (
     //
     <View style={style.body}>
@@ -152,7 +148,7 @@ const Login = (props) => {
             New to Rex Dispatch?{" "}
             <Text
               style={{ color: colors.lemon }}
-              // onPress={() => props.navigation.navigate("register")}
+              onPress={() => props.navigation.navigate("register")}
             >
               Register
             </Text>

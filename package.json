@@ -25,6 +25,7 @@
     "credit-card-type": "^9.1.0",
     "native-base": "^3.0.3",
     "react": "17.0.1",
+    "react-hook-form": "^7.12.2",
     "react-native": "0.64.2",
     "react-native-document-picker": "^5.2.0",
     "react-native-easy-grid": "^0.2.2",

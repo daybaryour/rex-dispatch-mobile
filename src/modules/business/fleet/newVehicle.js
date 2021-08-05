@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Text, Input, Divider } from "native-base";
+import { Text, Input, Divider, useToast, FormControl } from "native-base";
 import { Button } from "react-native-elements";
 import { View, ScrollView } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
+import { useForm, Controller } from "react-hook-form";
 
 //styles
 import style from "../../../assets/styles/general/style";
@@ -12,7 +13,94 @@ import colors from "../../../helpers/color";
 //partials
 import Header from "../../partials/header";
 
+//redux
+import { registerRider } from "../../../redux/business/fleet/fleetActions";
+import { useDispatch, useSelector } from "react-redux";
+
 const NewVehicle = (props) => {
+  const [isLoading, toggle_isLoading] = useState(false);
+
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const { message } = useSelector((state) => state.message);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const MyInput = ({ name, placeholder, required }) => {
+    return (
+      <>
+        <Controller
+          control={control}
+          rules={{
+            required: required,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <FormControl isInvalid={errors[name] ? true : false}>
+              <Input
+                {...style.form_control}
+                _focus={colors.border_black}
+                placeholder={placeholder}
+                onChangeText={(val) => onChange(val)}
+                value={value}
+              />
+            </FormControl>
+          )}
+          name={name}
+          defaultValue=""
+        />
+        {errors[name] && (
+          <Text style={style.error_text}>{placeholder} is required.</Text>
+        )}
+      </>
+    );
+  };
+
+  const onSubmit = (data) => {
+    toggle_isLoading(true);
+
+    dispatch(registerRider(data))
+      .then(() => {
+        toggle_isLoading(false);
+        
+        toast.show({
+          title: message
+            ? message
+            : "something went wrong, please check your internet connection",
+          status: "success",
+          placement: "top",
+        });
+        props.navigation.navigate("fleet", {
+          screen: "newVehicleSuccess",
+        });
+
+        //     props.navigation.dispatch(
+        //       CommonActions.reset({
+        //         index: 1,
+        //         routes: [
+        //           {
+        //             name: "auth",
+        //             screen: "verification",
+        //           },
+        //         ],
+        //       })
+        //     );
+      })
+      .catch(() => {
+        toast.show({
+          title: message
+            ? message
+            : "something went wrong, please check your internet connection",
+          status: "error",
+          placement: "top",
+        });
+        toggle_isLoading(false);
+      });
+  };
+
   return (
     <>
       <Header
@@ -39,55 +127,76 @@ const NewVehicle = (props) => {
             <Divider />
           </View>
           <Text style={style.form_label}>Vehicle Type</Text>
-          <Input
-            {...style.form_control}
-            _focus={colors.border_black}
+          <MyInput
+            name="vehicle_type"
             placeholder="Please enter"
+            required={true}
           />
 
           <Text style={style.form_label}>License Number (plate number)</Text>
-          <Input
-            {...style.form_control}
-            _focus={colors.border_black}
+          <MyInput
+            name="license_number"
             placeholder="Please enter"
+            required={true}
           />
 
           <Text style={style.form_label}>Rider’s First Name</Text>
-          <Input
-            {...style.form_control}
-            _focus={colors.border_black}
+          <MyInput
+            name="firstname"
             placeholder="Rider’s first name"
+            required={true}
           />
 
           <Text style={style.form_label}>Rider’s Last Name</Text>
-          <Input
-            {...style.form_control}
-            _focus={colors.border_black}
+          <MyInput
+            name="lastname"
             placeholder="Rider’s last name"
+            required={true}
           />
 
           <Text style={style.form_label}>Rider's Phone Number</Text>
-          <PhoneInput
-            containerStyle={style.phone_container}
-            textContainerStyle={style.phone_text_container}
-            textInputStyle={[style.no_margin, style.no_padding]}
-            //   ref={phoneInput}
-            defaultCode="NG"
-            layout="first"
-            //   onChangeText={(text) => {
-            //     setValue(text);
-            //   }}
-            //   onChangeFormattedText={(text) => {
-            //     setFormattedValue(text);
-            //   }}
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <PhoneInput
+                containerStyle={
+                  errors.phone
+                    ? style.phone_container_error
+                    : style.phone_container
+                }
+                textContainerStyle={style.phone_text_container}
+                textInputStyle={[style.no_margin, style.no_padding]}
+                //   ref={phoneInput}
+                defaultCode="NG"
+                layout="first"
+                // onChangeText={(text) => {
+                //   onChange(text);
+                // }}
+                onChangeFormattedText={(text) => {
+                  onChange(text);
+                }}
+              />
+            )}
+            name={"phone"}
+            defaultValue=""
           />
+          {errors.phone && (
+            <Text style={style.error_text}>Phone number is required.</Text>
+          )}
 
           <Button
             block
             title="Register"
             buttonStyle={[style.btn_success, { marginTop: 40 }]}
             titleStyle={style.btn_text}
-            onPress={() => props.navigation.navigate("newVehicleSuccess")}
+            loading={isLoading}
+            disabled={isLoading}
+            disabledStyle={[style.btn_success, { marginTop: 40, opacity: 0.8 }]}
+            onPress={handleSubmit(onSubmit)}
+            // onPress={() => props.navigation.navigate("newVehicleSuccess")}
           />
         </ScrollView>
       </View>

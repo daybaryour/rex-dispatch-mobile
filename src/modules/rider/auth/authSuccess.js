@@ -21,10 +21,10 @@ const AuthSuccess = (props) => {
             <Text style={[style.text_20]}>Congratulations!</Text>
             <Text
               style={[
-                style.text,
+                style.text_16_normal,
                 {
                   textAlign: "center",
-                  marginTop: 34,
+                  marginTop: 10,
                   marginBottom: 20,
                   paddingHorizontal: 25,
                 },

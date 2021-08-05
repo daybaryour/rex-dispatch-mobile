@@ -36,8 +36,11 @@ import BidDetails from "./bids/bidDetails";
 import MySubscriptions from "./settings/subscriptions/mySubscriptions";
 import Wallet from "./settings/wallet/wallet";
 
+//redux
+import { useSelector } from "react-redux";
+
 const Business = () => {
-  const [isAuth] = useState(true);
+  const isAuth = useSelector((state) => state.auth.isLoggedIn);
 
   const Stack = createStackNavigator();
   const Drawer = createDrawerNavigator();
@@ -133,23 +136,23 @@ const Business = () => {
 
   return (
     <NavigationContainer>
-      {isAuth ? (
-        <Stack.Navigator
-          initialRouteName="auth"
-          screenOptions={{ gestureEnabled: false }}
-          headerMode="none"
-        >
-          {/* delete during integration  */}
-          <Stack.Screen name="auth" component={AuthStack} />
-          <Stack.Screen name="dispatch" component={DispatchStack} />
-          <Stack.Screen name="bids" component={BidsStack} />
-          <Stack.Screen name="requests" component={RequestStack} />
-          <Stack.Screen name="fleet" component={FleetStack} />
-          <Stack.Screen name="settings" component={SettingsStack} />
-        </Stack.Navigator>
-      ) : (
+      {/* {isAuth ? ( */}
+      <Stack.Navigator
+        initialRouteName={isAuth ? "requests" : "auth"}
+        screenOptions={{ gestureEnabled: false }}
+        headerMode="none"
+      >
+        {/* delete during integration  */}
+        <Stack.Screen name="auth" component={AuthStack} />
+        <Stack.Screen name="dispatch" component={DispatchStack} />
+        <Stack.Screen name="bids" component={BidsStack} />
+        <Stack.Screen name="requests" component={RequestStack} />
+        <Stack.Screen name="fleet" component={FleetStack} />
+        <Stack.Screen name="settings" component={SettingsStack} />
+      </Stack.Navigator>
+      {/* ) : (
         <AuthStack />
-      )}
+      )} */}
     </NavigationContainer>
   );
 };

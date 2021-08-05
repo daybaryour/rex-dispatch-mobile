@@ -1,51 +1,57 @@
-import React from "react";
-
+import React, { useState } from "react";
 import { Text } from "react-native";
 import { Button } from "react-native-elements";
-import {
-  View,
-  ScrollView,
-  SafeAreaView,
-  StatusBar,
-  Dimensions,
-} from "react-native";
+import { View, ScrollView, SafeAreaView, StatusBar } from "react-native";
 import OtpInputs from "@twotalltotems/react-native-otp-input";
+import { useToast } from "native-base";
 
 //styles
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
 
-const window = Dimensions.get("window");
-const screen = Dimensions.get("screen");
+//redux
+import { verification } from "../../../redux/general/auth/authActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const Verification = (props) => {
-  // come back to convert this to functional component
-  //   state = {
-  //     window: {
-  //       width: "",
-  //       height: "",
-  //     },
-  //   };
+  const [otp, setOtp] = useState("");
+  const [isLoading, toggle_isLoading] = useState(false);
 
-  //   onDimensionChange = ({ window, screen }) => {
-  //     this.setState({
-  //       window: {
-  //         width: window.width,
-  //         height: window.height,
-  //       },
-  //     });
-  //   };
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const { message } = useSelector((state) => state.message);
+  const { user } = useSelector((state) => state.auth.user);
 
-  //   componentDidMount() {
-  //     Dimensions.addEventListener("change", this.onDimensionChange);
-  //   }
+  const onSubmit = () => {
+    toggle_isLoading(true);
+    if (!otp) {
+      toast.show({
+        title: "please input otp",
+        status: "error",
+        placement: "top",
+      });
+      toggle_isLoading(false);
+    } else {
+      dispatch(verification({ otp: otp }, "customer"))
+        .then(() => {
+          toggle_isLoading(false);
+          props.navigation.navigate("auth", {
+            screen: "authSuccess",
+          });
+        })
+        .catch(() => {
+          toast.show({
+            title: message
+              ? message
+              : "something went wrong, please check your internet connection",
+            status: "error",
+            placement: "top",
+          });
+          toggle_isLoading(false);
+        });
+    }
+  };
 
-  //   componentWillUnmount() {
-  //     Dimensions.removeEventListener("change", this.onDimensionChange);
-  //   }
-
-  //   const style = window.width > 578 ? tabStyle : normalStyle;
-  //   const authStyle = window.width > 578 ? authTabStyle : authNormalStyle;
   return (
     <>
       <SafeAreaView style={{ backgroundColor: colors.navy_blue }} />
@@ -63,7 +69,8 @@ const Verification = (props) => {
                 Verification
               </Text>
               <Text style={[style.heading_text, { color: colors.white }]}>
-                Enter the OTP we have sent to your mobile phone 07062584834
+                Enter the OTP we have sent to your mobile phone{" "}
+                {props.route.params ? props.route.params.phone : " "}
               </Text>
             </View>
             <View>
@@ -86,7 +93,8 @@ const Verification = (props) => {
                   borderWidth: 2,
                 }}
                 onCodeFilled={(code) => {
-                  console.log(`Code is ${code}, you are good to go!`);
+                  setOtp(code);
+                  //   console.log(`Code is ${code}, you are good to go!`);
                 }}
               />
             </View>
@@ -129,9 +137,12 @@ const Verification = (props) => {
                 title="Continue"
                 buttonStyle={[style.btn_success]}
                 titleStyle={style.btn_text}
-                onPress={() => props.navigation.navigate("card")}
+                loading={isLoading}
+                disabled={isLoading}
+                disabledStyle={[style.btn_success, { opacity: 0.8 }]}
+                onPress={() => onSubmit()}
               >
-                <Text style={style.btn_text}>Add Card</Text>
+                <Text style={style.btn_text}>Continue</Text>
               </Button>
             </View>
           </View>
