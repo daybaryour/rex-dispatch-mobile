@@ -60,7 +60,6 @@ const Register = (props) => {
 
   const dispatch = useDispatch();
   const toast = useToast();
-  const { message } = useSelector((state) => state.message);
 
   const {
     control,
@@ -122,11 +121,11 @@ const Register = (props) => {
         //       })
         //     );
       })
-      .catch(() => {
+      .catch((e) => {
         toast.show({
-          title: message
-            ? message
-            : "something went wrong, please check your internet connection",
+          title: e
+            ? e
+            : "something went wrong, please check your internet connection and try again",
           status: "error",
           placement: "top",
         });
@@ -175,37 +174,39 @@ const Register = (props) => {
               required: true,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-              <Select
-                //   selectedValue={language}
-                minWidth={200}
-                accessibilityLabel="Select Location"
-                placeholder="please select"
-                {...style.form_control}
-                onValueChange={(itemValue) => onChange(itemValue)}
-                _selectedItem={{
-                  bg: colors.lemon,
-                  _text: {
-                    color: colors.black,
-                    fontWeight: "bold",
-                  },
-                  endIcon: <CheckIcon size={4} />,
-                }}
-              >
-                {env.nigerian_states.map((state) => {
-                  return (
-                    <Select.Item
-                      label={`${state}`}
-                      value={`${state}`}
-                      key={`${state}`}
-                    />
-                  );
-                })}
-              </Select>
+              <FormControl isInvalid={errors["location"] ? true : false}>
+                <Select
+                  //   selectedValue={language}
+                  minWidth={200}
+                  accessibilityLabel="Select Location"
+                  placeholder="please select"
+                  {...style.form_control}
+                  onValueChange={(itemValue) => onChange(itemValue)}
+                  _selectedItem={{
+                    bg: colors.lemon,
+                    _text: {
+                      color: colors.black,
+                      fontWeight: "bold",
+                    },
+                    endIcon: <CheckIcon size={4} />,
+                  }}
+                >
+                  {env.NIGERIAN_STATES.map((state) => {
+                    return (
+                      <Select.Item
+                        label={`${state}`}
+                        value={`${state}`}
+                        key={`${state}`}
+                      />
+                    );
+                  })}
+                </Select>
+              </FormControl>
             )}
             name={"location"}
             defaultValue=""
           />
-          {errors.phone && (
+          {errors["location"] && (
             <Text style={style.error_text}>Location is required.</Text>
           )}
 
@@ -243,19 +244,27 @@ const Register = (props) => {
           )}
 
           <Text style={style.form_label}>Address</Text>
-          <View style={[style.form_control, { height: "auto" }]}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View
+                style={[
+                  errors["pickup_address"]
+                    ? style.phone_container_error
+                    : style.form_control,
+                  { height: "auto" },
+                ]}
+              >
                 <GooglePlacesAutocomplete
                   ref={ref}
                   placeholder="Please enter your address"
                   onPress={(data, details = null) => {
                     // 'details' is provided when fetchDetails = true
-                    text = ref.current?.getAddressText();
+                    const text = `${data.structured_formatting.main_text}, ${data.structured_formatting.secondary_text}`;
                     onChange(text);
                   }}
                   query={{
@@ -264,16 +273,17 @@ const Register = (props) => {
                     components: "country:ng",
                   }}
                 />
-              )}
-              name={"address"}
-              defaultValue=""
-            />
-            {errors.phone && (
-              <Text style={style.error_text}>
-                Address is required, please enter a valid one.
-              </Text>
+              </View>
             )}
-          </View>
+            name={"address"}
+            defaultValue=""
+          />
+
+          {errors.address && (
+            <Text style={style.error_text}>
+              Address is required, please enter a valid one.
+            </Text>
+          )}
 
           <Text style={style.form_label}>Attach License</Text>
 

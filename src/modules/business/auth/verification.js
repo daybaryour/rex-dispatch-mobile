@@ -39,11 +39,11 @@ const Verification = (props) => {
             screen: "authSuccess",
           });
         })
-        .catch(() => {
+        .catch((e) => {
           toast.show({
-            title: message
-              ? message
-              : "something went wrong, please check your internet connection",
+            title: e
+              ? e
+              : "something went wrong, please check your internet connection and try again",
             status: "error",
             placement: "top",
           });

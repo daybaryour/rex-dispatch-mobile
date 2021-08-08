@@ -7,7 +7,6 @@ import PhoneInput from "react-native-phone-number-input";
 import { CheckBox } from "react-native-elements";
 import { Grid, Row, Col } from "react-native-easy-grid";
 import { useForm, Controller } from "react-hook-form";
-import { CommonActions } from "@react-navigation/native";
 //style
 import authStyle from "../../../assets/styles/general/authStyle";
 import style from "../../../assets/styles/general/style";
@@ -26,7 +25,6 @@ const Register = (props) => {
 
   const dispatch = useDispatch();
   const toast = useToast();
-  const { message } = useSelector((state) => state.message);
 
   const phoneInput = useRef() < PhoneInput > null;
 
@@ -90,11 +88,11 @@ const Register = (props) => {
         //       })
         //     );
       })
-      .catch(() => {
+      .catch((e) => {
         toast.show({
-          title: message
-            ? message
-            : "something went wrong, please check your internet connection",
+          title: e
+            ? e
+            : "something went wrong, please check your internet connection and try again",
           status: "error",
           placement: "top",
         });

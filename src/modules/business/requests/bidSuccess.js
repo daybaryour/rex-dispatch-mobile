@@ -44,7 +44,7 @@ const BidSuccess = (props) => {
         />
         <Text
           style={[style.text_16, { textAlign: "center", color: colors.lemon }]}
-          onPress={() => props.navigation.navigate("history")}
+          onPress={() => props.navigation.navigate("dispatch")}
         >
           Manage your deliverables
         </Text>

@@ -1,6 +1,6 @@
 export default {
   GOOGLE_API_KEY: "AIzaSyD7aFHdf069bgIpmXzvB9DYwwMB4uXuCFA",
-  nigerian_states: [
+  NIGERIAN_STATES: [
     "Abia",
     "Adamawa",
     "Akwa Ibom",
@@ -39,5 +39,6 @@ export default {
     "Yobe",
     "Zamfara",
   ],
+  DISPATCH_TYPES: ["envelope", "parcel", "box", "food"],
   API_URL: "https://rex-dispatch-api.herokuapp.com/api/v1",
 };

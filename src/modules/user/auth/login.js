@@ -21,7 +21,6 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const err_resp = { phone: false, password: false };
   const [errors, setErrors] = useState(err_resp);
-
   const phoneInput = useRef() < PhoneInput > null;
 
   useEffect(() => {}, []);
@@ -32,7 +31,6 @@ const Login = (props) => {
 
   const dispatch = useDispatch();
   const toast = useToast();
-  const { message } = useSelector((state) => state.message);
 
   const handleSubmit = () => {
     toggle_isLoading(true);
@@ -58,11 +56,11 @@ const Login = (props) => {
             screen: "createDispatch",
           });
         })
-        .catch(() => {
+        .catch((e) => {
           toast.show({
-            title: message
-              ? message
-              : "something went wrong, please check your internet connection",
+            title: e
+              ? e
+              : "something went wrong, please check your internet connection and try again",
             status: "error",
             placement: "top",
           });

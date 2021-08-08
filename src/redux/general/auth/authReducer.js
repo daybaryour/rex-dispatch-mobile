@@ -11,9 +11,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const user = JSON.parse(AsyncStorage.getItem("user"));
 const user = {};
-AsyncStorage.setItem("user", "omo");
-// console.log(AsyncStorage.getItem("user"));
 
+// const storage = async () => {
+//   AsyncStorage.setItem("user", "omo");
+//   const user = await AsyncStorage.getItem("user");
+//   console.log(user, "line 15");
+// };
+
+// storage();
 const initialState = { isLoggedIn: false, token: null, user: {} };
 // user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
 
@@ -22,6 +27,7 @@ export default function authReducer(state = initialState, action) {
 
   switch (type) {
     case REGISTER_SUCCESS:
+      AsyncStorage.setItem("token", payload.token);
       return {
         ...state,
         isLoggedIn: false,
@@ -34,6 +40,7 @@ export default function authReducer(state = initialState, action) {
         isLoggedIn: false,
       };
     case VERIFICATION_SUCCESS:
+      AsyncStorage.setItem("isAuth", "true");
       return {
         ...state,
         isLoggedIn: true,
@@ -44,6 +51,8 @@ export default function authReducer(state = initialState, action) {
         isLoggedIn: false,
       };
     case LOGIN_SUCCESS:
+      AsyncStorage.setItem("token", payload.token);
+      AsyncStorage.setItem("isAuth", "true");
       return {
         ...state,
         isLoggedIn: true,

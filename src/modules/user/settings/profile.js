@@ -16,6 +16,9 @@ import env from "../../../helpers/constants";
 import Header from "../../partials/header";
 
 const Profile = (props) => {
+  const user = props.route.params.user;
+
+  console.log(user);
   return (
     <View style={style.body}>
       <Header icon={"back"} title={"Profile"} navigation={props.navigation} />

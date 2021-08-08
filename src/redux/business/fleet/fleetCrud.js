@@ -1,11 +1,11 @@
 import constants from "../../../helpers/constants";
-import axios from "axios";
+import { post } from "../../../helpers/axiosHelper";
 
 const API_URL = constants.API_URL;
 
 //register
 export function registerRider(user) {
-  return axios.post(`${API_URL}/user/business/create_dispatcher`, user);
+  return post(`/user/business/create_dispatcher`, user);
 }
 
 const fleetCrud = {

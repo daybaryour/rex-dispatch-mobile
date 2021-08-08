@@ -14,23 +14,32 @@ import "react-native-gesture-handler";
 import { Provider } from "react-redux";
 import store from "./src/redux/store";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Users from "./src/modules/user";
 import Onboarding from "./src/modules/onboarding";
 import Business from "./src/modules/business";
 import Riders from "./src/modules/rider";
-import setupAxios from "./src/redux/setupAxios";
-
-setupAxios(axios, store);
 
 class App extends React.Component {
   state = {
     route: "onboard",
   };
 
-  onRouteChange = (data) => {
+  //   componentDidMount() {
+  //     this.getUserType();
+  //   }
+
+  //   getUserType = async () => {
+  //     const route = await AsyncStorage.getItem("user_type");
+  //     this.setState({
+  //       route: route,
+  //     });
+  //   };
+
+  onRouteChange = (route) => {
     this.setState({
-      route: data,
+      route: route,
     });
   };
 

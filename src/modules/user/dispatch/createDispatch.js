@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { Text } from "native-base";
+import { Text, useToast } from "native-base";
 import { View, Image, TouchableOpacity } from "react-native";
 
 //styles
@@ -13,9 +13,54 @@ import Footer from "../../partials/footer/footer";
 import Pickup from "./pickup";
 import Delivery from "./delivery";
 
+//redux
+import { useDispatch, useSelector } from "react-redux";
+import { newDispatchRequest } from "../../../redux/user/dispatch/dispatchActions";
+
 const CreateDispatch = (props) => {
   const [pickup_show, toggle_pickup_show] = useState(true);
   const [delivery_details, toggle_delivery_details] = useState(false);
+  const [isLoading, toggle_isLoading] = useState(false);
+
+  const [pickup_data, setPickup_data] = useState({});
+  const [delivery_data, setDelivery_data] = useState({});
+
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  useEffect(() => {}, []);
+
+  onSubmit = () => {
+    toggle_isLoading(true);
+
+    // console.log("got");
+    if (pickup_data && delivery_data) {
+      let data = Object.assign(pickup_data, delivery_data);
+
+      console.log(data, "l40");
+
+      dispatch(newDispatchRequest(data))
+        .then(() => {
+          toggle_isLoading(false);
+          toggle_pickup_show(true);
+          props.navigation.navigate("dispatch", {
+            screen: "chooseProvider",
+            //   params: { id: data.phone },
+          });
+        })
+        .catch((e) => {
+          toast.show({
+            title: e
+              ? e
+              : "something went wrong, please check your internet connection and try again",
+            status: "error",
+            placement: "top",
+          });
+          toggle_isLoading(false);
+        });
+    }
+  };
+
   return (
     <>
       <View style={style.body}>
@@ -39,7 +84,7 @@ const CreateDispatch = (props) => {
                 {pickup_show ? "Pickup Details" : "Delivery Details"}
               </Text>
               {/* {pickup_show ? ( */}
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => toggle_pickup_show(!pickup_show)}
                 style={{ marginLeft: "auto", marginTop: 10 }}
               >
@@ -50,7 +95,7 @@ const CreateDispatch = (props) => {
                     height: 2,
                   }}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               {/* ) : (
                 <Text
                   style={{
@@ -68,9 +113,17 @@ const CreateDispatch = (props) => {
         </View>
         <>
           {pickup_show ? (
-            <Pickup toggle_pickup_show={toggle_pickup_show} />
+            <Pickup
+              toggle_pickup_show={toggle_pickup_show}
+              setPickup_data={setPickup_data}
+            />
           ) : (
-            <Delivery navigation={props.navigation} />
+            <Delivery
+              setDelivery_data={setDelivery_data}
+              toggle_pickup_show={toggle_pickup_show}
+              onSubmit={onSubmit}
+              isLoading={isLoading}
+            />
           )}
         </>
       </View>

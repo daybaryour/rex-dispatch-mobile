@@ -23,7 +23,6 @@ const Login = (props) => {
 
   const dispatch = useDispatch();
   const toast = useToast();
-  const { message } = useSelector((state) => state.message);
 
   const {
     control,
@@ -55,11 +54,11 @@ const Login = (props) => {
         //       })
         //     );
       })
-      .catch(() => {
+      .catch((e) => {
         toast.show({
-          title: message
-            ? message
-            : "something went wrong, please check your internet connection",
+          title: e
+            ? e
+            : "something went wrong, please check your internet connection and try again",
           status: "error",
           placement: "top",
         });

@@ -9,7 +9,6 @@ import {
 } from "./types";
 
 import authCrud from "./authCrud";
-import { SET_MESSAGE, CLEAR_MESSAGE } from "../../messageTypes";
 
 //register
 export const register = (data, user_type) => (dispatch) => {
@@ -21,21 +20,14 @@ export const register = (data, user_type) => (dispatch) => {
         dispatch({
           type: REGISTER_FAIL,
         });
-        dispatch({
-          type: SET_MESSAGE,
-          payload: resp.message,
-        });
 
-        return Promise.reject();
+        return Promise.reject(resp.message);
       }
       dispatch({
         type: REGISTER_SUCCESS,
         payload: { token: resp.token, user: resp.data },
       });
 
-      dispatch({
-        type: CLEAR_MESSAGE,
-      });
       return Promise.resolve();
     })
     .catch((error) => {
@@ -50,12 +42,7 @@ export const register = (data, user_type) => (dispatch) => {
         type: REGISTER_FAIL,
       });
 
-      dispatch({
-        type: SET_MESSAGE,
-        payload: message,
-      });
-
-      return Promise.reject();
+      return Promise.reject(message);
     });
 };
 
@@ -69,19 +56,12 @@ export const login = (data, user_type) => (dispatch) => {
         dispatch({
           type: LOGIN_FAIL,
         });
-        dispatch({
-          type: SET_MESSAGE,
-          payload: resp.message,
-        });
 
-        return Promise.reject();
+        return Promise.reject(resp.message);
       }
       dispatch({
         type: LOGIN_SUCCESS,
         payload: { token: resp.token, user: resp.data },
-      });
-      dispatch({
-        type: CLEAR_MESSAGE,
       });
 
       return Promise.resolve();
@@ -93,18 +73,12 @@ export const login = (data, user_type) => (dispatch) => {
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log(error);
 
       dispatch({
         type: LOGIN_FAIL,
       });
 
-      dispatch({
-        type: SET_MESSAGE,
-        payload: message,
-      });
-
-      return Promise.reject();
+      return Promise.reject(message);
     });
 };
 
@@ -118,20 +92,13 @@ export const verification = (otp, user_type) => (dispatch) => {
         dispatch({
           type: VERIFICATION_FAIL,
         });
-        dispatch({
-          type: SET_MESSAGE,
-          payload: resp.message,
-        });
 
-        return Promise.reject();
+        return Promise.reject(resp.message);
       }
 
       dispatch({
         type: VERIFICATION_SUCCESS,
         // payload: { auth: data },
-      });
-      dispatch({
-        type: CLEAR_MESSAGE,
       });
 
       return Promise.resolve();
@@ -143,17 +110,11 @@ export const verification = (otp, user_type) => (dispatch) => {
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log(error);
       dispatch({
         type: VERIFICATION_FAIL,
       });
 
-      dispatch({
-        type: SET_MESSAGE,
-        PAYLOAD: message,
-      });
-
-      return Promise.reject();
+      return Promise.reject(message);
     });
 };
 
