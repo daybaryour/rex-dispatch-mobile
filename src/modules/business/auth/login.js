@@ -1,11 +1,13 @@
 import React, { useRef, useState } from "react";
-import { FormControl, Image, Input, useToast } from "native-base";
+import { FormControl, Image, Input, useToast, Pressable } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button } from "react-native-elements";
 import { View, ScrollView, Text } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
 import { useForm, Controller } from "react-hook-form";
+import { CommonActions } from "@react-navigation/native";
 
+//style
 import authStyle from "../../../assets/styles/general/authStyle";
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
@@ -36,26 +38,22 @@ const Login = (props) => {
       .then(() => {
         toggle_isLoading(false);
 
-        props.navigation.navigate("requests", {
-          screen: "allRequests",
-        });
-
-        //     props.navigation.dispatch(
-        //       CommonActions.reset({
-        //         index: 1,
-        //         routes: [
-        //           {
-        //             name: "auth",
-        //             screen: "verification",
-        //           },
-        //         ],
-        //       })
-        //     );
+        props.navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [
+              {
+                name: "requests",
+                screen: "allRequests",
+              },
+            ],
+          })
+        );
       })
       .catch((e) => {
         toast.show({
           title: e
-            ? e
+            ? e.toLowerCase()
             : "something went wrong, please check your internet connection and try again",
           status: "error",
           placement: "top",
@@ -148,9 +146,11 @@ const Login = (props) => {
           {errors.password && (
             <Text style={style.error_text}>Password is required.</Text>
           )}
-
-          <Text style={authStyle.sm_text}>Forgot password?</Text>
-
+          <Pressable
+            onPress={() => props.navigation.navigate("forgotPassword")}
+          >
+            <Text style={authStyle.sm_text}>Forgot password?</Text>
+          </Pressable>
           <Button
             block
             title="Sign in"
@@ -158,7 +158,11 @@ const Login = (props) => {
             titleStyle={style.btn_text}
             loading={isLoading}
             disabled={isLoading}
-            disabledStyle={[style.btn_success, { marginTop: 0, opacity: 0.8 }]}
+            disabledStyle={[
+              style.btn_success_disabled,
+              ,
+              { marginTop: 0, opacity: 0.8 },
+            ]}
             onPress={handleSubmit(onSubmit)}
             // onPress={() => props.navigation.navigate("requests")}
           />

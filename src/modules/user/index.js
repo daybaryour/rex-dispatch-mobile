@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //react navigation
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Login from "./auth/login";
 import Register from "./auth/register";
 import Terms from "./auth/terms";
+import ForgotPassword from "./auth/forgotPassword";
+import ResetPassword from "./auth/resetPassword";
 import Verification from "./auth/verification";
 import AuthSuccess from "./auth/authSuccess";
 import Card from "./settings/card";
@@ -24,13 +27,22 @@ import Settings from "./settings/settings";
 import Profile from "./settings/profile";
 import Password from "./settings/password";
 import Support from "./settings/support";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View } from "react-native";
+import Spinner from "react-native-spinkit";
 
 //redux
 import { useSelector } from "react-redux";
+import colors from "../../helpers/color";
 
 const Users = (props) => {
+  const [isAuth, setIsAuth] = useState(null);
   const Stack = createStackNavigator();
   const Drawer = createDrawerNavigator();
+
+  useEffect(async () => {
+    setIsAuth(await AsyncStorage.getItem("isAuth"));
+  }, []);
 
   const AuthStack = () => {
     return (
@@ -38,11 +50,13 @@ const Users = (props) => {
       <Stack.Navigator
         screenOptions={{ gestureEnabled: false }}
         headerMode="none"
-        // initialRouteName="verification"
+        // initialRouteName="resetPassword"
       >
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="register" component={Register} />
         <Stack.Screen name="terms" component={Terms} />
+        <Stack.Screen name="forgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="resetPassword" component={ResetPassword} />
         <Stack.Screen name="verification" component={Verification} />
         <Stack.Screen name="authSuccess" component={AuthSuccess} />
       </Stack.Navigator>
@@ -111,29 +125,30 @@ const Users = (props) => {
     );
   };
 
-  const isAuth = useSelector((state) => state.auth.isLoggedIn);
+  //   const isAuth = useSelector((state) => state.auth.isLoggedin);
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName={isAuth ? "dispatch" : "auth"}
+      <Stack.Navigator
+        initialRouteName={isAuth == "customer" ? "dispatch" : "auth"}
         screenOptions={{ gestureEnabled: false }}
+        headerMode="none"
       >
-        <Drawer.Screen name="dispatch" component={DispatchStack} />
-        <Drawer.Screen name="wallet" component={Wallet} />
-        <Drawer.Screen name="track" component={TrackStack} />
-        <Drawer.Screen name="history" component={HistoryStack} />
-        <Drawer.Screen name="settings" component={SettingsStack} />
-      
-        <Drawer.Screen name="auth" component={AuthStack} />
+        <Stack.Screen name="dispatch" component={DispatchStack} />
+        <Stack.Screen name="wallet" component={Wallet} />
+        <Stack.Screen name="track" component={TrackStack} />
+        <Stack.Screen name="history" component={HistoryStack} />
+        <Stack.Screen name="settings" component={SettingsStack} />
+
+        <Stack.Screen name="auth" component={AuthStack} />
 
         {/* delete during integration  */}
-        {/* <Drawer.Screen name="login" component={Login} />
-          <Drawer.Screen name="register" component={Register} />
-          <Drawer.Screen name="terms" component={Terms} />
-          <Drawer.Screen name="verification" component={Verification} /> */}
-        {/* <Drawer.Screen name="card" component={Card} /> */}
-      </Drawer.Navigator>
+        {/* <Stack.Screen name="login" component={Login} />
+              <Stack.Screen name="register" component={Register} />
+              <Stack.Screen name="terms" component={Terms} />
+              <Stack.Screen name="verification" component={Verification} /> */}
+        {/* <Stack.Screen name="card" component={Card} /> */}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

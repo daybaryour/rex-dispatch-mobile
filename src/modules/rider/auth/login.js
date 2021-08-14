@@ -5,7 +5,8 @@ import { Button } from "react-native-elements";
 import { View, ScrollView, Text } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
 import { useForm, Controller } from "react-hook-form";
-
+import { CommonActions } from "@react-navigation/native";
+//style
 import authStyle from "../../../assets/styles/general/authStyle";
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
@@ -35,29 +36,42 @@ const Login = (props) => {
     // data.phone = data.phone.substring(1);
     // console.log(data);
     dispatch(login(data, "rider"))
-      .then(() => {
+      .then((data) => {
         toggle_isLoading(false);
 
-        props.navigation.navigate("auth", {
-          screen: "verification",
-        });
-
-        //     props.navigation.dispatch(
-        //       CommonActions.reset({
-        //         index: 1,
-        //         routes: [
-        //           {
-        //             name: "auth",
-        //             screen: "verification",
-        //           },
-        //         ],
-        //       })
-        //     );
+        if (data.is_verified) {
+          props.navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [
+                {
+                  name: "dispatch",
+                  screen: "deliverables",
+                },
+              ],
+            })
+          );
+        } else {
+          //   props.navigation.navigate("auth", {
+          //     screen: "verification",
+          //   });
+          props.navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [
+                {
+                  name: "setPassword",
+                  params: { phone: data.phone },
+                },
+              ],
+            })
+          );
+        }
       })
       .catch((e) => {
         toast.show({
           title: e
-            ? e
+            ? e.toLowerCase()
             : "something went wrong, please check your internet connection and try again",
           status: "error",
           placement: "top",
@@ -159,7 +173,11 @@ const Login = (props) => {
             titleStyle={style.btn_text}
             loading={isLoading}
             disabled={isLoading}
-            disabledStyle={[style.btn_success, { marginTop: 0, opacity: 0.8 }]}
+            disabledStyle={[
+              style.btn_success_disabled,
+              ,
+              { marginTop: 0, opacity: 0.8 },
+            ]}
             onPress={handleSubmit(onSubmit)}
             // onPress={() => props.navigation.navigate("verification")}
           />

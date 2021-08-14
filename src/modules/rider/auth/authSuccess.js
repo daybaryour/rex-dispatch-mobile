@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 import { Button } from "react-native-elements";
+import { CommonActions } from "@react-navigation/native";
 
 //styles
 import style from "../../../assets/styles/general/style";
@@ -30,16 +31,28 @@ const AuthSuccess = (props) => {
                 },
               ]}
             >
-              Your phone 0904 747 8291 has been registered
+              Your account has been verified successfully, please sign in with
+              the credentials created.
             </Text>
           </View>
         </View>
         <Button
           block
-          title="Set your password now"
+          title="Continue to login"
           buttonStyle={[style.btn_success]}
           titleStyle={style.btn_text}
-          onPress={() => props.navigation.navigate("setPassword")}
+          onPress={() =>
+            props.navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  {
+                    name: "login",
+                  },
+                ],
+              })
+            )
+          }
         />
       </ScrollView>
     </View>

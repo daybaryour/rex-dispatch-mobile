@@ -11,7 +11,7 @@ import {
   SUBMIT_FEEDBACK_FAIL,
 } from "./dispatchTypes";
 
-const initialState = { dispatches: [] };
+const initialState = { dispatches: [], track_parcel: "" };
 
 export function dispatchReducer(state = initialState, action) {
   const { type, payload } = action;
@@ -25,6 +25,17 @@ export function dispatchReducer(state = initialState, action) {
       return {
         ...state,
         dispatches: initialState.dispatches.push(payload),
+      };
+    }
+    case TRACK_PARCEL_SUCCESS: {
+      return {
+        ...state,
+        track_parcel: payload,
+      };
+    }
+    case TRACK_PARCEL_FAIL: {
+      return {
+        ...state,
       };
     }
     default:

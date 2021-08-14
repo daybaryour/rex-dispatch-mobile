@@ -7,6 +7,7 @@ import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
 
 const NewVehicleSuccess = (props) => {
+  console.log(props.route.params);
   return (
     <View style={style.body}>
       <ScrollView showsVerticalScrollIndicator={false} style={style.container}>
@@ -30,8 +31,9 @@ const NewVehicleSuccess = (props) => {
                 },
               ]}
             >
-              An OTP has been sent to Chukwuma's phone number 07054664673 to
-              complete the registration on his phone.
+              An OTP has been sent to {props.route.params.name}'s phone number{" "}
+              {props.route.params.phone} to complete the registration on his
+              phone.
             </Text>
           </View>
         </View>

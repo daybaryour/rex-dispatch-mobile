@@ -29,7 +29,7 @@ const Pickup = (props) => {
           rules={{
             required: required,
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onChange, value } }) => (
             <FormControl isInvalid={errors[name] ? true : false}>
               <Input
                 {...style.form_control}
@@ -133,6 +133,8 @@ const Pickup = (props) => {
                   const text = `${data.structured_formatting.main_text}, ${data.structured_formatting.secondary_text}`;
                   onChange(text);
                 }}
+                styles={{ textInput: { color: colors.text_black } }}
+                keyboardShouldPersistTaps="handled"
                 query={{
                   key: env.GOOGLE_API_KEY,
                   language: "en",

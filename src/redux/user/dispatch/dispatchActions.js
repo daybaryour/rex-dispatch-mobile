@@ -32,7 +32,7 @@ export const newDispatchRequest = (data) => (dispatch) => {
         payload: resp.data,
       });
 
-      return Promise.resolve();
+      return Promise.resolve(resp.data);
     })
     .catch((error) => {
       const message =
@@ -45,6 +45,68 @@ export const newDispatchRequest = (data) => (dispatch) => {
       dispatch({
         type: NEW_DISPATCH_FAIL,
       });
+
+      return Promise.reject(message);
+    });
+};
+
+//track parcel
+export const trackParcel = (data) => (dispatch) => {
+  return dispatchCrud
+    .trackParcel(data)
+    .then((response) => {
+      const resp = response.data;
+      console.log(resp);
+      if (resp.error) {
+        dispatch({
+          type: TRACK_PARCEL_FAIL,
+        });
+
+        return Promise.reject(resp.message);
+      }
+      dispatch({
+        type: TRACK_PARCEL_SUCCESS,
+        payload: resp.data,
+      });
+
+      return Promise.resolve(resp.data);
+    })
+    .catch((error) => {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      dispatch({
+        type: TRACK_PARCEL_FAIL,
+      });
+
+      return Promise.reject(message);
+    });
+};
+
+export const cancelParcel = (id, data) => (dispatch) => {
+  console.log("got here");
+  return dispatchCrud
+    .cancelParcel(data)
+    .then((response) => {
+      const resp = response.data;
+      console.log(resp);
+      if (resp.error) {
+        return Promise.reject(resp.message);
+      }
+
+      return Promise.resolve(resp.data);
+    })
+    .catch((error) => {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
 
       return Promise.reject(message);
     });

@@ -16,11 +16,11 @@ export const registerRider = (data) => (dispatch) => {
         return Promise.reject(resp.message);
       }
       dispatch({
-        type: REGISTER_RIDER_SUCCESS,
+        type: REGISTER_FLEET_SUCCESS,
         payload: { token: resp.token, user: resp.data },
       });
 
-      return Promise.resolve(resp.message);
+      return Promise.resolve(resp);
     })
     .catch((error) => {
       const message =

@@ -5,6 +5,10 @@ import {
   VERIFICATION_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  SET_PASSWORD_SUCCESS,
+  SET_PASSWORD_FAIL,
+  FIREBASE_TOKEN_SUCCESS,
+  FIREBASE_TOKEN_FAIL,
   LOGOUT,
 } from "./types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -19,31 +23,31 @@ const user = {};
 // };
 
 // storage();
-const initialState = { isLoggedIn: false, token: null, user: {} };
+const initialState = {
+  isLoggedIn: false,
+  token: null,
+  user: {},
+  firebase_token: null,
+};
 // user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
 
-export default function authReducer(state = initialState, action) {
+export default async function authReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
     case REGISTER_SUCCESS:
-      AsyncStorage.setItem("token", payload.token);
       return {
         ...state,
         isLoggedIn: false,
         user: payload.user,
-        token: payload.token,
       };
     case REGISTER_FAIL:
       return {
         ...state,
-        isLoggedIn: false,
       };
     case VERIFICATION_SUCCESS:
-      AsyncStorage.setItem("isAuth", "true");
       return {
         ...state,
-        isLoggedIn: true,
       };
     case VERIFICATION_FAIL:
       return {
@@ -51,8 +55,8 @@ export default function authReducer(state = initialState, action) {
         isLoggedIn: false,
       };
     case LOGIN_SUCCESS:
-      AsyncStorage.setItem("token", payload.token);
-      AsyncStorage.setItem("isAuth", "true");
+      await AsyncStorage.setItem("token", payload.token ? payload.token : " ");
+      await AsyncStorage.setItem("isAuth", payload.user_type);
       return {
         ...state,
         isLoggedIn: true,
@@ -66,7 +70,34 @@ export default function authReducer(state = initialState, action) {
         token: null,
         user: null,
       };
+    case SET_PASSWORD_SUCCESS:
+      await AsyncStorage.setItem("token", payload.token);
+      await AsyncStorage.setItem("isAuth", "rider");
+      return {
+        ...state,
+        isLoggedIn: true,
+        token: payload.token,
+        user: payload.user,
+      };
+    case SET_PASSWORD_FAIL:
+      return {
+        ...state,
+        isLoggedIn: false,
+        token: null,
+        user: null,
+      };
+    case FIREBASE_TOKEN_SUCCESS:
+      return {
+        ...state,
+        firebase_token: payload,
+      };
+    case FIREBASE_TOKEN_FAIL:
+      return {
+        ...state,
+      };
     case LOGOUT:
+      await AsyncStorage.setItem("token", " ");
+      await AsyncStorage.setItem("isAuth", " ");
       return {
         ...state,
         isLoggedIn: false,

@@ -3,15 +3,19 @@ import { Text } from "react-native";
 import { Button } from "react-native-elements";
 import { View, ScrollView, SafeAreaView, StatusBar } from "react-native";
 import OtpInputs from "@twotalltotems/react-native-otp-input";
-import { useToast } from "native-base";
+import { useToast, Pressable } from "native-base";
+import { CommonActions } from "@react-navigation/native";
 
 //styles
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
 
 //redux
-import { verification } from "../../../redux/general/auth/authActions";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  verification,
+  resendOtp,
+} from "../../../redux/general/auth/authActions";
+import { useDispatch } from "react-redux";
 
 const Verification = (props) => {
   const [otp, setOtp] = useState("");
@@ -19,8 +23,6 @@ const Verification = (props) => {
 
   const dispatch = useDispatch();
   const toast = useToast();
-  const { message } = useSelector((state) => state.message);
-  const { user } = useSelector((state) => state.auth.user);
 
   const onSubmit = () => {
     toggle_isLoading(true);
@@ -32,17 +34,26 @@ const Verification = (props) => {
       });
       toggle_isLoading(false);
     } else {
-      dispatch(verification({ otp: otp }, "business"))
+      dispatch(
+        verification({ otp: otp, phone: props.route.params.phone }, "business")
+      )
         .then(() => {
           toggle_isLoading(false);
-          props.navigation.navigate("auth", {
-            screen: "authSuccess",
-          });
+          props.navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [
+                {
+                  name: "authSuccess",
+                },
+              ],
+            })
+          );
         })
         .catch((e) => {
           toast.show({
             title: e
-              ? e
+              ? e.toLowerCase()
               : "something went wrong, please check your internet connection and try again",
             status: "error",
             placement: "top",
@@ -50,6 +61,25 @@ const Verification = (props) => {
           toggle_isLoading(false);
         });
     }
+  };
+
+  const handleResendOtp = () => {
+    toast.show({
+      title: `an otp has been sent to ${props.route.params.phone}`,
+      status: "success",
+      placement: "top",
+    });
+    dispatch(resendOtp({ phone: props.route.params.phone }, "business")).catch(
+      (e) => {
+        toast.show({
+          title: e
+            ? e.toLowerCase()
+            : "something went wrong, please check your internet connection and try again",
+          status: "error",
+          placement: "top",
+        });
+      }
+    );
   };
 
   return (
@@ -105,17 +135,19 @@ const Verification = (props) => {
                 marginBottom: 41,
               }}
             >
-              <Text style={[style.text_white, { textAlign: "center" }]}>
-                Didn't get the code?
-              </Text>
-              <Text
-                style={[
-                  style.text_white,
-                  { textAlign: "center", color: colors.lemon },
-                ]}
-              >
-                Resend code
-              </Text>
+              <Pressable onPress={() => handleResendOtp()}>
+                <Text style={[style.text_white, { textAlign: "center" }]}>
+                  Didn't get the code?
+                </Text>
+                <Text
+                  style={[
+                    style.text_white,
+                    { textAlign: "center", color: colors.lemon },
+                  ]}
+                >
+                  Resend code
+                </Text>
+              </Pressable>
             </View>
             <View>
               <Text style={[style.text_white, { textAlign: "center" }]}>
@@ -140,7 +172,7 @@ const Verification = (props) => {
                 onPress={() => props.navigation.navigate("authSuccess")}
                 loading={isLoading}
                 disabled={isLoading}
-                disabledStyle={[style.btn_success, { opacity: 0.8 }]}
+                disabledStyle={[style.btn_success_disabled, , { opacity: 0.8 }]}
                 onPress={() => onSubmit()}
               >
                 <Text style={style.btn_text}>Continue</Text>

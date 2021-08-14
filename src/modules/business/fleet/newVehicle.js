@@ -15,7 +15,7 @@ import Header from "../../partials/header";
 
 //redux
 import { registerRider } from "../../../redux/business/fleet/fleetActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const NewVehicle = (props) => {
   const [isLoading, toggle_isLoading] = useState(false);
@@ -62,36 +62,26 @@ const NewVehicle = (props) => {
     toggle_isLoading(true);
 
     dispatch(registerRider(data))
-      .then(() => {
+      .then((data) => {
         toggle_isLoading(false);
-
+        console.log(data);
         toast.show({
-          title: message
-            ? message
+          title: data.message
+            ? data.message
             : "something went wrong, please check your internet connection and try again",
           status: "success",
           placement: "top",
         });
-        props.navigation.navigate("fleet", {
-          screen: "newVehicleSuccess",
+        console.log(data.data.phone);
+        props.navigation.navigate("newVehicleSuccess", {
+          phone: data.data.phone,
+          name: data.data.firstname,
         });
-
-        //     props.navigation.dispatch(
-        //       CommonActions.reset({
-        //         index: 1,
-        //         routes: [
-        //           {
-        //             name: "auth",
-        //             screen: "verification",
-        //           },
-        //         ],
-        //       })
-        //     );
       })
       .catch((e) => {
         toast.show({
           title: e
-            ? e
+            ? e.toLowerCase()
             : "something went wrong, please check your internet connection and try again",
           status: "error",
           placement: "top",
@@ -193,7 +183,11 @@ const NewVehicle = (props) => {
             titleStyle={style.btn_text}
             loading={isLoading}
             disabled={isLoading}
-            disabledStyle={[style.btn_success, { marginTop: 40, opacity: 0.8 }]}
+            disabledStyle={[
+              style.btn_success_disabled,
+              ,
+              { marginTop: 40, opacity: 0.8 },
+            ]}
             onPress={handleSubmit(onSubmit)}
             // onPress={() => props.navigation.navigate("newVehicleSuccess")}
           />

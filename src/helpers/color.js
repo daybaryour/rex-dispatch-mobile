@@ -1,6 +1,7 @@
 export default {
   lemon: "#0BE05C",
   light_lemon: "rgba(11, 224, 92, 0.1)",
+  lemon_disabled: "rgba(11, 224, 92, 0.5)",
   border_black: "#4B545A",
   text_black: "#494949",
   navy_blue: "#00114E",

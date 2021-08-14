@@ -12,6 +12,8 @@ import colors from "../../../helpers/color";
 const Modals = (props) => {
   const [value, setValue] = React.useState("one");
 
+  const data = props.bid;
+  const parcel_details = props.parcel_details;
   return (
     <View style={style.modal_container}>
       {/* business details modal */}
@@ -31,7 +33,7 @@ const Modals = (props) => {
                 borderRadius: 5,
               }}
               source={{
-                uri: "https://wallpaperaccess.com/full/317501.jpg",
+                uri: data.logo,
               }}
               alt="Alternate Text"
               size={"sm"}
@@ -46,7 +48,7 @@ const Modals = (props) => {
                 Business Name
               </Text>
               <Text style={[style.text, { marginBottom: "3%" }]}>
-                Gokada Logistics
+                {data.business_name}
               </Text>
               <Divider />
             </View>
@@ -60,7 +62,7 @@ const Modals = (props) => {
                 Email Address
               </Text>
               <Text style={[style.text, { marginBottom: "4%" }]}>
-                esther@mylendme.co
+                {data.email}
               </Text>
               <Divider />
             </View>
@@ -73,7 +75,9 @@ const Modals = (props) => {
               >
                 Location
               </Text>
-              <Text style={[style.text, { marginBottom: "4%" }]}>Lagos</Text>
+              <Text style={[style.text, { marginBottom: "4%" }]}>
+                {data.location}
+              </Text>
               <Divider />
             </View>
             <View style={{ marginBottom: "5%" }}>
@@ -86,7 +90,7 @@ const Modals = (props) => {
                 Phone Number
               </Text>
               <Text style={[style.text, { marginBottom: "4%" }]}>
-                09047478291
+                {data.phone}
               </Text>
               <Divider />
             </View>
@@ -100,7 +104,7 @@ const Modals = (props) => {
                 Address
               </Text>
               <Text style={[style.text, { marginBottom: "4%" }]}>
-                11, Faith Avenue, Tolani Close, Opebi, Ikeja.
+                {data.address}
               </Text>
               <Divider />
             </View>
@@ -114,7 +118,7 @@ const Modals = (props) => {
                 Name of Contact Person
               </Text>
               <Text style={[style.text, { marginBottom: "4%" }]}>
-                Celebrity Dev
+                {data.contact_person}
               </Text>
             </View>
           </View>
@@ -134,14 +138,19 @@ const Modals = (props) => {
           ]}
         >
           <View style={style.container}>
-            <Text style={[style.text_16, { marginBottom: 20 }]}>Hi Bayo,</Text>
+            <Text style={[style.text_16, { marginBottom: 20 }]}>
+              Hi {parcel_details.senders_name},
+            </Text>
             <Text style={[style.text_16_normal, { marginBottom: "7%" }]}>
               you have selected{" "}
-              <Text style={[style.text_16]}>DHL Logistics</Text> to deliver your
-              package to
-              <Text style={[style.text_16]}> Daniel Chibuzor</Text> at 42 Ajose
-              str, Mende, Maryland for{" "}
-              <Text style={[style.text_16]}> ₦1500. </Text>
+              <Text style={[style.text_16]}>{data.business_name}</Text> to
+              deliver your package to
+              <Text style={[style.text_16]}>
+                {" "}
+                {parcel_details.recipient_name}
+              </Text>{" "}
+              at {parcel_details.delivery_address}
+              <Text style={[style.text_16]}> ₦{data.price} </Text>
             </Text>
             <Radio.Group
               name="myRadioGroup"
@@ -152,14 +161,14 @@ const Modals = (props) => {
               }}
             >
               <Radio aria-label="t2" value="one" colorScheme="green" my={1}>
-                Pay with wallet (2000)
+                Pay with wallet
               </Radio>
               <Radio aria-label="t2" value="two" colorScheme="green" my={1}>
                 Pay with Paystack
               </Radio>
-              <Radio aria-label="t2" value="three" colorScheme="green" my={1}>
+              {/* <Radio aria-label="t2" value="three" colorScheme="green" my={1}>
                 Pay on delivery
-              </Radio>
+              </Radio> */}
             </Radio.Group>
             <Button
               block
@@ -181,7 +190,10 @@ const Modals = (props) => {
               ]}
               onPress={() => {
                 props.toggle_showModal(null);
-                props.navigation.navigate("cancelRequest");
+                props.navigation.navigate("dispatch", {
+                  screen: "cancelRequest",
+                  params: { id: parcel_details._id },
+                });
               }}
             >
               Cancel Request

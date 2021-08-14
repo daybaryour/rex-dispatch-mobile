@@ -9,7 +9,7 @@ export default function fleetReducer(state = initialState, action) {
     case REGISTER_FLEET_SUCCESS:
       return {
         ...state,
-        fleet: state.fleet.push(payload.data), //comback to check if this works and add a root reducer
+        //comback to check if this works and add a root reducer
       };
     case REGISTER_FLEET_FAIL:
       return {

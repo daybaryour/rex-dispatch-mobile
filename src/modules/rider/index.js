@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Login from "./auth/login";
 // import Register from "./auth/register";
@@ -20,12 +20,17 @@ import Settings from "./settings/settings";
 import Profile from "./settings/profile";
 import Password from "./settings/password";
 import Support from "./settings/support";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Riders = () => {
-  const [isAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(null);
 
   const Stack = createStackNavigator();
   const Drawer = createDrawerNavigator();
+
+  useEffect(async () => {
+    setIsAuth(await AsyncStorage.getItem("isAuth"));
+  }, []);
 
   const AuthStack = () => {
     return (
@@ -86,20 +91,16 @@ const Riders = () => {
 
   return (
     <NavigationContainer>
-      {isAuth ? (
-        <Drawer.Navigator
-          initialRouteName="auth"
-          screenOptions={{ gestureEnabled: false }}
-        >
-          {/* delete during integration  */}
-          <Drawer.Screen name="auth" component={AuthStack} />
-          <Drawer.Screen name="dispatch" component={DispatchStack} />
-          <Drawer.Screen name="history" component={HistoryStack} />
-          <Drawer.Screen name="settings" component={SettingsStack} />
-        </Drawer.Navigator>
-      ) : (
-        <AuthStack />
-      )}
+      <Stack.Navigator
+        initialRouteName={isAuth == "rider" ? "dispatch" : "auth"}
+        screenOptions={{ gestureEnabled: false }}
+        headerMode="none"
+      >
+        <Stack.Screen name="auth" component={AuthStack} />
+        <Stack.Screen name="dispatch" component={DispatchStack} />
+        <Stack.Screen name="history" component={HistoryStack} />
+        <Stack.Screen name="settings" component={SettingsStack} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

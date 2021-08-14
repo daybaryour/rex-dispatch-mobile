@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 //styles
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
+import { CommonActions } from "@react-navigation/native";
 
 class Footer extends React.Component {
   state = {
@@ -99,7 +100,19 @@ class Footer extends React.Component {
                 opacity={location === "dispatch" ? 1 : 0.4}
                 py={2}
                 flex={1}
-                onPress={() => navigation.navigate("dispatch")}
+                onPress={() =>
+                  navigation.dispatch(
+                    CommonActions.reset({
+                      index: 1,
+                      routes: [
+                        {
+                          name: "dispatch",
+                          screen: "createDispatch",
+                        },
+                      ],
+                    })
+                  )
+                }
               >
                 <Center>
                   <Icon

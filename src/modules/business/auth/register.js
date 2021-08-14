@@ -32,8 +32,7 @@ const Register = (props) => {
   const [hide_password, toggle_hide_password] = useState(true);
   const [icon_checked, toggle_icon_checked] = useState(false);
   const [isLoading, toggle_isLoading] = useState(false);
-
-  const phoneInput = useRef() < PhoneInput > null;
+  const [image, set_image] = useState("");
 
   const ref = useRef();
 
@@ -43,6 +42,8 @@ const Register = (props) => {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
+
+      set_image(res.name);
       console.log(
         res.uri,
         res.type, // mime type
@@ -51,6 +52,7 @@ const Register = (props) => {
       );
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
+        set_image("");
         // User cancelled the picker, exit any dialogs or menus and move on
       } else {
         throw err;
@@ -124,7 +126,7 @@ const Register = (props) => {
       .catch((e) => {
         toast.show({
           title: e
-            ? e
+            ? e.toLowerCase()
             : "something went wrong, please check your internet connection and try again",
           status: "error",
           placement: "top",
@@ -141,7 +143,11 @@ const Register = (props) => {
         navigation={props.navigation}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false} style={style.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={style.container}
+        keyboardShouldPersistTaps={"handled"}
+      >
         <View>
           <Text
             style={{
@@ -157,16 +163,13 @@ const Register = (props) => {
         </View>
         <View>
           <Text style={style.form_label}>Business Name</Text>
-
           <MyInput
             name="business_name"
             placeholder="Business name here"
             required={true}
           />
-
           <Text style={style.form_label}>Email</Text>
           <MyInput name="email" placeholder="Email" required={true} />
-
           <Text style={style.form_label}>Location</Text>
           <Controller
             control={control}
@@ -209,7 +212,6 @@ const Register = (props) => {
           {errors["location"] && (
             <Text style={style.error_text}>Location is required.</Text>
           )}
-
           <Text style={style.form_label}>Phone Number</Text>
           <Controller
             control={control}
@@ -242,18 +244,16 @@ const Register = (props) => {
           {errors.phone && (
             <Text style={style.error_text}>Phone number is required.</Text>
           )}
-
           <Text style={style.form_label}>Address</Text>
-
           <Controller
             control={control}
             rules={{
               required: true,
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({ field: { onChange } }) => (
               <View
                 style={[
-                  errors["pickup_address"]
+                  errors["address"]
                     ? style.phone_container_error
                     : style.form_control,
                   { height: "auto" },
@@ -261,12 +261,16 @@ const Register = (props) => {
               >
                 <GooglePlacesAutocomplete
                   ref={ref}
-                  placeholder="Please enter your address"
-                  onPress={(data, details = null) => {
+                  placeholder="Please enter address"
+                  onPress={async (data, details = null) => {
                     // 'details' is provided when fetchDetails = true
+                    //   text = await ref.current?.getAddressText();
+                    //   console.log(text);
                     const text = `${data.structured_formatting.main_text}, ${data.structured_formatting.secondary_text}`;
                     onChange(text);
                   }}
+                  styles={{ textInput: { color: colors.text_black } }}
+                  keyboardShouldPersistTaps="handled"
                   query={{
                     key: env.GOOGLE_API_KEY,
                     language: "en",
@@ -278,21 +282,19 @@ const Register = (props) => {
             name={"address"}
             defaultValue=""
           />
-
-          {errors.address && (
+          {errors["address"] && (
             <Text style={style.error_text}>
-              Address is required, please enter a valid one.
+              Pickup address is required, please enter a valid one.
             </Text>
           )}
-
           <Text style={style.form_label}>Attach License</Text>
-
           <Input
             placeholder="Please Attach"
             {...style.form_control}
             _focus={colors.border_black}
             isDisabled={true}
             _disabled={{ opacity: 1, bg: colors.white }}
+            value={image}
             InputRightElement={
               <Button
                 block
@@ -312,9 +314,7 @@ const Register = (props) => {
           <Text style={{ fontSize: 14, color: colors.pure_ash, marginTop: 7 }}>
             (png, jpeg format only)
           </Text>
-
           <Text style={style.form_label}>Create a Password</Text>
-
           <Controller
             control={control}
             rules={{
@@ -347,7 +347,6 @@ const Register = (props) => {
           {errors.password && (
             <Text style={style.error_text}>Password is required.</Text>
           )}
-
           <Grid style={{ marginVertical: 30 }}>
             <Row>
               <Col size={0.4}>
@@ -392,18 +391,25 @@ const Register = (props) => {
               </Col>
             </Row>
           </Grid>
-
           <Button
             block
-            title="Register Account"
+            title={
+              icon_checked
+                ? "Register Account"
+                : "Please accept terms and conditions"
+            }
             buttonStyle={[style.btn_success, { marginTop: 0 }]}
-            titleStyle={style.btn_text}
             loading={isLoading}
-            disabled={isLoading}
-            disabledStyle={[style.btn_success, { marginTop: 0, opacity: 0.8 }]}
+            disabled={isLoading || !icon_checked}
+            disabledStyle={[
+              style.btn_success_disabled,
+              ,
+              { marginTop: 0, opacity: 0.8 },
+            ]}
+            disabledTitleStyle={{ color: colors.white }}
+            titleStyle={style.btn_text}
             onPress={handleSubmit(onSubmit)}
           />
-
           <Text style={{ fontSize: 14, marginBottom: 42 }}>
             Have an account?{" "}
             <Text

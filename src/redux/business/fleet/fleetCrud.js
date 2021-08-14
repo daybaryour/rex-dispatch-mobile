@@ -5,7 +5,7 @@ const API_URL = constants.API_URL;
 
 //register
 export function registerRider(user) {
-  return post(`/user/business/create_dispatcher`, user);
+  return post(`/business/dispatcher/create_dispatcher`, user);
 }
 
 const fleetCrud = {

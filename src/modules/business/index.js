@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // import Login from "./auth/login";
 // import Register from "./auth/register";
@@ -12,6 +12,8 @@ import Login from "./auth/login";
 import Register from "./auth/register";
 import Terms from "./auth/terms";
 import Verification from "./auth/verification";
+import ForgotPassword from "./auth/forgotPassword";
+import ResetPassword from "./auth/resetPassword";
 // import Deliverables from "./dispatch/deliverables";
 // import SingleDeliverable from "./dispatch/singleDeliverable";
 // import ConfirmDelivery from "./dispatch/confirmDelivery";
@@ -35,26 +37,34 @@ import Bids from "./bids/bids";
 import BidDetails from "./bids/bidDetails";
 import MySubscriptions from "./settings/subscriptions/mySubscriptions";
 import Wallet from "./settings/wallet/wallet";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //redux
 import { useSelector } from "react-redux";
 
 const Business = () => {
-  const isAuth = useSelector((state) => state.auth.isLoggedIn);
+  const [isAuth, setIsAuth] = useState(null);
 
   const Stack = createStackNavigator();
   const Drawer = createDrawerNavigator();
+
+  useEffect(async () => {
+    setIsAuth(await AsyncStorage.getItem("isAuth"));
+  }, []);
 
   const AuthStack = () => {
     return (
       //auth stack
       <Stack.Navigator
         screenOptions={{ gestureEnabled: false }}
+        initialRouteName="login"
         headerMode="none"
       >
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="register" component={Register} />
         <Stack.Screen name="terms" component={Terms} />
+        <Stack.Screen name="forgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="resetPassword" component={ResetPassword} />
         <Stack.Screen name="verification" component={Verification} />
         <Stack.Screen name="authSuccess" component={AuthSuccess} />
       </Stack.Navigator>
@@ -138,7 +148,7 @@ const Business = () => {
     <NavigationContainer>
       {/* {isAuth ? ( */}
       <Stack.Navigator
-        initialRouteName={isAuth ? "requests" : "auth"}
+        initialRouteName={isAuth == "business" ? "requests" : "auth"}
         screenOptions={{ gestureEnabled: false }}
         headerMode="none"
       >

@@ -3,14 +3,18 @@ import { Text } from "react-native";
 import { Button } from "react-native-elements";
 import { View, ScrollView, SafeAreaView, StatusBar } from "react-native";
 import OtpInputs from "@twotalltotems/react-native-otp-input";
-import { useToast } from "native-base";
+import { useToast, Pressable } from "native-base";
+import { CommonActions } from "@react-navigation/native";
 
 //styles
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
 
 //redux
-import { verification } from "../../../redux/general/auth/authActions";
+import {
+  verification,
+  resendOtp,
+} from "../../../redux/general/auth/authActions";
 import { useDispatch, useSelector } from "react-redux";
 
 const Verification = (props) => {
@@ -30,17 +34,26 @@ const Verification = (props) => {
       });
       toggle_isLoading(false);
     } else {
-      dispatch(verification({ otp: otp }, "customer"))
+      dispatch(
+        verification({ otp: otp, phone: props.route.params.phone }, "customer")
+      )
         .then(() => {
           toggle_isLoading(false);
-          props.navigation.navigate("auth", {
-            screen: "authSuccess",
-          });
+          props.navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [
+                {
+                  name: "authSuccess",
+                },
+              ],
+            })
+          );
         })
         .catch((e) => {
           toast.show({
             title: e
-              ? e
+              ? e.toLowerCase()
               : "something went wrong, please check your internet connection and try again",
             status: "error",
             placement: "top",
@@ -48,6 +61,28 @@ const Verification = (props) => {
           toggle_isLoading(false);
         });
     }
+  };
+
+  const handleResendOtp = () => {
+    dispatch(resendOtp({ phone: props.route.params.phone }, "customer"))
+      .then((message) => {
+        toast.show({
+          title: message
+            ? message.toLowerCase()
+            : "something went wrong, please check your internet connection and try again",
+          status: "success",
+          placement: "top",
+        });
+      })
+      .catch((e) => {
+        toast.show({
+          title: e
+            ? e.toLowerCase()
+            : "something went wrong, please check your internet connection and try again",
+          status: "error",
+          placement: "top",
+        });
+      });
   };
 
   return (
@@ -103,17 +138,19 @@ const Verification = (props) => {
                 marginBottom: 41,
               }}
             >
-              <Text style={[style.text_white, { textAlign: "center" }]}>
-                Didn't get the code?
-              </Text>
-              <Text
-                style={[
-                  style.text_white,
-                  { textAlign: "center", color: colors.lemon },
-                ]}
-              >
-                Resend code
-              </Text>
+              <Pressable onPress={() => handleResendOtp()}>
+                <Text style={[style.text_white, { textAlign: "center" }]}>
+                  Didn't get the code?
+                </Text>
+                <Text
+                  style={[
+                    style.text_white,
+                    { textAlign: "center", color: colors.lemon },
+                  ]}
+                >
+                  Resend code
+                </Text>
+              </Pressable>
             </View>
             <View>
               <Text style={[style.text_white, { textAlign: "center" }]}>
@@ -137,7 +174,7 @@ const Verification = (props) => {
                 titleStyle={style.btn_text}
                 loading={isLoading}
                 disabled={isLoading}
-                disabledStyle={[style.btn_success, { opacity: 0.8 }]}
+                disabledStyle={[style.btn_success_disabled, , { opacity: 0.8 }]}
                 onPress={() => onSubmit()}
               >
                 <Text style={style.btn_text}>Continue</Text>

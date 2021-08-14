@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
-import { Text, Input, TextArea, FormControl } from "native-base";
+import { Text, Input, TextArea, FormControl, useToast } from "native-base";
 import { Button } from "react-native-elements";
 import { View, ScrollView } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
@@ -12,7 +12,12 @@ import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
 import env from "../../../helpers/constants";
 
+//redux
+import { useDispatch, useSelector } from "react-redux";
+import { newDispatchRequest } from "../../../redux/user/dispatch/dispatchActions";
+
 const Delivery = (props) => {
+  const [loading, toggle_loading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -50,10 +55,35 @@ const Delivery = (props) => {
     );
   };
 
-  const setDeliveryData = async (data) => {
-    await props.setDelivery_data(data);
+  const dispatch = useDispatch();
+  const toast = useToast();
 
-    await props.onSubmit();
+  const onSubmit = async (delivery_data) => {
+    toggle_loading(true);
+
+    if (props.pickup_data && delivery_data) {
+      let data = Object.assign(props.pickup_data, delivery_data);
+
+      dispatch(newDispatchRequest(data))
+        .then((resp) => {
+          toggle_loading(false);
+          props.toggle_pickup_show(true);
+          props.navigation.navigate("dispatch", {
+            screen: "chooseProvider",
+            params: { parcel_details: resp },
+          });
+        })
+        .catch((e) => {
+          toast.show({
+            title: e
+              ? e.toLowerCase()
+              : "something went wrong, please check your internet connection and try again",
+            status: "error",
+            placement: "top",
+          });
+          toggle_loading(false);
+        });
+    }
   };
 
   return (
@@ -87,6 +117,7 @@ const Delivery = (props) => {
                   const text = `${data.structured_formatting.main_text}, ${data.structured_formatting.secondary_text}`;
                   onChange(text);
                 }}
+                styles={{ textInput: { color: colors.text_black } }}
                 query={{
                   key: env.GOOGLE_API_KEY,
                   language: "en",
@@ -177,13 +208,13 @@ const Delivery = (props) => {
           title="Continue"
           buttonStyle={[style.btn_success, { marginTop: 40, marginBottom: 20 }]}
           titleStyle={style.btn_text}
-          loading={props.isLoading}
-          disabled={props.isLoading}
+          loading={loading}
+          disabled={loading}
           disabledStyle={[
             style.btn_success,
             { marginTop: 40, opacity: 0.8, marginBottom: 20 },
           ]}
-          onPress={handleSubmit(setDeliveryData)}
+          onPress={handleSubmit(onSubmit)}
         />
 
         <Text

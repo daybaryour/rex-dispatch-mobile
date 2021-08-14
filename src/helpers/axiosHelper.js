@@ -12,6 +12,7 @@ const axiosApi = axios.create({
 const getToken = async () => {
   const token = await AsyncStorage.getItem("token");
 
+  console.log(token, "15");
   axiosApi.defaults.headers.common["Authorization"] = "Bearer " + token;
 };
 

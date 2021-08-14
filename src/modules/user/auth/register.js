@@ -14,7 +14,7 @@ import colors from "../../../helpers/color";
 
 //redux
 import { register } from "../../../redux/general/auth/authActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Register = (props) => {
   const [hide_password, toggle_hide_password] = useState(true);
@@ -42,7 +42,7 @@ const Register = (props) => {
           rules={{
             required: required,
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onChange, value } }) => (
             <FormControl isInvalid={errors[name] ? true : false}>
               <Input
                 {...style.form_control}
@@ -68,7 +68,7 @@ const Register = (props) => {
     // data.phone = data.phone.substring(1);
     // console.log(data);
     dispatch(register(data, "customer"))
-      .then(() => {
+      .then((data) => {
         toggle_isLoading(false);
 
         props.navigation.navigate("auth", {
@@ -91,7 +91,7 @@ const Register = (props) => {
       .catch((e) => {
         toast.show({
           title: e
-            ? e
+            ? e.toLowerCase()
             : "something went wrong, please check your internet connection and try again",
           status: "error",
           placement: "top",
@@ -133,7 +133,7 @@ const Register = (props) => {
             rules={{
               required: true,
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({ field: { onChange } }) => (
               <PhoneInput
                 containerStyle={
                   errors.phone
@@ -241,12 +241,18 @@ const Register = (props) => {
 
           <Button
             block
-            title="Register"
+            title={
+              icon_checked
+                ? "Register Account"
+                : "Please accept terms and conditions"
+            }
             buttonStyle={[style.btn_success, { marginTop: 0 }]}
             titleStyle={style.btn_text}
             loading={isLoading}
-            disabled={isLoading}
-            disabledStyle={[style.btn_success, { marginTop: 0, opacity: 0.8 }]}
+            disabled={isLoading || !icon_checked}
+            disabledStyle={[
+              style.btn_success_disabled,, { marginTop: 0, opacity: 0.8 }]}
+            disabledTitleStyle={{ color: "#fff" }}
             onPress={handleSubmit(onSubmit)}
           />
 

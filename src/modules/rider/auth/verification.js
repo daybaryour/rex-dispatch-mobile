@@ -130,7 +130,7 @@ const Verification = (props) => {
                 titleStyle={style.btn_text}
                 loading={isLoading}
                 disabled={isLoading}
-                disabledStyle={[style.btn_success, { opacity: 0.8 }]}
+                disabledStyle={[style.btn_success_disabled, , { opacity: 0.8 }]}
                 onPress={() => onSubmit()}
                 // onPress={() => props.navigation.navigate("authSuccess")}
               >

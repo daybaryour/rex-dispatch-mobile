@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 import { Button } from "react-native-elements";
+import { CommonActions } from "@react-navigation/native";
 
 //styles
 import style from "../../../assets/styles/general/style";
@@ -30,17 +31,27 @@ const AuthSuccess = (props) => {
                 },
               ]}
             >
-              Your account has been successfully verified
+              Your account has been successfully verified, Please Sign in with
+              the details created.
             </Text>
           </View>
         </View>
         <Button
           block
-          title="Create a dispatch"
+          title="Continue to login"
           buttonStyle={[style.btn_success]}
           titleStyle={style.btn_text}
           onPress={() =>
-            props.navigation.navigate("dispatch", { screen: "createDispatch" })
+            props.navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  {
+                    name: "login",
+                  },
+                ],
+              })
+            )
           }
         />
       </ScrollView>

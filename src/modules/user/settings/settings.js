@@ -24,18 +24,27 @@ import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 
 const Settings = (props) => {
   const [pageLoading, setPageLoading] = useState(true);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(async () => {
-    dispatch(getUserDetails("customer")).then(() => {
-      setPageLoading(false);
-    });
-    setUser(store.getState().settings.user);
-  }, []);
+    dispatch(getUserDetails("customer"))
+      .then(() => {
+        setUser(store.getState().settings.user);
+        setPageLoading(false);
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }, [1]);
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout()).then(() => {
+      props.navigation.navigate("auth", {
+        screen: "login",
+      });
+    });
+
     // console.log("got");
   };
 
@@ -44,7 +53,7 @@ const Settings = (props) => {
       <View style={style.body}>
         <Header icon={"menu"} title={"Settings"} />
 
-        {pageLoading || !user ? (
+        {pageLoading || user == {} || !user ? (
           <View
             style={{
               // display: "flex",
@@ -95,10 +104,12 @@ const Settings = (props) => {
                   >
                     <Avatar
                       size="xlarge"
-                      title={`${user.firstname[0]}.${user.lastname[0]}`}
-                      //   source={{
-                      //     uri: user.image ? user.image : null,
-                      //   }}
+                      title={`${user && user.firstname && user.firstname[0]}.${
+                        user && user.lastname && user.lastname[0]
+                      }`}
+                      source={{
+                        uri: user.image ? user.image : null,
+                      }}
                       rounded
                       containerStyle={{ backgroundColor: colors.navy_blue }}
 

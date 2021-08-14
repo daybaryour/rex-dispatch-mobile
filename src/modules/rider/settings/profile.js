@@ -112,6 +112,7 @@ const Profile = (props) => {
               // 'details' is provided when fetchDetails = true
               console.log(data, details);
             }}
+            styles={{ textInput: { color: colors.text_black } }}
             query={{
               key: env.GOOGLE_API_KEY,
               language: "en",

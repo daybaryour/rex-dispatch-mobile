@@ -57,7 +57,7 @@ export const editUserProfile = (data, user_type) => (dispatch) => {
         payload: resp.data,
       });
 
-      return Promise.resolve();
+      return Promise.resolve(resp.message);
     })
     .catch((error) => {
       const message =
@@ -92,12 +92,8 @@ export const changePassword = (data, user_type) => (dispatch) => {
       dispatch({
         type: settingsTypes.CHANGE_PASSWORD_SUCCESS,
       });
-      dispatch({
-        type: SET_MESSAGE,
-        payload: resp.message,
-      });
 
-      return Promise.resolve();
+      return Promise.resolve(resp.message);
     })
     .catch((error) => {
       const message =

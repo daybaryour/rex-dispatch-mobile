@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import { Text, useToast } from "native-base";
-import { View, Image, TouchableOpacity } from "react-native";
+import { View, Image, TouchableOpacity, Platform } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //styles
 import style from "../../../assets/styles/general/style";
@@ -14,52 +15,61 @@ import Pickup from "./pickup";
 import Delivery from "./delivery";
 
 //redux
-import { useDispatch, useSelector } from "react-redux";
-import { newDispatchRequest } from "../../../redux/user/dispatch/dispatchActions";
+import { useDispatch } from "react-redux";
+import { save_firebase_token } from "../../../redux/general/auth/authActions";
+
+//firebase
+import messaging from "@react-native-firebase/messaging";
 
 const CreateDispatch = (props) => {
   const [pickup_show, toggle_pickup_show] = useState(true);
-  const [delivery_details, toggle_delivery_details] = useState(false);
-  const [isLoading, toggle_isLoading] = useState(false);
 
   const [pickup_data, setPickup_data] = useState({});
-  const [delivery_data, setDelivery_data] = useState({});
 
   const dispatch = useDispatch();
-  const toast = useToast();
 
-  useEffect(() => {}, []);
-
-  onSubmit = () => {
-    toggle_isLoading(true);
-
-    // console.log("got");
-    if (pickup_data && delivery_data) {
-      let data = Object.assign(pickup_data, delivery_data);
-
-      console.log(data, "l40");
-
-      dispatch(newDispatchRequest(data))
-        .then(() => {
-          toggle_isLoading(false);
-          toggle_pickup_show(true);
-          props.navigation.navigate("dispatch", {
-            screen: "chooseProvider",
-            //   params: { id: data.phone },
-          });
-        })
-        .catch((e) => {
-          toast.show({
-            title: e
-              ? e
-              : "something went wrong, please check your internet connection and try again",
-            status: "error",
-            placement: "top",
-          });
-          toggle_isLoading(false);
-        });
+  const requestPermission = async () => {
+    try {
+      await messaging().requestPermission();
+    } catch {
+      console.log("permission rejected");
     }
   };
+
+  useEffect(async () => {
+    const enabled = await messaging().hasPermission();
+    if (enabled) {
+      messaging()
+        .getToken()
+        .then((token) => {
+          dispatch(
+            save_firebase_token(
+              {
+                token: token,
+                device_type: Platform.OS == "ios" ? "ios" : "android",
+              },
+              "customer"
+            )
+          );
+        });
+
+      // console.log(await AsyncStorage.removeItem("token"));
+
+      messaging().onTokenRefresh((token) => {
+        dispatch(
+          save_firebase_token(
+            {
+              token: token,
+              device_type: Platform.OS == "ios" ? "ios" : "android",
+            },
+            "customer"
+          )
+        );
+      });
+    } else {
+      requestPermission();
+    }
+  }, []);
 
   return (
     <>
@@ -119,10 +129,9 @@ const CreateDispatch = (props) => {
             />
           ) : (
             <Delivery
-              setDelivery_data={setDelivery_data}
+              pickup_data={pickup_data}
               toggle_pickup_show={toggle_pickup_show}
-              onSubmit={onSubmit}
-              isLoading={isLoading}
+              navigation={props.navigation}
             />
           )}
         </>

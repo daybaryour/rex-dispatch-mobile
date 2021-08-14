@@ -32,20 +32,28 @@ export default StyleSheet.create({
   btn_success: {
     backgroundColor: colors.lemon,
     borderRadius: 3,
-    padding: 20,
+    padding: 15,
+    marginBottom: 40,
+    marginTop: 50,
+  },
+
+  btn_success_disabled: {
+    backgroundColor: colors.lemon_disabled,
+    borderRadius: 3,
+    padding: 15,
     marginBottom: 40,
     marginTop: 50,
   },
 
   // form elements
   form_control: {
-    borderWidth: 1.1,
+    borderWidth: 1.2,
     borderColor: colors.border_black,
     borderRadius: 3,
     width: "100%",
     // height: "13%",
     fontSize: 16,
-    height: 50,
+    height: 55,
   },
 
   form_label: {
@@ -58,20 +66,20 @@ export default StyleSheet.create({
   //   react-native-phone-number-input styling
   phone_container: {
     padding: 0,
-    borderWidth: 1,
+    borderWidth: 1.2,
     width: "100%",
     borderRadius: 3,
   },
   phone_container_error: {
     padding: 0,
-    borderWidth: 1,
+    borderWidth: 1.2,
     width: "100%",
     borderRadius: 3,
     borderColor: "red",
   },
   phone_text_container: {
     backgroundColor: "#fff",
-    maxHeight: 50,
+    maxHeight: 55,
     margin: 0,
     padding: 0,
   },
@@ -101,7 +109,7 @@ export default StyleSheet.create({
   //texts
   btn_text: {
     fontSize: 16,
-    fontWeight: Platform.OS === "ios" ? "600" : "bold",
+    fontWeight: "normal",
   },
   text: {
     fontSize: 14,
