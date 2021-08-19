@@ -6,6 +6,7 @@ import { Avatar } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/FontAwesome5";
 import DocumentPicker from "react-native-document-picker";
+
 //styles
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
@@ -23,10 +24,11 @@ const Settings = (props) => {
         type: [DocumentPicker.types.images],
       });
       console.log(
-        res.uri,
-        res.type, // mime type
-        res.name,
-        res.size
+        res
+        // res.uri,
+        // res.type, // mime type
+        // res.name,
+        // res.size
       );
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {

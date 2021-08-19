@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text } from "react-native";
 import { Button } from "react-native-elements";
 import { View, ScrollView, SafeAreaView, StatusBar } from "react-native";
@@ -20,9 +20,16 @@ import { useDispatch } from "react-redux";
 const Verification = (props) => {
   const [otp, setOtp] = useState("");
   const [isLoading, toggle_isLoading] = useState(false);
+  const [counter, setCounter] = useState(60);
 
   const dispatch = useDispatch();
   const toast = useToast();
+
+  useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
 
   const onSubmit = () => {
     toggle_isLoading(true);
@@ -64,13 +71,18 @@ const Verification = (props) => {
   };
 
   const handleResendOtp = () => {
-    toast.show({
-      title: `an otp has been sent to ${props.route.params.phone}`,
-      status: "success",
-      placement: "top",
-    });
-    dispatch(resendOtp({ phone: props.route.params.phone }, "business")).catch(
-      (e) => {
+    setCounter(59);
+    dispatch(resendOtp({ phone: props.route.params.phone }, "business"))
+      .then((message) => {
+        toast.show({
+          title: message
+            ? message.toLowerCase()
+            : "something went wrong, please check your internet connection and try again",
+          status: "success",
+          placement: "top",
+        });
+      })
+      .catch((e) => {
         toast.show({
           title: e
             ? e.toLowerCase()
@@ -78,8 +90,7 @@ const Verification = (props) => {
           status: "error",
           placement: "top",
         });
-      }
-    );
+      });
   };
 
   return (
@@ -135,7 +146,11 @@ const Verification = (props) => {
                 marginBottom: 41,
               }}
             >
-              <Pressable onPress={() => handleResendOtp()}>
+              <Pressable
+                onPress={() => {
+                  counter == 0 ? handleResendOtp() : " ";
+                }}
+              >
                 <Text style={[style.text_white, { textAlign: "center" }]}>
                   Didn't get the code?
                 </Text>
@@ -145,7 +160,7 @@ const Verification = (props) => {
                     { textAlign: "center", color: colors.lemon },
                   ]}
                 >
-                  Resend code
+                  Resend code {counter == 0 ? " " : `in ${counter} seconds`}
                 </Text>
               </Pressable>
             </View>

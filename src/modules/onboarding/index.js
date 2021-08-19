@@ -18,7 +18,7 @@ const Onboarding = (props) => {
 
   return (
     <View style={style.body}>
-      <ScrollView style={style.container}>
+      <ScrollView style={style.container} showsVerticalScrollIndicator={false}>
         <View>
           <Image
             alt="rex-logo"

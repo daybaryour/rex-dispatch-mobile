@@ -4,6 +4,7 @@ import { View, Text, ScrollView, Platform } from "react-native";
 import { Button } from "react-native-elements";
 import { Radio, TextArea, FormControl, useToast } from "native-base";
 import { useForm, Controller } from "react-hook-form";
+import { CommonActions } from "@react-navigation/native";
 
 //styles
 import style from "../../../assets/styles/general/style";
@@ -30,13 +31,19 @@ const CancelRequest = (props) => {
 
   const onSubmit = (data) => {
     toggle_loading(true);
-
     dispatch(cancelParcel(props.route.params.id, data))
       .then((resp) => {
         toggle_loading(false);
-        props.navigation.navigate("dispatch", {
-          screen: "createDispatch",
-        });
+        props.navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [
+              {
+                name: "createDispatch",
+              },
+            ],
+          })
+        );
       })
       .catch((e) => {
         toast.show({

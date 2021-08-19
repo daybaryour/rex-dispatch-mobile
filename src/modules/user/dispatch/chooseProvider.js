@@ -65,8 +65,6 @@ const ChooseProvider = (props) => {
     });
   }, []);
 
-  console.log(bids);
-
   return (
     <View style={style.body}>
       <Header
@@ -162,14 +160,21 @@ const ChooseProvider = (props) => {
                       </Text>
                     </Col>
                     <Col
-                      size={1.1}
+                      size={1.5}
                       style={{
                         alignItems: "flex-end",
                         justifyContent: "space-around",
                       }}
                     >
-                      <Text style={[style.text_16, { marginBottom: 10 }]}>
-                        ₦{data.price}
+                      <Text
+                        style={[
+                          style.text_16,
+                          {
+                            marginBottom: 10,
+                          },
+                        ]}
+                      >
+                        ₦ {new Intl.NumberFormat().format(data.price)}
                       </Text>
 
                       <Button

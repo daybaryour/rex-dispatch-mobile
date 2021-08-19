@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint .",
     "git_push": "node -e \"const mssg = ' ' + process.argv[1]; require('child_process').execSync('git add . && git commit -m \\\"' + mssg + '\\\" && git push -u origin master', { stdio:[0, 1, 2] } ) \"",
-    "git_push_dev": "node -e \"const mssg = ' ' + process.argv[1]; require('child_process').execSync('git add . && git commit -m \\\"' + mssg + '\\\" && git push -u origin development', { stdio:[0, 1, 2] } ) \""
+    "git_push_dev": "node -e \"const mssg = ' ' + process.argv[1]; require('child_process').execSync('git add . && git commit -m \\\"' + mssg + '\\\" && git push -u origin development', { stdio:[0, 1, 2] } ) \"",
+    "build_apk": "cd android && ./gradlew clean && cd .. && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
@@ -28,10 +29,12 @@
     "axios": "^0.21.1",
     "card-validator": "^8.1.1",
     "credit-card-type": "^9.1.0",
+    "moment": "^2.29.1",
     "native-base": "^3.0.3",
     "react": "17.0.1",
     "react-hook-form": "^7.12.2",
     "react-native": "0.64.2",
+    "react-native-currency-format": "^1.0.19",
     "react-native-document-picker": "^5.2.0",
     "react-native-easy-grid": "^0.2.2",
     "react-native-elements": "^3.4.2",
@@ -39,6 +42,7 @@
     "react-native-google-places-autocomplete": "^2.2.0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-modal": "^12.0.2",
+    "react-native-paystack-webview": "^4.0.3",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-push-notification": "^7.4.0",
     "react-native-ratings": "^8.1.0",
@@ -52,6 +56,7 @@
     "react-native-step-indicator": "^1.0.3",
     "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^8.1.0",
+    "react-native-webview": "^11.13.0",
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",

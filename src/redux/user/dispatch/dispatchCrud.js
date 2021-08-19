@@ -1,21 +1,32 @@
 import { post, patch, get } from "../../../helpers/axiosHelper";
 
-export function newDispatch(data) {
+function newDispatch(data) {
   return post(`/parcel/create_parcel`, data);
 }
 
-export function trackParcel(data) {
+function dispatchHistory() {
+  return get(`/parcel/dispatch_history`);
+}
+
+function trackParcel(data) {
   return get(`/parcel/track_parcel/${data}`);
 }
 
-export function cancelParcel(id, data) {
+function cancelParcel(id, data) {
   return patch(`/parcel/cancel_parcel/${id}`, data);
+}
+
+// complete parcel process
+function parcelPayment(data) {
+  return patch(`/parcel/complete_parcel_process`, data);
 }
 
 const dispatchCrud = {
   newDispatch,
   trackParcel,
   cancelParcel,
+  parcelPayment,
+  dispatchHistory,
 };
 
 export default dispatchCrud;

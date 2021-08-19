@@ -80,16 +80,19 @@ const Profile = (props) => {
     // data.phone = data.phone.substring(1);
     // console.log(data);
     dispatch(editUserProfile(data, "customer"))
-      .then((message) => {
+      .then((data) => {
         toggle_isLoading(false);
 
         toast.show({
-          title: message,
+          title: data.message,
           status: "success",
           placement: "top",
         });
+
+        props.route.params.setUser(data.data);
       })
       .catch((e) => {
+        console.log(e);
         toast.show({
           title: e
             ? e.toLowerCase()
@@ -275,7 +278,7 @@ const Profile = (props) => {
             </View>
           )}
           name={"address"}
-          //   defaultValue={user.address}
+          defaultValue={user.address}
         />
         {errors["address"] && (
           <Text style={style.error_text}>

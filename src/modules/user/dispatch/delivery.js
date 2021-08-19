@@ -13,7 +13,7 @@ import colors from "../../../helpers/color";
 import env from "../../../helpers/constants";
 
 //redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { newDispatchRequest } from "../../../redux/user/dispatch/dispatchActions";
 
 const Delivery = (props) => {

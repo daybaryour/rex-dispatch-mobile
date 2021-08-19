@@ -41,4 +41,5 @@ export default {
   ],
   DISPATCH_TYPES: ["envelope", "parcel", "box", "food"],
   API_URL: "https://rex-dispatch-api.herokuapp.com/api/v1",
+  PAYSTACK_PK: "pk_test_7ef0929bad6cd1b77c44d66f876cc049e8be89d9",
 };

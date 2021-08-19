@@ -50,6 +50,31 @@ export const newDispatchRequest = (data) => (dispatch) => {
     });
 };
 
+//get dispatch history
+export const dispatchHistory = (ata) => (dispatch) => {
+  return dispatchCrud
+    .dispatchHistory()
+    .then((response) => {
+      const resp = response.data;
+
+      if (resp.error) {
+        return Promise.reject(resp.message);
+      }
+
+      return Promise.resolve(resp.data);
+    })
+    .catch((error) => {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return Promise.reject(message);
+    });
+};
+
 //track parcel
 export const trackParcel = (data) => (dispatch) => {
   return dispatchCrud
@@ -90,10 +115,35 @@ export const trackParcel = (data) => (dispatch) => {
 export const cancelParcel = (id, data) => (dispatch) => {
   console.log("got here");
   return dispatchCrud
-    .cancelParcel(data)
+    .cancelParcel(id, data)
     .then((response) => {
       const resp = response.data;
       console.log(resp);
+      if (resp.error) {
+        return Promise.reject(resp.message);
+      }
+
+      return Promise.resolve(resp.data);
+    })
+    .catch((error) => {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return Promise.reject(message);
+    });
+};
+
+//complete parcel process
+export const parcelPayment = (data) => (dispatch) => {
+  return dispatchCrud
+    .parcelPayment(data)
+    .then((response) => {
+      const resp = response.data;
+
       if (resp.error) {
         return Promise.reject(resp.message);
       }

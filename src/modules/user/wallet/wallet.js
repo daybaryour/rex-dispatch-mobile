@@ -42,7 +42,7 @@ const Wallet = (props) => {
                 >
                   ₦20,000.00
                 </Text>
-                <Button
+                {/* <Button
                   title="Add funds +"
                   size={5}
                   buttonStyle={{
@@ -57,7 +57,7 @@ const Wallet = (props) => {
                     color: colors.lemon,
                   }}
                   //   onPress={() => toggle_showModal("proceed_payment")}
-                />
+                /> */}
               </Col>
               <Col size={1} style={{ alignItems: "center" }}>
                 <Text
@@ -79,18 +79,19 @@ const Wallet = (props) => {
             </Row>
           </Grid>
         </View>
-
-        <View>
-          <Transactions />
-        </View>
-
         <View style={style.container}>
           <Button
             block
             title="Add funds to wallet"
-            buttonStyle={[style.btn_success, { marginTop: 20 }]}
+            buttonStyle={[
+              style.btn_success,
+              { marginTop: 20, marginBottom: 0 },
+            ]}
             titleStyle={style.btn_text}
           />
+        </View>
+        <View>
+          <Transactions />
         </View>
       </ScrollView>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 import { Button } from "react-native-elements";
+import { CommonActions } from "@react-navigation/native";
 
 //styles
 import style from "../../../assets/styles/general/style";
@@ -37,7 +38,7 @@ const OrderSuccess = (props) => {
               email.
             </Text>
             <Text style={[style.text, { fontWeight: "400" }]}>
-              Your order number is 03345
+              Your order number is {props.route.params}
             </Text>
           </View>
         </View>
@@ -46,11 +47,34 @@ const OrderSuccess = (props) => {
           title="Send another parcel"
           buttonStyle={[style.btn_success, { marginTop: 55 }]}
           titleStyle={style.btn_text}
-          onPress={() => props.navigation.navigate("dispatch")}
+          onPress={() =>
+            props.navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  {
+                    name: "createDispatch",
+                  },
+                ],
+              })
+            )
+          }
         />
         <Text
           style={[style.text_16, { textAlign: "center", color: colors.lemon }]}
-          onPress={() => props.navigation.navigate("track")}
+          onPress={() =>
+            props.navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  {
+                    name: "track",
+                    screen: "track",
+                  },
+                ],
+              })
+            )
+          }
         >
           Track my Parcel
         </Text>

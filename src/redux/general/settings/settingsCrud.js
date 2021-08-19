@@ -7,7 +7,7 @@ export function getUser(user_type) {
       : user_type == "business"
       ? "business/business_profile"
       : "dispatcher/dispatcher_profile";
-  return get(`/user/${url}`);
+  return get(`/${url}`);
 }
 
 export function editProfile(data, user_type) {
@@ -18,7 +18,7 @@ export function editProfile(data, user_type) {
       ? "business"
       : "dispatcher";
 
-  return patch(`/user/${url}/update_user`, data);
+  return patch(`/${url}/update_user`, data);
 }
 
 export function changeAvatar(data, user_type) {
@@ -29,7 +29,7 @@ export function changeAvatar(data, user_type) {
       ? "business"
       : "dispatcher";
 
-  return patch(`/user/${url}/profile_picture`, data);
+  return post(`/${url}/profile_picture`, data);
 }
 
 export function changePassword(data, user_type) {
@@ -40,7 +40,7 @@ export function changePassword(data, user_type) {
       ? "business"
       : "dispatcher";
 
-  return patch(`/user/${url}/change_password`, data);
+  return patch(`/${url}/change_password`, data);
 }
 
 const settingsCrud = {

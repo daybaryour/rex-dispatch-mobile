@@ -20,7 +20,7 @@ export const getUserDetails = (user_type) => (dispatch) => {
         payload: resp.data,
       });
 
-      return Promise.resolve();
+      return Promise.resolve(resp.data);
     })
     .catch((error) => {
       const message =
@@ -29,6 +29,8 @@ export const getUserDetails = (user_type) => (dispatch) => {
           error.response.data.message) ||
         error.message ||
         error.toString();
+
+      console.log(error);
 
       dispatch({
         type: settingsTypes.GET_USER_FAIL,
@@ -57,7 +59,7 @@ export const editUserProfile = (data, user_type) => (dispatch) => {
         payload: resp.data,
       });
 
-      return Promise.resolve(resp.message);
+      return Promise.resolve(resp);
     })
     .catch((error) => {
       const message =
@@ -130,9 +132,10 @@ export const changeAvatar = (data, user_type) => (dispatch) => {
         payload: resp.data,
       });
 
-      return Promise.resolve();
+      return Promise.resolve(resp.data);
     })
     .catch((error) => {
+      console.log(error);
       const message =
         (error.response &&
           error.response.data &&

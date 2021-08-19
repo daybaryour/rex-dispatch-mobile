@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import { Divider } from "native-base";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
+import { Divider, useToast } from "native-base";
 import { Avatar } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import Spinner from "react-native-spinkit";
+import DocumentPicker from "react-native-document-picker";
 
 //styles
 import style from "../../../assets/styles/general/style";
@@ -16,7 +23,10 @@ import color from "../../../helpers/color";
 
 //redux
 import { logout } from "../../../redux/general/auth/authActions";
-import { getUserDetails } from "../../../redux/general/settings/settingsActions";
+import {
+  getUserDetails,
+  changeAvatar,
+} from "../../../redux/general/settings/settingsActions";
 import { useDispatch, useSelector } from "react-redux";
 import store from "../../../redux/store";
 
@@ -25,18 +35,92 @@ import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 const Settings = (props) => {
   const [pageLoading, setPageLoading] = useState(true);
   const [user, setUser] = useState(null);
+
   const dispatch = useDispatch();
+  const toast = useToast();
 
   useEffect(async () => {
     dispatch(getUserDetails("customer"))
-      .then(() => {
+      .then((data) => {
         setUser(store.getState().settings.user);
         setPageLoading(false);
       })
       .catch((e) => {
         alert(e);
       });
-  }, [1]);
+  }, []);
+
+  const pickImage = async () => {
+    // Pick a single file
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+      });
+      let data = new FormData();
+      // res.uri,
+      // res.type, // mime type
+      // res.name,
+      // res.size
+      let image = {
+        name: res.name,
+        type: res.type,
+        size: res.size,
+        uri: res.uri,
+      };
+      data.append("avatar", image);
+      console.log(data._parts, "71");
+
+      dispatch(changeAvatar(data, "customer"))
+        .then((data) => {
+          // toggle_isLoading(false);
+
+          toast.show({
+            title: data.message,
+            status: "success",
+            placement: "top",
+          });
+
+          setUser(data.data);
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.show({
+            title: e
+              ? e.toLowerCase()
+              : "something went wrong, please check your internet connection and try again",
+            status: "error",
+            placement: "top",
+          });
+          // toggle_isLoading(false);
+        });
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
+  };
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    dispatch(getUserDetails("customer"))
+      .then((data) => {
+        setUser(data);
+        setRefreshing(false);
+      })
+      .catch((e) => {
+        alert(e);
+      });
+
+    // wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout()).then(() => {
@@ -73,7 +157,12 @@ const Settings = (props) => {
           </View>
         ) : (
           <>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            >
               <View
                 style={{
                   backgroundColor: colors.ash_bg,
@@ -85,7 +174,7 @@ const Settings = (props) => {
                   <View style={{ display: "flex", flexDirection: "row" }}>
                     <Text style={[style.text_16]}>Profile</Text>
                     <TouchableOpacity
-                      onPress={() => props.navigation.navigate("profile")}
+                      onPress={() => pickImage()}
                       style={{
                         marginLeft: "auto",
                       }}
@@ -104,6 +193,7 @@ const Settings = (props) => {
                   >
                     <Avatar
                       size="xlarge"
+                      containerStyle={{ backgroundColor: colors.navy_blue }}
                       title={`${user && user.firstname && user.firstname[0]}.${
                         user && user.lastname && user.lastname[0]
                       }`}
@@ -111,7 +201,6 @@ const Settings = (props) => {
                         uri: user.image ? user.image : null,
                       }}
                       rounded
-                      containerStyle={{ backgroundColor: colors.navy_blue }}
 
                       //   style={{
                       //     width: 120,
@@ -146,7 +235,10 @@ const Settings = (props) => {
                 <View style={style.container}>
                   <TouchableOpacity
                     onPress={() =>
-                      props.navigation.navigate("profile", { user: user })
+                      props.navigation.navigate("profile", {
+                        user: user,
+                        setUser: setUser,
+                      })
                     }
                   >
                     <View style={{ marginBottom: "5%" }}>
