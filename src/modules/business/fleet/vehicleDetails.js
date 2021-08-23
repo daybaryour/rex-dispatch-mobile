@@ -11,6 +11,7 @@ import colors from "../../../helpers/color";
 import Header from "../../partials/header";
 
 const VehicleDetails = (props) => {
+  data = props.route.params.data;
   return (
     <View style={style.body}>
       <Header
@@ -40,7 +41,9 @@ const VehicleDetails = (props) => {
               <Text style={[style.text, { color: colors.pure_ash }]}>
                 Vehicle Type
               </Text>
-              <Text style={[style.text_16, { marginVertical: 10 }]}>Bike</Text>
+              <Text style={[style.text_16, { marginVertical: 10 }]}>
+                {data.vehicle_type}
+              </Text>
               <Divider />
             </View>
             <View style={{ marginBottom: 13 }}>
@@ -48,7 +51,7 @@ const VehicleDetails = (props) => {
                 License Number (Plate Number)
               </Text>
               <Text style={[style.text_16, { marginVertical: 10 }]}>
-                NMHFFDGHN
+                {data.license_number.toUpperCase()}
               </Text>
               <Divider />
             </View>
@@ -57,16 +60,16 @@ const VehicleDetails = (props) => {
                 Rider’s Name
               </Text>
               <Text style={[style.text_16, { marginVertical: 10 }]}>
-                Obinna Godwin
+                {data.firstname} {data.lastname}
               </Text>
               <Divider />
             </View>
             <View style={{ marginBottom: 13 }}>
               <Text style={[style.text, { color: colors.pure_ash }]}>
-                RIder’s Phone Number
+                Rider’s Phone Number
               </Text>
               <Text style={[style.text_16, { marginVertical: 10 }]}>
-                0904 747 8291
+                {data.phone}
               </Text>
             </View>
           </View>

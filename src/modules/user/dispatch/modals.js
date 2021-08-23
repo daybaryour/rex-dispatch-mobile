@@ -277,9 +277,9 @@ const Modals = (props) => {
               }}
               onSuccess={(res) => {
                 let init_data = {
-                  //   parcel_id: parcel_details._id,
+                  parcel_id: parcel_details._id,
                   bid_id: data.mongo_id,
-                  reference: res.data.transactionRef.reference,
+                  payment_ref: res.data.transactionRef.reference,
                   payment_channel: paymentChannel,
                 };
                 dispatch(parcelPayment(init_data))
@@ -300,7 +300,7 @@ const Modals = (props) => {
                     );
                   })
                   .catch((e) => {
-                    toggle_loading(false);
+                    toggleLoading(false);
                     props.toggle_showModal(null);
                     toast.show({
                       title: e

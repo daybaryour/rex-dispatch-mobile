@@ -1,4 +1,4 @@
-import { post } from "../../../helpers/axiosHelper";
+import { post, get } from "../../../helpers/axiosHelper";
 
 //initialize transaction
 function initializeTrx(data, user_type) {
@@ -16,9 +16,15 @@ function verifyTrx(data, user_type) {
   );
 }
 
+//get my transactions
+function getTransactions(user_type) {
+  return get(`/general/transactions/transaction_history?model=${user_type}`);
+}
+
 const transactionCrud = {
   initializeTrx,
   verifyTrx,
+  getTransactions,
 };
 
 export default transactionCrud;

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-// import Login from "./auth/login";
-// import Register from "./auth/register";
-// import Verification from "./auth/verification";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //react navigation
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -14,10 +11,7 @@ import Terms from "./auth/terms";
 import Verification from "./auth/verification";
 import ForgotPassword from "./auth/forgotPassword";
 import ResetPassword from "./auth/resetPassword";
-// import Deliverables from "./dispatch/deliverables";
-// import SingleDeliverable from "./dispatch/singleDeliverable";
-// import ConfirmDelivery from "./dispatch/confirmDelivery";
-// import DispatchSuccess from "./dispatch/dispatchSuccess";
+import BusinessVerification from "./settings/businessVerification";
 import History from "./history/history";
 import SingleHistory from "./history/singleHistory";
 import Settings from "./settings/settings";
@@ -30,6 +24,7 @@ import NewVehicleSuccess from "./fleet/newVehicleSuccess";
 import Subscriptions from "./settings/subscriptions/subscriptions";
 import Requests from "./requests/requests";
 import SingleRequest from "./requests/singleRequest";
+import BidModal from "./requests/bidModal";
 import BidSuccess from "./requests/bidSuccess";
 import Fleet from "./fleet/fleet";
 import VehicleDetails from "./fleet/vehicleDetails";
@@ -37,7 +32,6 @@ import Bids from "./bids/bids";
 import BidDetails from "./bids/bidDetails";
 import MySubscriptions from "./settings/subscriptions/mySubscriptions";
 import Wallet from "./settings/wallet/wallet";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //redux
 import { useSelector } from "react-redux";
@@ -80,6 +74,7 @@ const Business = () => {
       >
         <Stack.Screen name="allRequests" component={Requests} />
         <Stack.Screen name="singleRequest" component={SingleRequest} />
+        <Stack.Screen name="placeBid" component={BidModal} />
         <Stack.Screen name="bidSuccess" component={BidSuccess} />
       </Stack.Navigator>
     );
@@ -140,6 +135,10 @@ const Business = () => {
         <Stack.Screen name="mySubscriptions" component={MySubscriptions} />
         <Stack.Screen name="subscriptions" component={Subscriptions} />
         <Stack.Screen name="wallet" component={Wallet} />
+        <Stack.Screen
+          name="businessVerification"
+          component={BusinessVerification}
+        />
       </Stack.Navigator>
     );
   };

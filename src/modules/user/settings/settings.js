@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -102,13 +102,9 @@ const Settings = (props) => {
     }
   };
 
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-  };
-
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
     dispatch(getUserDetails("customer"))
       .then((data) => {
@@ -118,8 +114,6 @@ const Settings = (props) => {
       .catch((e) => {
         alert(e);
       });
-
-    // wait(2000).then(() => setRefreshing(false));
   }, []);
 
   const handleLogout = () => {

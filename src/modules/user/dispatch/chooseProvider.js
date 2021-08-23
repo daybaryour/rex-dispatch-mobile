@@ -99,7 +99,7 @@ const ChooseProvider = (props) => {
             return (
               <>
                 <Grid
-                  key={data}
+                  key={data.mongo_id}
                   onPress={() => toggle_showModal("business_details")}
                 >
                   <Row style={{ marginTop: 18, marginBottom: 15 }}>

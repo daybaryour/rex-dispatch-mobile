@@ -51,9 +51,9 @@ export const newDispatchRequest = (data) => (dispatch) => {
 };
 
 //get dispatch history
-export const dispatchHistory = (ata) => (dispatch) => {
+export const dispatchHistory = (user_type) => (dispatch) => {
   return dispatchCrud
-    .dispatchHistory()
+    .dispatchHistory(user_type)
     .then((response) => {
       const resp = response.data;
 
@@ -113,12 +113,10 @@ export const trackParcel = (data) => (dispatch) => {
 };
 
 export const cancelParcel = (id, data) => (dispatch) => {
-  console.log("got here");
   return dispatchCrud
     .cancelParcel(id, data)
     .then((response) => {
       const resp = response.data;
-      console.log(resp);
       if (resp.error) {
         return Promise.reject(resp.message);
       }

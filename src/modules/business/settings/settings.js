@@ -186,10 +186,7 @@ const Settings = (props) => {
                     <Text style={[style.text_16_normal]}>
                       Manage Subscription
                     </Text>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.navigation.navigate("mySubscriptions")
-                      }
+                    <View
                       style={{
                         marginLeft: "auto",
                       }}
@@ -201,14 +198,12 @@ const Settings = (props) => {
                         }}
                         name={"chevron-right"}
                       />
-                    </TouchableOpacity>
+                    </View>
                   </View>
                   <Divider />
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => props.navigation.navigate("password")}
-              ></TouchableOpacity>
+
               <TouchableOpacity
                 onPress={() => props.navigation.navigate("password")}
               >
@@ -221,8 +216,7 @@ const Settings = (props) => {
                     }}
                   >
                     <Text style={[style.text_16_normal]}>Security</Text>
-                    <TouchableOpacity
-                      onPress={() => props.navigation.navigate("password")}
+                    <View
                       style={{
                         marginLeft: "auto",
                       }}
@@ -234,7 +228,7 @@ const Settings = (props) => {
                         }}
                         name={"chevron-right"}
                       />
-                    </TouchableOpacity>
+                    </View>
                   </View>
                   <Divider />
                 </View>
@@ -255,8 +249,7 @@ const Settings = (props) => {
                     }}
                   >
                     <Text style={[style.text_16_normal]}>Support</Text>
-                    <TouchableOpacity
-                      onPress={() => props.navigation.navigate("support")}
+                    <View
                       style={{
                         marginLeft: "auto",
                       }}
@@ -268,7 +261,40 @@ const Settings = (props) => {
                         }}
                         name={"chevron-right"}
                       />
-                    </TouchableOpacity>
+                    </View>
+                  </View>
+                  <Divider />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  props.navigation.navigate("businessVerification")
+                }
+              >
+                <View style={{ marginBottom: "5%" }}>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginBottom: "4%",
+                    }}
+                  >
+                    <Text style={[style.text_16_normal]}>
+                      Business Verification
+                    </Text>
+                    <View
+                      style={{
+                        marginLeft: "auto",
+                      }}
+                    >
+                      <Icon
+                        style={{
+                          fontSize: 14,
+                          marginTop: "20%",
+                        }}
+                        name={"chevron-right"}
+                      />
+                    </View>
                   </View>
                   <Divider />
                 </View>

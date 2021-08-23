@@ -13,6 +13,7 @@ import BidModal from "./bidModal";
 
 const SingleRequest = (props) => {
   const [showModal, toggle_showModal] = useState(false);
+  const data = props.route.params.data;
 
   return (
     <View style={style.body}>
@@ -54,7 +55,7 @@ const SingleRequest = (props) => {
                   Package Type
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  Documents & Files
+                  {data.package_type}
                 </Text>
                 <Divider />
               </View>
@@ -63,7 +64,7 @@ const SingleRequest = (props) => {
                   Pickup Address
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.pickup_address}
                 </Text>
                 <Divider />
               </View>
@@ -72,7 +73,7 @@ const SingleRequest = (props) => {
                   Nearest Landmark
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.nearest_landmark}
                 </Text>
                 <Divider />
               </View>
@@ -81,7 +82,7 @@ const SingleRequest = (props) => {
                   Sender’s Name
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.senders_name}
                 </Text>
                 <Divider />
               </View>
@@ -90,7 +91,7 @@ const SingleRequest = (props) => {
                   Phone Number
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.senders_phone}
                 </Text>
                 <Divider />
               </View>
@@ -112,7 +113,7 @@ const SingleRequest = (props) => {
                   Delivery Address
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.delivery_address}
                 </Text>
                 <Divider />
               </View>
@@ -121,7 +122,7 @@ const SingleRequest = (props) => {
                   Nearest Landmark
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.notable_landmark}
                 </Text>
                 <Divider />
               </View>
@@ -130,18 +131,32 @@ const SingleRequest = (props) => {
                   Receiver’s Name
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.recipient_name}
                 </Text>
                 <Divider />
               </View>
-              <View style={{ marginBottom: 20 }}>
+              <View style={{ marginBottom: 13 }}>
                 <Text style={[style.text, { color: colors.pure_ash }]}>
                   Phone Number
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.recipient_phone}
                 </Text>
+                <Divider />
               </View>
+              {data.additional_information ? (
+                <View style={{ marginBottom: 13 }}>
+                  <Text style={[style.text, { color: colors.pure_ash }]}>
+                    Additional Information
+                  </Text>
+                  <Text style={[style.text_16, { marginVertical: 10 }]}>
+                    {data.additional_information}
+                  </Text>
+                  <Divider />
+                </View>
+              ) : (
+                <></>
+              )}
             </View>
           </View>
 
@@ -150,7 +165,9 @@ const SingleRequest = (props) => {
             title="Place Bid"
             buttonStyle={[style.btn_success, { marginTop: 33 }]}
             titleStyle={style.btn_text}
-            onPress={() => toggle_showModal(true)}
+            onPress={() => {
+              props.navigation.navigate("placeBid");
+            }}
           />
         </View>
       </ScrollView>

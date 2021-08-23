@@ -7,7 +7,6 @@ export const registerRider = (data) => (dispatch) => {
     .registerRider(data)
     .then((response) => {
       const resp = response.data;
-      console.log(resp);
       if (resp.error) {
         dispatch({
           type: REGISTER_FLEET_FAIL,
@@ -33,6 +32,31 @@ export const registerRider = (data) => (dispatch) => {
       dispatch({
         type: REGISTER_FLEET_FAIL,
       });
+
+      return Promise.reject(message);
+    });
+};
+
+//get fleet
+export const getFleet = () => (dispatch) => {
+  return fleetCrud
+    .getFleet()
+    .then((response) => {
+      const resp = response.data;
+      console.log(resp);
+      if (resp.error) {
+        return Promise.reject(resp.message);
+      }
+
+      return Promise.resolve(resp.data);
+    })
+    .catch((error) => {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
 
       return Promise.reject(message);
     });

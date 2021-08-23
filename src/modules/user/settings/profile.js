@@ -207,7 +207,7 @@ const Profile = (props) => {
                 minWidth={200}
                 accessibilityLabel="Select Location"
                 placeholder="Please select"
-                {...style.form_control}
+                {...style.select_form_control}
                 onValueChange={(itemValue) => onChange(itemValue)}
                 _selectedItem={{
                   bg: colors.lemon,
@@ -300,7 +300,7 @@ const Profile = (props) => {
                 minWidth={200}
                 accessibilityLabel="Select gender"
                 placeholder="Please select"
-                {...style.form_control}
+                {...style.select_form_control}
                 onValueChange={(itemValue) => onChange(itemValue)}
                 _selectedItem={{
                   bg: colors.lemon,

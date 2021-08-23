@@ -86,7 +86,7 @@ const Profile = (props) => {
           minWidth={200}
           accessibilityLabel="Select Package Type"
           placeholder="please select"
-          {...style.form_control}
+          {...style.select_form_control}
           //   onValueChange={(itemValue) => setLanguage(itemValue)}
           _selectedItem={{
             bg: colors.lemon,
@@ -128,7 +128,7 @@ const Profile = (props) => {
           minWidth={200}
           accessibilityLabel="Select Package Type"
           placeholder="please select"
-          {...style.form_control}
+          {...style.select_form_control}
           //   onValueChange={(itemValue) => setLanguage(itemValue)}
           _selectedItem={{
             bg: colors.lemon,

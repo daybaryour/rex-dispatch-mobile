@@ -4,8 +4,8 @@ function newDispatch(data) {
   return post(`/parcel/create_parcel`, data);
 }
 
-function dispatchHistory() {
-  return get(`/parcel/dispatch_history`);
+function dispatchHistory(user_type) {
+  return get(`/parcel/dispatch_history?model=${user_type}`);
 }
 
 function trackParcel(data) {

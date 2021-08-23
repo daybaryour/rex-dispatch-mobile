@@ -161,7 +161,6 @@ const TrackDispatch = (props) => {
           disabled={loading}
           disabledStyle={[
             style.btn_success_disabled,
-            ,
             { marginTop: 35, opacity: 0.8 },
           ]}
           onPress={handleSubmit(onSubmit)}

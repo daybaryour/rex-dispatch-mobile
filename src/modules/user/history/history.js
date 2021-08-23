@@ -19,12 +19,14 @@ import { useDispatch } from "react-redux";
 import { dispatchHistory } from "../../../redux/user/dispatch/dispatchActions";
 
 const History = (props) => {
-  const source = [1, 2, 3, 4, 5];
   const [history, setHistory] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
 
+  const dispatch = useDispatch();
+  const toast = useToast();
+
   useEffect(() => {
-    dispatch(dispatchHistory())
+    dispatch(dispatchHistory("customer"))
       .then((res) => {
         setHistory(res);
         setPageLoading(false);
@@ -33,18 +35,12 @@ const History = (props) => {
         toast.show({
           title: e
             ? e.toLowerCase()
-            : "something went wrong, please check your internet connection and try again",
+            : "something went wrong, please check your internet connection and restart the app",
           status: "error",
           placement: "top",
         });
-        toggle_loading(false);
       });
   }, []);
-
-  console.log(history[0]);
-
-  const dispatch = useDispatch();
-  const toast = useToast();
 
   return (
     <View style={style.body}>
@@ -139,9 +135,7 @@ const History = (props) => {
                             },
                           ]}
                         >
-                          {moment(data.createdAt).format(
-                            "MMMM Do YYYY, h:mm:ss"
-                          )}
+                          {moment(data.createdAt).format("MMMM Do YYYY, h:mm")}
                         </Text>
                         <Text
                           style={[

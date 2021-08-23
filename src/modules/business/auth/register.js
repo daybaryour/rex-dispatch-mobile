@@ -183,7 +183,7 @@ const Register = (props) => {
                   minWidth={200}
                   accessibilityLabel="Select Location"
                   placeholder="please select"
-                  {...style.form_control}
+                  {...style.select_form_control}
                   onValueChange={(itemValue) => onChange(itemValue)}
                   _selectedItem={{
                     bg: colors.lemon,
@@ -403,7 +403,7 @@ const Register = (props) => {
             disabled={isLoading || !icon_checked}
             disabledStyle={[
               style.btn_success_disabled,
-              ,
+
               { marginTop: 0, opacity: 0.8 },
             ]}
             disabledTitleStyle={{ color: colors.white }}

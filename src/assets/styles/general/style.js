@@ -51,9 +51,19 @@ export default StyleSheet.create({
     borderColor: colors.border_black,
     borderRadius: 3,
     width: "100%",
-    // height: "13%",
+
     fontSize: 16,
     height: 55,
+  },
+
+  select_form_control: {
+    paddingTop: 4,
+    paddingBottom: 4,
+    width: "100%",
+    borderWidth: 1.2,
+    borderColor: colors.border_black,
+    borderRadius: 3,
+    fontSize: 16,
   },
 
   form_label: {

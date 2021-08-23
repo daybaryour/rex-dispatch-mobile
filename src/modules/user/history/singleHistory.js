@@ -1,7 +1,7 @@
 import { Divider } from "native-base";
 import React from "react";
 import { View, Text, ScrollView } from "react-native";
-
+import { Button } from "react-native-elements";
 //styles
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
@@ -21,9 +21,12 @@ const SingleHistory = (props) => {
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: colors.ash_bg, paddingTop: 22 }}
+        style={{
+          backgroundColor: colors.ash_bg,
+          paddingTop: 22,
+        }}
       >
-        <View style={style.container}>
+        <View style={[style.container, { paddingBottom: 40 }]}>
           <View
             style={{
               borderWidth: 1,
@@ -38,10 +41,28 @@ const SingleHistory = (props) => {
               <Text
                 style={[
                   style.text_12,
-                  { color: colors.lemon, marginLeft: "auto" },
+                  {
+                    color:
+                      data.status == "delivered"
+                        ? colors.lemon
+                        : data.status == "in_transit"
+                        ? colors.yellow
+                        : colors.red,
+                    marginLeft: "auto",
+                  },
                 ]}
               >
-                COMPLETED
+                {data.status == "bid_pending"
+                  ? "BID PENDING"
+                  : data.status == "rider_assigned"
+                  ? "RIDER ASSIGNED"
+                  : data.status == "picked_up"
+                  ? "PICKED UP"
+                  : data.status == "in_transit"
+                  ? "IN TRANSIT"
+                  : data.status == "delivered"
+                  ? "DELIVERED"
+                  : "CANCELED"}
               </Text>
             </View>
 
@@ -153,8 +174,42 @@ const SingleHistory = (props) => {
                 </Text>
                 <Divider />
               </View>
+              {data.additional_information ? (
+                <View style={{ marginBottom: 13 }}>
+                  <Text style={[style.text, { color: colors.pure_ash }]}>
+                    Additional Information
+                  </Text>
+                  <Text style={[style.text_16, { marginVertical: 10 }]}>
+                    {data.additional_information}
+                  </Text>
+                  <Divider />
+                </View>
+              ) : (
+                <></>
+              )}
             </View>
           </View>
+          {data.status == "bid_pending" ? (
+            <View>
+              <Button
+                block
+                title="Continue to bids"
+                buttonStyle={[
+                  style.btn_success,
+                  { marginTop: 40, marginBottom: 20 },
+                ]}
+                titleStyle={style.btn_text}
+                onPress={() => {
+                  props.navigation.navigate("dispatch", {
+                    screen: "chooseProvider",
+                    params: { parcel_details: data },
+                  });
+                }}
+              />
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
       </ScrollView>
     </View>
