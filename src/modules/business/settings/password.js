@@ -12,6 +12,7 @@ import colors from "../../../helpers/color";
 //partials
 import Header from "../../partials/header";
 
+//redux
 import { changePassword } from "../../../redux/general/settings/settingsActions";
 import { useDispatch } from "react-redux";
 
@@ -36,7 +37,7 @@ const Password = (props) => {
           rules={{
             required: required,
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onChange, value } }) => (
             <FormControl isInvalid={errors[name] ? true : false}>
               <Input
                 type="password"

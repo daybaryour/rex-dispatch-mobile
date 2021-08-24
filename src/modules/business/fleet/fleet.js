@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { Button } from "react-native-elements";
 import { useToast } from "native-base";
@@ -22,6 +28,7 @@ const Fleet = (props) => {
   const [fleet, setFleet] = useState([]);
   const [fleetLoading, setFleetLoading] = useState(true);
   const [pageLoading, setPageLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const dispatch = useDispatch();
   const toast = useToast();
@@ -30,7 +37,7 @@ const Fleet = (props) => {
     dispatch(getFleet())
       .then((res) => {
         setPageLoading(false);
-        console.log(res);
+
         setFleet(res);
         setFleetLoading(false);
       })
@@ -38,6 +45,24 @@ const Fleet = (props) => {
         toast.show({
           title: e
             ? e.toLowerCase()
+            : "something went wrong, please check your internet connection and restart the app",
+          status: "error",
+          placement: "top",
+        });
+      });
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(getFleet())
+      .then((data) => {
+        setFleet(data);
+        setRefreshing(false);
+      })
+      .catch((e) => {
+        toast.show({
+          title: e
+            ? e.toString()
             : "something went wrong, please check your internet connection and restart the app",
           status: "error",
           placement: "top",
@@ -115,7 +140,12 @@ const Fleet = (props) => {
           </View>
         </View>
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
           <View style={style.container}>
             {fleet.map((data) => {
               return (

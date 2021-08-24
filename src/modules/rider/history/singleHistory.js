@@ -1,7 +1,7 @@
 import { Divider } from "native-base";
 import React from "react";
 import { View, Text, ScrollView } from "react-native";
-
+import { Button } from "react-native-elements";
 //styles
 import style from "../../../assets/styles/general/style";
 import colors from "../../../helpers/color";
@@ -10,6 +10,8 @@ import colors from "../../../helpers/color";
 import Header from "../../partials/header";
 
 const SingleHistory = (props) => {
+  const data = props.route.params.data;
+
   return (
     <View style={style.body}>
       <Header
@@ -19,9 +21,12 @@ const SingleHistory = (props) => {
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: colors.ash_bg, paddingTop: 22 }}
+        style={{
+          backgroundColor: colors.ash_bg,
+          paddingTop: 22,
+        }}
       >
-        <View style={style.container}>
+        <View style={[style.container, { paddingBottom: 40 }]}>
           <View
             style={{
               borderWidth: 1,
@@ -32,14 +37,32 @@ const SingleHistory = (props) => {
             }}
           >
             <View style={{ display: "flex", flexDirection: "row" }}>
-              <Text style={[style.text_16]}>#03345</Text>
+              <Text style={[style.text_16]}>{data.order_number}</Text>
               <Text
                 style={[
                   style.text_12,
-                  { color: colors.lemon, marginLeft: "auto" },
+                  {
+                    color:
+                      data.status == "delivered"
+                        ? colors.lemon
+                        : data.status == "in_transit"
+                        ? colors.yellow
+                        : colors.red,
+                    marginLeft: "auto",
+                  },
                 ]}
               >
-                COMPLETED
+                {data.status == "bid_pending"
+                  ? "BID PENDING"
+                  : data.status == "rider_assigned"
+                  ? "RIDER ASSIGNED"
+                  : data.status == "picked_up"
+                  ? "PICKED UP"
+                  : data.status == "in_transit"
+                  ? "IN TRANSIT"
+                  : data.status == "delivered"
+                  ? "DELIVERED"
+                  : "CANCELED"}
               </Text>
             </View>
 
@@ -62,7 +85,7 @@ const SingleHistory = (props) => {
                   Package Type
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  Documents & Files
+                  {data.package_type}
                 </Text>
                 <Divider />
               </View>
@@ -71,7 +94,7 @@ const SingleHistory = (props) => {
                   Pickup Address
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.pickup_address}
                 </Text>
                 <Divider />
               </View>
@@ -80,7 +103,7 @@ const SingleHistory = (props) => {
                   Nearest Landmark
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.nearest_landmark}
                 </Text>
                 <Divider />
               </View>
@@ -89,7 +112,7 @@ const SingleHistory = (props) => {
                   Sender’s Name
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.senders_name}
                 </Text>
                 <Divider />
               </View>
@@ -98,7 +121,7 @@ const SingleHistory = (props) => {
                   Phone Number
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.senders_phone}
                 </Text>
                 <Divider />
               </View>
@@ -120,7 +143,7 @@ const SingleHistory = (props) => {
                   Delivery Address
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.delivery_address}
                 </Text>
                 <Divider />
               </View>
@@ -129,7 +152,7 @@ const SingleHistory = (props) => {
                   Nearest Landmark
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.notable_landmark}
                 </Text>
                 <Divider />
               </View>
@@ -138,7 +161,7 @@ const SingleHistory = (props) => {
                   Receiver’s Name
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.recipient_name}
                 </Text>
                 <Divider />
               </View>
@@ -147,12 +170,46 @@ const SingleHistory = (props) => {
                   Phone Number
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.recipient_phone}
                 </Text>
                 <Divider />
               </View>
+              {data.additional_information ? (
+                <View style={{ marginBottom: 13 }}>
+                  <Text style={[style.text, { color: colors.pure_ash }]}>
+                    Additional Information
+                  </Text>
+                  <Text style={[style.text_16, { marginVertical: 10 }]}>
+                    {data.additional_information}
+                  </Text>
+                  <Divider />
+                </View>
+              ) : (
+                <></>
+              )}
             </View>
           </View>
+          {data.status == "bid_pending" ? (
+            <View>
+              <Button
+                block
+                title="Continue to bids"
+                buttonStyle={[
+                  style.btn_success,
+                  { marginTop: 40, marginBottom: 20 },
+                ]}
+                titleStyle={style.btn_text}
+                onPress={() => {
+                  props.navigation.navigate("dispatch", {
+                    screen: "chooseProvider",
+                    params: { parcel_details: data },
+                  });
+                }}
+              />
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
       </ScrollView>
     </View>

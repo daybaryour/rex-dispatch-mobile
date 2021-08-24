@@ -166,16 +166,18 @@ const SingleRequest = (props) => {
             buttonStyle={[style.btn_success, { marginTop: 33 }]}
             titleStyle={style.btn_text}
             onPress={() => {
-              props.navigation.navigate("placeBid");
+              props.navigation.navigate("placeBid", {
+                parcel_id: data._id,
+              });
             }}
           />
         </View>
       </ScrollView>
-      <BidModal
+      {/* <BidModal
         showModal={showModal}
         toggle_showModal={toggle_showModal}
         navigation={props.navigation}
-      />
+      /> */}
     </View>
   );
 };

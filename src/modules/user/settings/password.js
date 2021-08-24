@@ -36,7 +36,7 @@ const Password = (props) => {
           rules={{
             required: required,
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onChange, value } }) => (
             <FormControl isInvalid={errors[name] ? true : false}>
               <Input
                 type="password"

@@ -1,7 +1,4 @@
-import constants from "../../../helpers/constants";
 import { post, get } from "../../../helpers/axiosHelper";
-
-const API_URL = constants.API_URL;
 
 //register
 function registerRider(user) {

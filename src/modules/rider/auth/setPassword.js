@@ -42,13 +42,6 @@ const SetPassword = (props) => {
       dispatch(setPassword(data))
         .then((message) => {
           toggle_loading(false);
-          toast.show({
-            title: message
-              ? message.toLowerCase()
-              : "something went wrong, please check your internet connection and try again",
-            status: "success",
-            placement: "top",
-          });
           props.navigation.dispatch(
             CommonActions.reset({
               index: 1,

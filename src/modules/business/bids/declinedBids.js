@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, ScrollView, RefreshControl } from "react-native";
 import { Divider, Pressable } from "native-base";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Spinner from "react-native-spinkit";
@@ -16,6 +16,7 @@ import { getBids } from "../../../redux/business/bids/bidActions";
 const DeclinedBids = (props) => {
   const [declined, setDeclined] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const dispatch = useDispatch();
   const toast = useToast();
@@ -25,6 +26,24 @@ const DeclinedBids = (props) => {
       .then((res) => {
         setDeclined(res);
         setPageLoading(false);
+      })
+      .catch((e) => {
+        toast.show({
+          title: e
+            ? e.toLowerCase()
+            : "something went wrong, please check your internet connection and restart the app",
+          status: "error",
+          placement: "top",
+        });
+      });
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(getBids("declined"))
+      .then((data) => {
+        setDeclined(data);
+        setRefreshing(false);
       })
       .catch((e) => {
         toast.show({
@@ -92,6 +111,9 @@ const DeclinedBids = (props) => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{ backgroundColor: colors.ash_bg }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           <View style={style.container}>
             {declined.map((data) => {

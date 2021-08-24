@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
 import { useToast } from "native-base";
 import Spinner from "react-native-spinkit";
 import moment from "moment";
@@ -21,6 +27,7 @@ import { dispatchHistory } from "../../../redux/user/dispatch/dispatchActions";
 const History = (props) => {
   const [history, setHistory] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const dispatch = useDispatch();
   const toast = useToast();
@@ -30,6 +37,24 @@ const History = (props) => {
       .then((res) => {
         setHistory(res);
         setPageLoading(false);
+      })
+      .catch((e) => {
+        toast.show({
+          title: e
+            ? e.toLowerCase()
+            : "something went wrong, please check your internet connection and restart the app",
+          status: "error",
+          placement: "top",
+        });
+      });
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(dispatchHistory("business"))
+      .then((data) => {
+        setHistory(data);
+        setRefreshing(false);
       })
       .catch((e) => {
         toast.show({
@@ -97,6 +122,9 @@ const History = (props) => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{ backgroundColor: colors.ash_bg, paddingTop: 22 }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           <View style={style.container}>
             {history.map((data) => {

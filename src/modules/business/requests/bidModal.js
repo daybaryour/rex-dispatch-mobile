@@ -5,6 +5,7 @@ import Modal from "react-native-modal";
 import { Button } from "react-native-elements";
 import { Input, useToast, FormControl, Select, CheckIcon } from "native-base";
 import { useForm, Controller } from "react-hook-form";
+import Spinner from "react-native-spinkit";
 
 //styles
 import style from "../../../assets/styles/general/style";
@@ -16,6 +17,7 @@ import Header from "../../partials/header";
 //redux
 import { useDispatch } from "react-redux";
 import { getFleet } from "../../../redux/business/fleet/fleetActions";
+import { placeBid } from "../../../redux/business/bids/bidActions";
 
 const BidModal = (props) => {
   const [fleet, setFleet] = useState([]);
@@ -35,6 +37,7 @@ const BidModal = (props) => {
     dispatch(getFleet())
       .then((res) => {
         setFleet(res);
+
         setFleetLoading(false);
       })
       .catch((e) => {
@@ -48,7 +51,24 @@ const BidModal = (props) => {
       });
   }, []);
 
-  const onSubmit = () => {};
+  const onSubmit = (data) => {
+    toggleLoading(true);
+    data.parcel_id = props.route.params.parcel_id;
+    dispatch(placeBid(data))
+      .then((res) => {
+        toggleLoading(false);
+        props.navigation.navigate("bidSuccess");
+      })
+      .catch((e) => {
+        toast.show({
+          title: e
+            ? e.toLowerCase()
+            : "something went wrong, please check your internet connection and restart the app",
+          status: "error",
+          placement: "top",
+        });
+      });
+  };
 
   return (
     <View style={style.body}>
@@ -64,6 +84,7 @@ const BidModal = (props) => {
         onBackdropPress={() => props.toggle_showModal(false)}
       >
         <View style={[style.modalContent, { borderRadius: 3 }]}> */}
+
       <View style={style.container}>
         {/* <Text style={[style.text_18, { textAlign: "center" }]}>Make a Bid</Text> */}
         <Text style={style.form_label}>Amount</Text>
@@ -73,20 +94,22 @@ const BidModal = (props) => {
             required: true,
           }}
           render={({ field: { onChange, value } }) => (
-            <FormControl isInvalid={errors["amount"] ? true : false}>
+            <FormControl isInvalid={errors["price"] ? true : false}>
               <Input
                 {...style.form_control}
                 _focus={colors.border_black}
+                type="numeric"
+                keyboardType="numeric"
                 placeholder="Please enter amount"
                 onChangeText={(val) => onChange(val)}
                 value={value}
               />
             </FormControl>
           )}
-          name={"amount"}
+          name={"price"}
           defaultValue=""
         />
-        {errors["amount"] && (
+        {errors["price"] && (
           <Text style={style.error_text}>Amount is required.</Text>
         )}
 
@@ -104,9 +127,9 @@ const BidModal = (props) => {
                 minWidth={200}
                 accessibilityLabel="Select rider"
                 placeholder={
-                  fleet.length
-                    ? "Please select rider"
-                    : "Please add riders in the fleet section"
+                  !fleet.length
+                    ? "Please add riders in the fleet section"
+                    : "Please select rider"
                 }
                 {...style.select_form_control}
                 isDisabled={fleetLoading || !fleet.length ? true : false}
@@ -121,11 +144,13 @@ const BidModal = (props) => {
                 }}
               >
                 {fleet.map((rider) => {
-                  <Select.Item
-                    label={`${rider.firstname} ${rider.lastname}`}
-                    value={rider._id}
-                    key={rider._id}
-                  />;
+                  return (
+                    <Select.Item
+                      label={`${rider.firstname} ${rider.lastname}`}
+                      value={rider._id}
+                      key={rider._id}
+                    />
+                  );
                 })}
               </Select>
             </FormControl>
@@ -139,18 +164,14 @@ const BidModal = (props) => {
 
         <Button
           block
-          title={fleetLoading ? "please wait..." : "place bid"}
+          title={fleetLoading ? "fetching riders..." : "place bid"}
           buttonStyle={[style.btn_success]}
           loading={loading}
           disabled={loading || fleetLoading || !fleet.length}
           disabledStyle={[style.btn_success_disabled]}
           disabledTitleStyle={{ color: colors.white }}
           titleStyle={style.btn_text}
-          //   onPress={handleSubmit(onSubmit)}
-          onPress={() => {
-            props.toggle_showModal(false);
-            props.navigation.navigate("bidSuccess");
-          }}
+          onPress={handleSubmit(onSubmit)}
         />
       </View>
       {/* </View>

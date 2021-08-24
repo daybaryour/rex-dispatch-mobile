@@ -12,6 +12,7 @@ import Header from "../../partials/header";
 
 const SingleDeliverable = (props) => {
   const [value, setValue] = React.useState("one");
+  const data = props.route.params.data;
 
   return (
     <View style={style.body}>
@@ -65,7 +66,7 @@ const SingleDeliverable = (props) => {
                   Package Type
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  Documents & Files
+                  {data.package_type}
                 </Text>
                 <Divider />
               </View>
@@ -74,7 +75,7 @@ const SingleDeliverable = (props) => {
                   Pickup Address
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.pickup_address}
                 </Text>
                 <Divider />
               </View>
@@ -83,7 +84,7 @@ const SingleDeliverable = (props) => {
                   Nearest Landmark
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.nearest_landmark}
                 </Text>
                 <Divider />
               </View>
@@ -92,7 +93,7 @@ const SingleDeliverable = (props) => {
                   Sender’s Name
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.senders_name}
                 </Text>
                 <Divider />
               </View>
@@ -101,7 +102,7 @@ const SingleDeliverable = (props) => {
                   Phone Number
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.senders_phone}
                 </Text>
                 <Divider />
               </View>
@@ -123,7 +124,7 @@ const SingleDeliverable = (props) => {
                   Delivery Address
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.delivery_address}
                 </Text>
                 <Divider />
               </View>
@@ -132,7 +133,7 @@ const SingleDeliverable = (props) => {
                   Nearest Landmark
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.notable_landmark}
                 </Text>
                 <Divider />
               </View>
@@ -141,19 +142,32 @@ const SingleDeliverable = (props) => {
                   Receiver’s Name
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.recipient_name}
                 </Text>
                 <Divider />
               </View>
-              <View style={{ marginBottom: 20 }}>
+              <View style={{ marginBottom: 13 }}>
                 <Text style={[style.text, { color: colors.pure_ash }]}>
                   Phone Number
                 </Text>
                 <Text style={[style.text_16, { marginVertical: 10 }]}>
-                  5 Isaac John str, Ikeja
+                  {data.recipient_phone}
                 </Text>
                 <Divider />
               </View>
+              {data.additional_information ? (
+                <View style={{ marginBottom: 13 }}>
+                  <Text style={[style.text, { color: colors.pure_ash }]}>
+                    Additional Information
+                  </Text>
+                  <Text style={[style.text_16, { marginVertical: 10 }]}>
+                    {data.additional_information}
+                  </Text>
+                  <Divider />
+                </View>
+              ) : (
+                <></>
+              )}
               <Radio.Group
                 name="myRadioGroup"
                 aria-label="t2"

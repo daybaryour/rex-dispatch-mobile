@@ -54,7 +54,7 @@ const Requests = (props) => {
     dispatch(getRequests())
       .then((res) => {
         setRequests(res);
-        setPageLoading(false);
+        setRefreshing(false);
       })
       .catch((e) => {
         toast.show({
@@ -69,7 +69,7 @@ const Requests = (props) => {
 
   return (
     <View style={style.body}>
-      <Header title={"Dispatch History"} />
+      <Header title={"Dispatch Requests"} />
       {pageLoading ? (
         <View
           style={{
