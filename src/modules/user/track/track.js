@@ -113,8 +113,6 @@ const TrackDispatch = (props) => {
               ? 4
               : 5;
 
-          console.log(status);
-
           set_current_position(status);
         }
 

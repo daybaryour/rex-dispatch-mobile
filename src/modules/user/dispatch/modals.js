@@ -14,7 +14,6 @@ import colors from "../../../helpers/color";
 
 //redux
 import store from "../../../redux/store";
-import { initializeTransaction } from "../../../redux/general/transactions/transactionActions";
 import { parcelPayment } from "../../../redux/user/dispatch/dispatchActions";
 import { useDispatch } from "react-redux";
 
@@ -241,7 +240,6 @@ const Modals = (props) => {
               disabled={loading}
               disabledStyle={[style.btn_success, { opacity: 0.8 }]}
               onPress={() => {
-                84;
                 toggleLoading(true);
                 paymentChannel == "paystack"
                   ? paystackWebViewRef.current.startTransaction()

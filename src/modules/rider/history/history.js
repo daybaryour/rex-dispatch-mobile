@@ -189,7 +189,7 @@ const History = (props) => {
                             ? "IN TRANSIT"
                             : data.status == "delivered"
                             ? "DELIVERED"
-                            : "CANCELED"}
+                            : "CANCELLED"}
                         </Text>
                       </View>
                       <View

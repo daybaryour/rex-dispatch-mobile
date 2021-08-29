@@ -22,6 +22,6 @@ export default {
   red: "#FD3538",
   text_red: "#D8394C",
   yellow: "#FFCE21",
-  indigo_light: "#rgba(117, 117, 158, 0.4)",
+  indigo_light: "rgba(117, 117, 158, 0.4)",
   indigo: "#75759E",
 };
