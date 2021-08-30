@@ -46,6 +46,7 @@ const History = (props) => {
           status: "error",
           placement: "top",
         });
+        setPageLoading(false);
       });
   }, []);
 
@@ -64,6 +65,7 @@ const History = (props) => {
           status: "error",
           placement: "top",
         });
+        setRefreshing(false);
       });
   }, []);
 

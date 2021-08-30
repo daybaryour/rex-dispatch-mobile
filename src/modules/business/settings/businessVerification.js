@@ -18,11 +18,13 @@ import Header from "../../partials/header";
 
 //redux
 import { useDispatch } from "react-redux";
+import { verifyBusiness } from "../../../redux/business/verification/verificationAction";
 
 const BusinessVerification = (props) => {
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
   const toast = useToast();
+  const [loading, toggleLoading] = useState(false);
 
   const {
     control,
@@ -84,6 +86,31 @@ const BusinessVerification = (props) => {
     );
   };
 
+  const onSubmit = (data) => {
+    toggleLoading(true);
+    dispatch(verifyBusiness(data))
+      .then((res) => {
+        toggleLoading(false);
+        toast.show({
+          title: res
+            ? res.toLowerCase()
+            : "something went wrong, please check your internet connection and restart the app",
+          status: "error",
+          placement: "top",
+        });
+      })
+      .catch((e) => {
+        toggleLoading(false);
+        toast.show({
+          title: e
+            ? e.toLowerCase()
+            : "something went wrong, please check your internet connection and restart the app",
+          status: "error",
+          placement: "top",
+        });
+      });
+  };
+
   return (
     <View style={style.body}>
       <Header
@@ -117,9 +144,9 @@ const BusinessVerification = (props) => {
             required: false,
           }}
           render={({ field: { onChange } }) => (
-            <FormControl isInvalid={errors["document_type"] ? true : false}>
+            <FormControl isInvalid={errors["type"] ? true : false}>
               <Select
-                // selectedValue={user.document_type}
+                // selectedValue={user.type}
                 minWidth={200}
                 accessibilityLabel="Select government issued id type"
                 placeholder="Please select"
@@ -149,10 +176,10 @@ const BusinessVerification = (props) => {
               </Select>
             </FormControl>
           )}
-          name={"document_type"}
+          name={"type"}
           defaultValue=""
         />
-        {errors["document_type"] && (
+        {errors["type"] && (
           <Text style={style.error_text}>Document type is required.</Text>
         )}
 
@@ -220,23 +247,13 @@ const BusinessVerification = (props) => {
           block
           title="Submit"
           buttonStyle={[style.btn_success]}
+          loading={loading}
+          disabled={loading}
+          disabledStyle={[style.btn_success_disabled, , { opacity: 0.8 }]}
+          disabledTitleStyle={{ color: colors.white }}
           titleStyle={style.btn_text}
+          onPress={handleSubmit(onSubmit)}
         />
-        {/* <Button
-            block
-            title="Submit"
-            buttonStyle={[style.btn_success, { marginTop: 0 }]}
-            loading={isLoading}
-            disabled={isLoading || !icon_checked}
-            disabledStyle={[
-              style.btn_success_disabled,
-              ,
-              { marginTop: 0, opacity: 0.8 },
-            ]}
-            disabledTitleStyle={{ color: colors.white }}
-            titleStyle={style.btn_text}
-            onPress={handleSubmit(onSubmit)}
-          /> */}
       </ScrollView>
     </View>
   );

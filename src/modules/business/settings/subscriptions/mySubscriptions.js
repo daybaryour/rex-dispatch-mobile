@@ -38,8 +38,10 @@ const MySubscriptions = (props) => {
           status: "error",
           placement: "top",
         });
+        setPageLoading(false);
       });
   }, []);
+
   return (
     <>
       <View style={style.body}>

@@ -39,6 +39,7 @@ const History = (props) => {
         setPageLoading(false);
       })
       .catch((e) => {
+        setPageLoading(false);
         toast.show({
           title: e
             ? e.toLowerCase()
@@ -64,6 +65,7 @@ const History = (props) => {
           status: "error",
           placement: "top",
         });
+        setRefreshing(false);
       });
   }, []);
 

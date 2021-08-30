@@ -48,6 +48,7 @@ const BidModal = (props) => {
           status: "error",
           placement: "top",
         });
+        setFleetLoading(false);
       });
   }, []);
 
@@ -60,6 +61,7 @@ const BidModal = (props) => {
         props.navigation.navigate("bidSuccess");
       })
       .catch((e) => {
+        toggleLoading(false);
         toast.show({
           title: e
             ? e.toLowerCase()

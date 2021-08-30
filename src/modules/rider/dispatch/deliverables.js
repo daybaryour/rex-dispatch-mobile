@@ -39,6 +39,7 @@ const Deliverables = (props) => {
           status: "error",
           placement: "top",
         });
+        setPageLoading(false);
       });
   }, []);
   const onRefresh = useCallback(() => {
@@ -56,6 +57,7 @@ const Deliverables = (props) => {
           status: "error",
           placement: "top",
         });
+        setRefreshing(false);
       });
   }, []);
 

@@ -36,6 +36,7 @@ const Transactions = () => {
           status: "error",
           placement: "top",
         });
+        setPageLoading(false);
       });
   }, []);
 

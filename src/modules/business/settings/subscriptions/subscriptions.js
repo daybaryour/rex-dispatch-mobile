@@ -51,6 +51,7 @@ const Subscriptions = (props) => {
           status: "error",
           placement: "top",
         });
+        setPageLoading(false);
       });
   }, []);
 

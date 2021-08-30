@@ -39,6 +39,7 @@ const History = (props) => {
           status: "error",
           placement: "top",
         });
+        setPageLoading(false);
       });
   }, []);
 

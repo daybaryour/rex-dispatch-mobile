@@ -49,6 +49,8 @@ const Fleet = (props) => {
           status: "error",
           placement: "top",
         });
+        setPageLoading(false);
+        setFleetLoading(false);
       });
   }, []);
 
@@ -67,6 +69,7 @@ const Fleet = (props) => {
           status: "error",
           placement: "top",
         });
+        setRefreshing(false);
       });
   }, []);
 

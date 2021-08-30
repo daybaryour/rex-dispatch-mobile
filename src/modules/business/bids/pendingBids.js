@@ -35,6 +35,7 @@ const PendingBids = (props) => {
           status: "error",
           placement: "top",
         });
+        setPageLoading(false);
       });
   }, []);
 
@@ -53,6 +54,7 @@ const PendingBids = (props) => {
           status: "error",
           placement: "top",
         });
+        setRefreshing(false);
       });
   }, []);
 
