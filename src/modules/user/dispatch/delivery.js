@@ -85,7 +85,7 @@ const Delivery = (props) => {
         });
     }
   };
-
+//   9015933322325746051
   return (
     <>
       <ScrollView

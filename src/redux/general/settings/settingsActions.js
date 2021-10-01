@@ -115,6 +115,7 @@ export const changePassword = (data, user_type) => (dispatch) => {
 
 //change avatar
 export const changeAvatar = (data, user_type) => (dispatch) => {
+  console.log(data);
   return settingsCrud
     .changeAvatar(data, user_type)
     .then((response) => {

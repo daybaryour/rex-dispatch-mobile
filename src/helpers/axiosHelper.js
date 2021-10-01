@@ -13,6 +13,7 @@ const getToken = async () => {
   const token = await AsyncStorage.getItem("token");
 
   axiosApi.defaults.headers.common["Authorization"] = "Bearer " + token;
+  console.log(token);
 };
 
 getToken();
@@ -28,7 +29,7 @@ export async function get(url, config = {}) {
 
 export async function post(url, data, config = {}) {
   const token = await AsyncStorage.getItem("token");
-  return axiosApi.post(url, { ...data }, { ...config });
+  return axiosApi.post(url, data, { ...config });
 }
 
 export async function put(url, data, config = {}) {

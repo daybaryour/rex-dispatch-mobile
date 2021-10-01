@@ -10,7 +10,10 @@
     "lint": "eslint .",
     "git_push": "node -e \"const mssg = ' ' + process.argv[1]; require('child_process').execSync('git add . && git commit -m \\\"' + mssg + '\\\" && git push -u origin master', { stdio:[0, 1, 2] } ) \"",
     "git_push_dev": "node -e \"const mssg = ' ' + process.argv[1]; require('child_process').execSync('git add . && git commit -m \\\"' + mssg + '\\\" && git push -u origin development', { stdio:[0, 1, 2] } ) \"",
-    "build_apk": "cd android && ./gradlew clean && cd .. && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android"
+    "build_apk": "cd android && ./gradlew clean && cd .. && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
+    "playstore": "cd android && ./gradlew clean && cd .. && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew bundleRelease",
+    "release-build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/* && cd android && ./gradlew assembleRelease && cd ..",
+    "gradle-clean": "cd android &&./gradlew clean && cd .."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
@@ -38,8 +41,10 @@
     "react-native-document-picker": "^5.2.0",
     "react-native-easy-grid": "^0.2.2",
     "react-native-elements": "^3.4.2",
+    "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-google-places-autocomplete": "^2.2.0",
+    "react-native-in-app-review": "^3.2.2",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-modal": "^12.0.2",
     "react-native-paystack-webview": "^4.0.3",
